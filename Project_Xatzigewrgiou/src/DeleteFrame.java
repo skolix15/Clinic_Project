@@ -406,6 +406,7 @@ public class DeleteFrame extends JFrame {
 				
 			}
 			
+			
 			class ButtonListenerDeleteButton implements ActionListener {
 				
 				public void actionPerformed(ActionEvent e) {
