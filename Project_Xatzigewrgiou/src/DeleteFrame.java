@@ -344,11 +344,7 @@ public class DeleteFrame extends JFrame {
 		 	    	
 		 	    } 	);
 		 	    
-		 	    
-		 	    
-		 	    
-						
-						
+
 				//Εισαγωγή του panel στο contentpane
 						
 				this.setContentPane(panel);
