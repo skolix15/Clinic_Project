@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -56,6 +58,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		confirmButton.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent arg0) {
+				
 				order.informHistory(fileNameForHistory);
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
 				int rowCount = dm.getRowCount();
@@ -277,7 +280,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	
  	      public void valueChanged(ListSelectionEvent e) {
  	    	  
- 	    	if( !e.getValueIsAdjusting() ) {
+ 	    	if(!e.getValueIsAdjusting() ) {
  	    		
  	    	
  	    	  String medicineName = "";
@@ -296,31 +299,57 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	  }
  	       
  	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
+ 	    	  
+ 	    	  
  		    
  	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
  	    		  
- 	    		  order.addMedicineInTheOrder(clickedMedicine, 1); 		// Arxika 1 kai meta ginetai tropopoihsh
- 		    
- 	    		  totalCost = String.valueOf(order.getTotalCost());
- 		    
- 	    		  textFieldForCost.setText(totalCost);
- 		    
- 	    		  DefaultTableModel modelForOrderTable = (DefaultTableModel) orderTable.getModel();
- 	        
- 	    		  modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), 1}); 
- 	    	  
- 	    		  for(int i=0;i<Storage.getMedicineList().size();i++) {
+ 	    		  String inputAvailabilityString = JOptionPane.showInputDialog(null,"Enter quantity of the medicine you want to buy: ");
  	    		  
- 	    	  			int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
- 	    	  			storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
+ 	    		  if(inputAvailabilityString == null || inputAvailabilityString.equals("") )
+ 	    			  JOptionPane.showMessageDialog(null,"You dind't enter any number.","Error..",JOptionPane.ERROR_MESSAGE);
+
+ 	    		  else {
+ 	    			  
+ 	    			  int inputAvailabilityInteger = Integer.parseInt(inputAvailabilityString);
+ 	    			  
+ 	    			  if(inputAvailabilityInteger <= 0) 
+ 	    				  JOptionPane.showMessageDialog(null,"Invalid quantity of medicine.","Error..",JOptionPane.ERROR_MESSAGE);
+ 	    			  
+ 	    			  else if(typeOfOrder == true && !(clickedMedicine.getAvailability() >= inputAvailabilityInteger))
+	    			  		JOptionPane.showMessageDialog(null,"Not enough stocks for this medicine.","Error..",JOptionPane.ERROR_MESSAGE);
+ 	    			  
+ 	    			  else  {
+ 	    		  
+ 	    			  		order.addMedicineInTheOrder(clickedMedicine, inputAvailabilityInteger); 	
+ 		    
+ 	    			  		DecimalFormat df = new DecimalFormat("#.##");
+	    			
+ 	    			  		totalCost = String.valueOf(df.format(order.getTotalCost()));
+	     		    
+ 	    			  		textFieldForCost.setText(totalCost);
+ 		    
+ 	    			  		DefaultTableModel modelForOrderTable = (DefaultTableModel) orderTable.getModel();
+ 	        
+ 	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), inputAvailabilityInteger}); 
+ 	    	  
+ 	    			  		for(int i=0;i<Storage.getMedicineList().size();i++) {
+ 	    		  
+ 	    	  						int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
+ 	    	  						storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
  	    	  			
- 	    	  			}
+ 	    	  					}
+ 	    			  	}
+ 	    			  
+ 	    			  	
+ 	    			  
+ 	    		  	}
  	    		  }
  	    	  }
  	    	 }
  	    	}
  	      
- 	      } ); 
+ 	    } ); 
  	    
  	    orderTable.addMouseListener(new MouseAdapter() {
  	    	
@@ -349,42 +378,51 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    		
  	    		if( e.getButton() == MouseEvent.BUTTON3) {
  	    			
- 	    			order.deleteMedicineFronTheOrder(clickedMedicine);
- 	    			
- 	    			order.informHistory(fileNameForHistory);
- 	    			
- 	    			String medCode = "";
- 	    			
- 	    			for(int i=0;i<Storage.getMedicineList().size();i++) {
- 	    				
- 	    				medCode = (String) storageTable.getModel().getValueAt(i,1);
- 	    				
- 	    				if(clickedMedicine.getCode().equals(medCode)) {
- 	    					
- 	    					DefaultTableModel model = (DefaultTableModel)storageTable.getModel();
- 	    					model.setValueAt(clickedMedicine.getAvailability(),i, 2);
- 	    					
- 	    					}
- 	    				}
- 	    			
- 	    			
- 	    			((DefaultTableModel) orderTable.getModel()).removeRow(selectedRowFromOrderTable);
- 	    			
- 	    			totalCost = String.valueOf(order.getTotalCost());
- 	     		    
- 	   	    	  	textFieldForCost.setText(totalCost);
- 	   	    	  	
- 	   	    	  	for(int i=0;i<Storage.getMedicineList().size();i++) {
- 	   	    	  		
- 	   	    	  		int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
- 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
- 	   	    	  		
- 	   	    	  	}	
- 	    	}
-
- 	      }	
+ 	    			String message = "Are you sure you want to delete this medicine from the list?\n";
+ 	    	        int returnValue = JOptionPane.showConfirmDialog(null, message,"Delete",JOptionPane.YES_NO_OPTION);
+ 	    	        
+ 	    	        if (returnValue == JOptionPane.YES_OPTION) { 	
+ 	    		        
+ 	    		    	order.deleteMedicineFronTheOrder(clickedMedicine);
+ 	 	    			
+ 	 	    			order.informHistory(fileNameForHistory);
+ 	 	    			
+ 	 	    			String medCode = "";
+ 	 	    			
+ 	 	    			for(int i=0;i<Storage.getMedicineList().size();i++) {
+ 	 	    				
+ 	 	    				medCode = (String) storageTable.getModel().getValueAt(i,1);
+ 	 	    				
+ 	 	    				if(clickedMedicine.getCode().equals(medCode)) {
+ 	 	    					
+ 	 	    					DefaultTableModel model = (DefaultTableModel)storageTable.getModel();
+ 	 	    					model.setValueAt(clickedMedicine.getAvailability(),i, 2);
+ 	 	    					
+ 	 	    					}
+ 	 	    				}
+ 	 	    			
+ 	 	    			
+ 	 	    			((DefaultTableModel) orderTable.getModel()).removeRow(selectedRowFromOrderTable);
+ 	 	    			
+ 	 	    			DecimalFormat df = new DecimalFormat("#.##");
+ 	 	    			
+ 	 	    			totalCost = String.valueOf(df.format(order.getTotalCost()));
+ 	 	     		    
+ 	 	   	    	  	textFieldForCost.setText(totalCost);
+ 	 	   	    	  	
+ 	 	   	    	  	for(int i=0;i<Storage.getMedicineList().size();i++) {
+ 	 	   	    	  		
+ 	 	   	    	  		int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
+ 	 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
+ 	 	   	    	  		
+ 	 	   	    	  	}
+ 	 	   	    	  }
+ 	    		    }
+ 	    		}	
  	    	
  	    } 	);
+ 	    
+ 	    
  	   
 	    // Eisagwgi tou panel sto ContentPane
 	

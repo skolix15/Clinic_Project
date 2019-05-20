@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -313,6 +313,11 @@ public class DeleteFrame extends JFrame {
 		 	    		
 		 	    		if( e.getButton() == MouseEvent.BUTTON3) {
 		 	    			
+		 	    			String message = "Would you like to delete this medicine from the list?\n";
+		 	    	        int returnValue = JOptionPane.showConfirmDialog(null, message,"Delete",JOptionPane.YES_NO_OPTION);
+		 	    	        
+		 	    	        if (returnValue == JOptionPane.YES_OPTION) {
+		 	    			
 		 	    			order.deleteMedicineFronTheOrder(clickedMedicine);
 		 	    			
 		 	    			String medCode = "";
@@ -335,14 +340,14 @@ public class DeleteFrame extends JFrame {
 		 	   	    	  	for(int i=0;i<Storage.getMedicineList().size();i++) {
 		 	   	    	  		
 		 	   	    	  		int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
-		 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
+		 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2);
 		 	   	    	  		
-		 	   	    	  	}	
-		 	    	}
-
-		 	      }	
+		 	   	    	  	}
+		 	    	       }
+		 	    	      }
+		 	            }
 		 	    	
-		 	    } 	);
+		 	    	} 	);
 		 	    
 
 				//Εισαγωγή του panel στο contentpane
