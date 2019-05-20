@@ -295,8 +295,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	        	  		medicineCode = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(),j);
  	        	  	else if( j==1 )
  	        	  		medicineName = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(), j);
- 	        	  	
- 	    	  }
+ 	        	  	}
  	       
  	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
  	    	  
@@ -308,6 +307,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    		  
  	    		  if(inputAvailabilityString == null || inputAvailabilityString.equals("") )
  	    			  JOptionPane.showMessageDialog(null,"You dind't enter any number.","Error..",JOptionPane.ERROR_MESSAGE);
+ 	    		  
+ 	    		  else if(!PrescriptionAndSupplyFrame.isNumeric(inputAvailabilityString)) 
+ 	    			 JOptionPane.showMessageDialog(null,"You have to enter a number.","Error..",JOptionPane.ERROR_MESSAGE);
 
  	    		  else {
  	    			  
@@ -337,13 +339,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    		  
  	    	  						int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
  	    	  						storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
- 	    	  			
- 	    	  					}
- 	    			  	}
- 	    			  
- 	    			  	
- 	    			  
- 	    		  	}
+ 	    	  						}
+ 	    			  		}
+ 	    			  }
  	    		  }
  	    	  }
  	    	 }
@@ -442,6 +440,15 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	
 		
 		
+		}
+	
+	public static boolean isNumeric(String str) { 
+		  try {  
+		    Double.parseDouble(str);  
+		    return true;
+		  } catch(NumberFormatException e){  
+		    return false;  
+		  }  
 		}
 	
 	
