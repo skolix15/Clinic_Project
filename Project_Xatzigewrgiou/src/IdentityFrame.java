@@ -47,7 +47,7 @@ public class IdentityFrame extends JFrame{
 				
 				if( password.equals(correct)) {
 					dispose();
-					new MainFrame();
+					new SupplyChainMainFrame();
 				}
 				
 				else {

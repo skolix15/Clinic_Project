@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class MainFrame extends JFrame{
+public class SupplyChainMainFrame extends JFrame{
 	
 	private JPanel panel;
 	private JMenuBar mb;
@@ -40,7 +40,7 @@ public class MainFrame extends JFrame{
 	JFrame frame = this;
 	
    
-	public MainFrame() {
+	public SupplyChainMainFrame() {
 
 		// Dimiourgia baras menu
 		
@@ -232,7 +232,7 @@ class JTablePopupMenuListener implements ActionListener {
 		if(e.getActionCommand().equals("Go to Central Menu")){
 			
 			dispose();
-			new MainFrame();
+			new SupplyChainMainFrame();
 		}
 		
 		else if(e.getActionCommand().equals("Prescription") ) {

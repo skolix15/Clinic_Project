@@ -175,7 +175,7 @@ public class AddFrame extends JFrame{
 					if(e.getActionCommand().equals("Go to Central Menu")){
 						
 						dispose();
-						new MainFrame();
+						new SupplyChainMainFrame();
 					}
 					
 					else if(e.getActionCommand().equals("Prescription") ) {
