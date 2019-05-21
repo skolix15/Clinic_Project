@@ -309,7 +309,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    			  JOptionPane.showMessageDialog(null,"You dind't enter any number.","Error..",JOptionPane.ERROR_MESSAGE);
  	    		  
  	    		  else if(!PrescriptionAndSupplyFrame.isNumeric(inputAvailabilityString)) 
- 	    			 JOptionPane.showMessageDialog(null,"You have to enter a number.","Error..",JOptionPane.ERROR_MESSAGE);
+ 	    			 JOptionPane.showMessageDialog(null,"You have to enter an integer number.","Error..",JOptionPane.ERROR_MESSAGE);
 
  	    		  else {
  	    			  
@@ -444,7 +444,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	
 	public static boolean isNumeric(String str) { 
 		  try {  
-		    Double.parseDouble(str);  
+		    Integer.parseInt(str);  
 		    return true;
 		  } catch(NumberFormatException e){  
 		    return false;  
