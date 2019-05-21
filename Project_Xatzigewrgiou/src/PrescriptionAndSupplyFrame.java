@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,6 +74,20 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	
 			}
 		});
+		
+		// Prosthiki eikonas kai listener gia aythn
+		
+		ImageIcon icon = new ImageIcon("hospital1.png");
+		JLabel lb = new JLabel(icon);
+	
+		lb.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) 
+		    {	 
+		    	setVisible(false);
+		        new AddFrame();           
+		    }
+			
+		}	);
 		
 		
 		// Dimiourgia tou text poy tha periexei to synoliko kostos
@@ -142,6 +157,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    mb.add(orderMenu);
 	    mb.add(storageMenu);
 	    mb.add(statisticsMenu);
+	    mb.add(lb);
 	    
 	    // Eisagwgi twn farmakwn pou briskontai sthn apothiki tou iatreiou, ston pinaka pou antistoixizetai se aythn
 	    
@@ -241,8 +257,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    
 	    // Kathorismos tou tropou topothetisis twn antikeimenwn sto kathe panel panel ( px katakorifa, orizontia )
 	    
-	    menuPanel.setLayout(new BoxLayout(menuPanel,BoxLayout.X_AXIS));
-	    menuPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    
 	    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 	    panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 	    
@@ -251,11 +266,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    
 	    menuPanel.add(mb);
 	    
+	    
 	    // Prosthiki tou parapanw panel sto teliko panel 
 	    // Epipleon prosthiki tou pinaka (apothiki) kai tou titlou tou sto teliko panel
-	    
+	   
 	    panel.add(menuPanel);
-	    
+	 
 	    panel.add(storageTitle);
 	    panel.add(storageScrollPane);
 	    
@@ -383,8 +399,6 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    		        
  	    		    	order.deleteMedicineFronTheOrder(clickedMedicine);
  	 	    			
- 	 	    			order.informHistory(fileNameForHistory);
- 	 	    			
  	 	    			String medCode = "";
  	 	    			
  	 	    			for(int i=0;i<Storage.getMedicineList().size();i++) {
@@ -431,9 +445,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		this.setSize(600,400);
 		
 		if( typeOfOrder == true)
-			this.setTitle("Central Menu\\Order\\Prescription");
+			this.setTitle("/Supply Chain/Pharmacist/Order/Prescription");
 		else if(typeOfOrder == false)
-			this.setTitle("Central Menu\\Order\\Prescription");
+			this.setTitle("/Supply Chain/Pharmacist/Order/Supply");
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
@@ -492,7 +506,7 @@ class JTablePopupMenuListener implements ActionListener {
 			else if(e.getActionCommand().equals("Show Statistics")) {
 				
 				dispose();
-				// ....
+				new StatisticsFrame();
 			}
 			
 		}

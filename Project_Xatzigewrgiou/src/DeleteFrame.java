@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -50,20 +51,29 @@ public class DeleteFrame extends JFrame {
 	
 	public DeleteFrame() {
 		
-				//Δημιουργία panel
-				panel = new JPanel();
-				menuPanel = new JPanel();	
-				
-				
+				//Δημιουργία μπάρας μενού
+				mb = new JMenuBar();
+	
 				//Δημιουργία για κουμπί καταχώρησης
 				confirm = new JButton("Delete Medicine(s)");
 				ButtonListenerDeleteButton deleteButton = new ButtonListenerDeleteButton();
 				confirm.addActionListener(deleteButton);
+				
+				// Prosthiki eikonas kai listener gia aythn
+				
+				ImageIcon icon = new ImageIcon("hospital1.png");
+				JLabel lb = new JLabel(icon);
+			
+				lb.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) 
+				    {	 
+				    	setVisible(false);
+				        new AddFrame();           
+				    }
+					
+				}	);
 						
-				
-				//Δημιουργία μπάρας μενού
-				mb = new JMenuBar();
-				
+	
 
 			    //Πίνακες
 				storageModel = new DefaultTableModel();
@@ -148,18 +158,7 @@ public class DeleteFrame extends JFrame {
 				
 			    storageTitle = new JLabel("STORAGE");
 			    deleteTitle = new JLabel("Delete");
-				
-			    // Kathorismos topothethshs tou titlou
-			    
-			    storageTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-			    deleteTitle.setAlignmentX(Component.RIGHT_ALIGNMENT);
-				
-				
-				
-				
-				
-			    
-				
+
 				//Δημιουργία μενού
 			    centralMenu_Menu = new JMenu("Central Menu");
 				orderMenu = new JMenu("Order");
@@ -168,10 +167,8 @@ public class DeleteFrame extends JFrame {
 				
 				
 				//Δημιουργία επιλογών κάθε μενού
-				
-				
-				
-				i1 = new JMenuItem("Recipe");  
+	
+				i1 = new JMenuItem("Prescription");  
 			    i2 = new JMenuItem("Supply");  
 			    i3 = new JMenuItem("Add");
 			    i4 = new JMenuItem("Delete"); 
@@ -201,11 +198,17 @@ public class DeleteFrame extends JFrame {
 			    mb.add(orderMenu);
 			    mb.add(storageMenu);
 			    mb.add(statisticsMenu);
-					    
+			    mb.add(lb);	
 			    
-			    //Τρόπος τοποθέτησης στα πάνελ
-			    menuPanel.setLayout(new BoxLayout(menuPanel,BoxLayout.X_AXIS));
-			    menuPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			    // Kathorismos topothethshs tou titlou
+			    
+			    storageTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+			    deleteTitle.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			    
+
+				//Δημιουργία panel
+				panel = new JPanel();
+				menuPanel = new JPanel();
 			   
 			    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 				panel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -357,8 +360,8 @@ public class DeleteFrame extends JFrame {
 						
 				//Καθορισμός των βασικών χαρακτηριστικών του panel
 						
-				this.setSize(600,600);
-				this.setTitle("Central Menu\\Storage\\Delete");
+				this.setSize(600,400);
+				this.setTitle("/Supply Chain/Pharmacist/Storage/Delete");
 				this.setVisible(true);
 				this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
@@ -404,7 +407,7 @@ public class DeleteFrame extends JFrame {
 					else if(e.getActionCommand().equals("Show Statistics")) {
 						
 						dispose();
-						// ....
+						new StatisticsFrame();
 					}
 					
 				}

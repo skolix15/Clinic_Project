@@ -2,8 +2,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +40,7 @@ public class AddFrame extends JFrame{
 	
 	public AddFrame () {
 		
-		//Δημιουργία panel
+				//Δημιουργία panel
 				panel = new JPanel();
 				menuPanel = new JPanel();
 				
@@ -62,6 +65,20 @@ public class AddFrame extends JFrame{
 				ButtonListenerConfirm confirmListener= new ButtonListenerConfirm();
 				confirm.addActionListener(confirmListener);
 				
+				// Prosthiki eikonas kai listener gia aythn
+				
+				ImageIcon icon = new ImageIcon("hospital1.png");
+				JLabel lb = new JLabel(icon);
+			
+				lb.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) 
+				    {	 
+				    	setVisible(false);
+				        new AddFrame();           
+				    }
+					
+				}	);
+				
 				
 				//Δημιουργία μπάρας μενού
 				mb = new JMenuBar();
@@ -77,7 +94,7 @@ public class AddFrame extends JFrame{
 				
 				
 				
-				i1 = new JMenuItem("Recipe");  
+				i1 = new JMenuItem("Prescription");  
 			    i2 = new JMenuItem("Supply");  
 			    i3 = new JMenuItem("Add");
 			    i4 = new JMenuItem("Delete"); 
@@ -113,10 +130,7 @@ public class AddFrame extends JFrame{
 			    mb.add(orderMenu);
 			    mb.add(storageMenu);
 			    mb.add(statisticsMenu);
-			    
-			    //Τρόπος τοποθέτησης στα πάνελ
-			    menuPanel.setLayout(new BoxLayout(menuPanel,BoxLayout.X_AXIS));
-			    menuPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			    mb.add(lb);
 			    
 			    menuPanel.add(mb);
 			    panel.add(menuPanel);
@@ -144,8 +158,8 @@ public class AddFrame extends JFrame{
 				
 				//Καθορισμός των βασικών χαρακτηριστικών του panel
 				
-				this.setSize(600,300);
-				this.setTitle("Central Menu\\Storage\\Add");
+				this.setSize(600,400);
+				this.setTitle("/Supply Chain/Pharmacist/Storage/Add");
 				this.setVisible(true);
 				this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
@@ -193,7 +207,7 @@ public class AddFrame extends JFrame{
 					else if(e.getActionCommand().equals("Show Statistics")) {
 						
 						dispose();
-						// ....
+						new StatisticsFrame();
 					}
 					
 				}

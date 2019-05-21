@@ -2,8 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,6 +72,20 @@ public class MainFrame extends JFrame{
 	    i5.addActionListener(listener);
 	    iCentralMenu.addActionListener(listener);
 	    
+	    // Prosthiki eikonas kai listener gia aythn
+		
+	 		ImageIcon icon = new ImageIcon("hospital1.png");
+	 		JLabel lb = new JLabel(icon);
+	 	
+	 		lb.addMouseListener(new MouseAdapter() {
+	 			public void mouseClicked(MouseEvent e) 
+	 		    {	 
+	 		    	setVisible(false);
+	 		        new AddFrame();           
+	 		    }
+	 			
+	 		}	);
+	    
 	    // Eisagwgi twn pediwn sto antistoixo menu
 	    
 	    centralMenu_Menu.add(iCentralMenu);
@@ -88,6 +105,7 @@ public class MainFrame extends JFrame{
 	    mb.add(orderMenu);
 	    mb.add(storageMenu);
 	    mb.add(statisticsMenu);
+	    mb.add(lb);
 	    
 	    // Gemisma toy pinaka apothiki me ta farmaka pou periexei h apothiki
 	    
@@ -174,8 +192,6 @@ public class MainFrame extends JFrame{
 	    
 	    // Kathorismos tou tropou topothetisis twn antikeimenwn sto kathe panel panel ( px katakorifa, orizontia )
 	    
-	    menuPanel.setLayout(new BoxLayout(menuPanel,BoxLayout.X_AXIS));
-	    menuPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 	    panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 	    
@@ -202,7 +218,7 @@ public class MainFrame extends JFrame{
 		// Kathorismos basikwn xaraktiristikwn tou frame
 		
 		this.setSize(600,400);
-		this.setTitle("Central Menu");
+		this.setTitle("/Supply Chain/Pharmacist/Central Menu");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	
@@ -248,7 +264,7 @@ class JTablePopupMenuListener implements ActionListener {
 		else if(e.getActionCommand().equals("Show Statistics")) {
 			
 			dispose();
-			// ....
+			new StatisticsFrame();
 		}
 		
 	}

@@ -10,8 +10,9 @@ public class Main {
 	   Storage.addMedicine("panadol","003",2.5,7);
 	   Storage.addMedicine("siropi","004",4,6);
 	    	
-
-	   new MainFrame();
+	   new IdentityFrame();
+	   //new MainFrame();
+	   //new DeleteFrame();
 	   
 	   
 
