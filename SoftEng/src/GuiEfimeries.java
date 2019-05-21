@@ -38,7 +38,7 @@ public class GuiEfimeries extends JFrame {
 	private JTextField FindField;
 	private JScrollPane scrollPane, scrollPane2;
 	private JTable table, program;
-	
+	private JLabel hrLabel;
 
 	public GuiEfimeries() {
 		
@@ -98,6 +98,8 @@ public class GuiEfimeries extends JFrame {
 			
 			//Κουμπί: Εργαζόμενοι->Μεταβολή
 			if(e.getSource()== item1 ) {
+				
+				hrLabel = new JLabel ("Το διαθέσιμο δυναμικό");
 			
 				String columnNames[] = {"Ονοματεπώνυμο" , "ΑΜ" };
 			    String rowData[][] = { {"Μαρία Παπανικολάου","99"},
@@ -120,6 +122,7 @@ public class GuiEfimeries extends JFrame {
 				button1 =new JButton("Προσθήκη"); 
 				button2 =new JButton("Αφαίρεση");
 			
+				secondPanel.add(hrLabel);
 				secondPanel.add(scrollPane);
 				secondPanel.add(FindField);
 				secondPanel.add(button1);

@@ -13,7 +13,7 @@ public class GuiGiatros1 extends JFrame {
     private JTextField codeField;
     private JLabel label;
     private JButton move;
-    
+   
 	
     public GuiGiatros1() {
 		G_Panel = new JPanel();
