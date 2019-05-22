@@ -50,7 +50,7 @@ public class Prescription extends Order {
 		totalCost = 0;
 		
 		for(int i = 0;i<medicines.size();i++) 
-			totalCost += medicines.get(i).getPrice();
+			totalCost += medicines.get(i).getPrice() * quantityOfMedicines.get(i);
 		
 		return totalCost;
 	}
