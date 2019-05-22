@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -37,10 +36,10 @@ public class SupplyChainMainFrame extends JFrame{
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 	private DefaultTableModel model;
-	JFrame frame = this;
 	
    
 	public SupplyChainMainFrame() {
+		
 
 		// Dimiourgia baras menu
 		
@@ -165,9 +164,7 @@ public class SupplyChainMainFrame extends JFrame{
             }
 
         });
-    
-	   
-	    
+
 	    // Kathorismos topothetisis tou pinaka
 	    
 	    storageTable.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -204,14 +201,14 @@ public class SupplyChainMainFrame extends JFrame{
 	    
 	    // Prosthiki tou parapanw panel sto teliko panel 
 	    // Epipleon prosthiki tou pinaka (apothiki) kai tou titlou tou sto teliko panel
-	    
+
 	    panel.add(menuPanel);
 	    panel.add(title);
 	    panel.add(scrollPane);
-
+	
 	    panel.add(label, BorderLayout.WEST);
 	    panel.add(filterText, BorderLayout.CENTER);
-	    
+	 
 	    // Eisagwgi tou panel sto ContentPane
 	
 		this.setContentPane(panel);
