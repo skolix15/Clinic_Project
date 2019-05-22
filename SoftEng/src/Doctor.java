@@ -7,6 +7,16 @@ public class Doctor {
 	String password;
 	String timetable;
 	
+	public Doctor(String firstN, String lastN, String rn)
+	{
+		super();
+		this.firstName = firstN;
+		this.lastName = lastN;
+		this.rn = rn;
+		this.password = null;
+		this.timetable = null;
+	}
+	
 	public Doctor(String firstName, String lastName, String rn, String password, String timetable) {
 		super();
 		this.firstName = firstName;

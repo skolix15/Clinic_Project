@@ -44,67 +44,100 @@ public class db{
 	
    
 	
-	public static void printTable (String name, ArrayList<Doctor> doctors, Connection myConn) {
+/*	public static void printTable (String name, ArrayList<Doctor> doctors, Connection myConn) {
 		
+	}
+	*/
+	
+	
+	
+	/*  Input: A list that will contain all the data from all the doctors
+	 * 		   and a connection with the database
+	 *  Function: Gets all the doctors from the database and all their data a
+	 *            and puts them in the ArrayList that was sent as input
+	 *  Output: The list that contains the doctors
+	 */
+	public static void getAllDoctors(ArrayList<Doctor> doctors, Connection myConn)
+	{
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		String Query;
+		try {
+			myStmt = myConn.createStatement();
+			// 3. Execute SQL query
+			String query = "select * from doctor";
+			myRs = myStmt.executeQuery(query);
+			
+			// 4. Process the result set and put the data in the doctor list
+			Doctor d;
+			while (myRs.next()) {
+				
+				
+				d = new Doctor(myRs.getString("First Name"), myRs.getString("Last Name"), myRs.getString("RN")
+						, myRs.getString("Password"),  myRs.getString("Timetable"));
+				
+				// add the doctor to the doctor's list
+				doctors.add(d);
+			}
+		}catch (Exception exc) {
+				exc.printStackTrace();
+			}finally {
+				if (myRs != null) {
+					try {
+						myRs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				if (myStmt != null) {
+					try {
+						myStmt.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+		}	
+	}
+
+	
+	/* Input: The name of the table, the field to count, the value of the condition and a connection
+	 * Function: counts how many entries exist in the given table that satisfies a certain condition
+	 * Output: returns: -1 in the case of an error
+	 * 					a positive integer that states the number of satisfied entries 
+	 */
+	public static int getNumberOfEntries(String table, String field, String value, Connection myConn)
+	{
+		int Number = -1; 
+		 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		
 		try {
 			myStmt = myConn.createStatement();
-			// 3. Execute SQL query
-			String query = "select * from " + name;
+			
+			//create and send the query
+			String query = "select count(*) as Number from " + table + " where " + field + " = " + value;
 			myRs = myStmt.executeQuery(query);
 			
-			// 4. Process the result set
-//			while (myRs.next()) {
-//				System.out.println(myRs.getString("First Name") + ", " + myRs.getString("Last Name") + ", " + myRs.getString("RN") + 
-//				", " + myRs.getString("Password") + ", " + myRs.getString("Timetable"));
-//			}			
+			// get the result of the database
+			while(myRs.next())
+				Number = myRs.getInt("Number");
 			
-			ResultSetMetaData rsmd = myRs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			// The column count starts from 1
-			Doctor d;
-			while (myRs.next()) {
-				for (int i = 1; i <= columnCount; i++ ) {
-					  String n = rsmd.getColumnName(i);
-					  
-					  System.out.print(myRs.getString(n) + "       \t");
-					  
-					}
-				System.out.println();
-			}	
-
-			  
-			
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
-		finally {
-			if (myRs != null) {
-				try {
-					myRs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			if (myStmt != null) {
-				try {
-					myStmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		return Number;
 	}
 	
-	
-	
+	/* INPUT: the doctor to be inserted to the database and a connection with the database
+	 * Function: inserts  doctor to the database with null values in password and timetable
+	 * Output: -----------------------
+	 */
 	 public static void addDoctor (Doctor d, Connection myConn) {
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -112,9 +145,8 @@ public class db{
 		
 		try {
 			myStmt = myConn.createStatement();
-			myStmt.executeUpdate("Insert into doctor (`First Name`, `Last Name`, `RN`, `Password`, `Timetable`)  Values ('" + d.firstName + "', '" + d.lastName + "', '" + d.rn + "', '" + d.password + "', '" + d.timetable + "')");;
-							
-		//	printTable("doctor", myConn);
+
+			myStmt.executeUpdate("Insert into doctor (`First Name`, `Last Name`, `RN`)  Values ('" + d.firstName + "', '" + d.lastName + "', '" + d.rn + "')");
 				
 		}
 		catch (Exception exc) {
@@ -151,14 +183,14 @@ public class db{
 				
 				myStmt.setString(1, d.rn);
 				
-				//2. Create a statement
+/*				//2. Create a statement
 				//myStmt = myConn.createStatement();
 				//3. Execute SQL query
 				//String query = "delete from doctor where RN = " + d.rn;
+*/		
 				myStmt.executeUpdate();
-				
-			//	printTable("doctor", myConn);
-					
+
+									
 			}
 			catch (Exception exc) {
 				exc.printStackTrace();
@@ -184,6 +216,35 @@ public class db{
 			}
 		 }
 	 
+	 
+	 public static String returnDoctorPassword(String AM, Connection myConn)
+	 {
+			Statement myStmt = null;
+			ResultSet myRs = null;
+			String pass=null;
+			
+			try {
+				myStmt = myConn.createStatement();
+				// 3. Execute SQL query
+				String query = "select Password from doctor where RN = " + AM ;
+				myRs = myStmt.executeQuery(query);
+				
+				while (myRs.next())
+					pass = myRs.getString("Password");
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return pass;
+	 }
+	 
+	 
+	 /* Input: the code of the wanted entity (1: manager, 2: pharmacist) and a database connection
+	  * Function: gets the password of the wanted entity
+	  * Output: the password
+	  */
 	 public static String returnPasswordUser (int code, Connection myConn) {
 			
 			Statement myStmt = null;
@@ -193,20 +254,11 @@ public class db{
 			try {
 				myStmt = myConn.createStatement();
 				// 3. Execute SQL query
-				String query = "select Password from privileged_user where Code=" + code;
-				
-				System.out.println("select Password from privileged_user where Code=" + code);
+				String query = "select Password from privileged_user where Code = " + code;
 				myRs = myStmt.executeQuery(query);
 				
 				if(myRs.next())
 				    pass = myRs.getString("Password");
-				
-				//System.out.println(pass);
-				//4. Process the result set
-//				while (myRs.next()) {
-//					System.out.println(myRs.getString("Password"));
-//				}
-				
 			}
 			catch (Exception exc) {
 				exc.printStackTrace();
