@@ -15,6 +15,7 @@ public class DoctorLogInFrame extends JFrame {
     private JButton move;
 	private db conn;
 
+
    
 	
     public DoctorLogInFrame(db connection) {
