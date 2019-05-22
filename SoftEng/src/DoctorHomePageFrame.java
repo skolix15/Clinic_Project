@@ -13,7 +13,7 @@ import javax.swing.JTable;
 
 
 
-public class GuiGiatros2 extends JFrame {
+public class DoctorHomePageFrame extends JFrame {
 	
 	private JPanel centralPanel;
 	
@@ -26,8 +26,10 @@ public class GuiGiatros2 extends JFrame {
 	private JMenuItem item1,item2;
 	
 	private JLabel label1, label2, label3, label4;
+	private db conn;
 	
-	public GuiGiatros2() {
+	public DoctorHomePageFrame(db connection) {
+		conn=connection;
 		centralPanel=new JPanel();
 	
 		menubar= new JMenuBar();

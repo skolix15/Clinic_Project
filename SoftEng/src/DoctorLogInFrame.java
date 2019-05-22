@@ -7,15 +7,18 @@ import java.awt.event.MouseEvent;
 
 
 
-public class GuiGiatros1 extends JFrame {
+public class DoctorLogInFrame extends JFrame {
     private JPanel G_Panel;
     private JTextField nameField;
     private JTextField codeField;
     private JLabel label;
     private JButton move;
+	private db conn;
+
    
 	
-    public GuiGiatros1() {
+    public DoctorLogInFrame(db connection) {
+    	conn=connection;
 		G_Panel = new JPanel();
 		label = new JLabel("Είσοδος του Ιατρού");
 		nameField = new JTextField("Εισήγαγε αριθμό μητρώου");
@@ -36,7 +39,7 @@ public class GuiGiatros1 extends JFrame {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	setVisible(false);
-		        new BasicGUI();           
+		        new GlobalHomeFrame(conn);           
 		    }
 		});
 		
@@ -81,7 +84,7 @@ public class GuiGiatros1 extends JFrame {
 				
 				setVisible(false);
 
-				new GuiProgramma();
+				new DoctorPreferenceFrame(conn);
 			
 			}
 			

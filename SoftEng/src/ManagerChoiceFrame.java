@@ -10,13 +10,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-class GuiDieuthinti2 extends JFrame{
-		JButton b1 =new JButton("Εφοδιασιτκή Αλυσίδα");
-		JButton b2 =new JButton("Εφημερίες - Βάρδιες");
+class ManagerChoiceFrame extends JFrame{
+		private JButton b1 =new JButton("Εφοδιασιτκή Αλυσίδα");
+		private JButton b2 =new JButton("Εφημερίες - Βάρδιες");
 
-		JPanel D_Panel;
+		private JPanel D_Panel;
+		
+		private db conn;
+
 					 
-		public GuiDieuthinti2() {
+		public ManagerChoiceFrame(db connection) {
+			conn=connection;
 			D_Panel = new JPanel();
 			D_Panel.add(b1);
 			D_Panel.add(b2);
@@ -35,7 +39,7 @@ class GuiDieuthinti2 extends JFrame{
 				public void mouseClicked(MouseEvent e) 
 			    {	 
 			    	setVisible(false);
-			        new BasicGUI();           
+			        new GlobalHomeFrame(conn);           
 			    }
 			});
 			
@@ -61,7 +65,7 @@ class GuiDieuthinti2 extends JFrame{
 				else if(e.getSource() == b2){
 					setVisible(false);
 
-					new GuiEfimeries();
+					new ManagerHomePageFrame(conn);
 				}
 				
 			}

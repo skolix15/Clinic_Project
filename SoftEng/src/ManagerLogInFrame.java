@@ -14,9 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
-public class GuiDieuthinti1 extends JFrame  {
-	
-	//private JTextField code= new JTextField("Κωδικός Διευθυντή");
+public class ManagerLogInFrame extends JFrame  {
+
 	private JPasswordField code = new JPasswordField(10);
 	
 	private JButton button =new JButton("Είσοδος");
@@ -24,8 +23,11 @@ public class GuiDieuthinti1 extends JFrame  {
 	private JLabel label= new JLabel();
 	private JPanel CentralPanel;
 
+	private db conn;
+
 	
-	public GuiDieuthinti1() {
+	public ManagerLogInFrame(db connection) {
+		conn = connection;
 		CentralPanel=new JPanel();
 		
 		label.setText("Εισάγεται τον κωδικό του διευθυντή");
@@ -47,7 +49,7 @@ public class GuiDieuthinti1 extends JFrame  {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	setVisible(false);
-		        new BasicGUI();           
+		        new GlobalHomeFrame(conn);           
 		    }
 		});
 
@@ -67,13 +69,7 @@ public class GuiDieuthinti1 extends JFrame  {
 			if(e.getSource() == button) {
 				String password= code.getText();
 				//Έλεγχος για εγκυρότητα κωδικού(μέσω βάσεων δεδομένων)
-				
-				try {
-					db conn = new db();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
 				
 				//όπου 1 ο διευθυντής στην βάση δεδομένων
 				//o κωδικός είναι 1111
@@ -81,16 +77,13 @@ public class GuiDieuthinti1 extends JFrame  {
 		
 				if (password.equals(result)) {
 					setVisible(false);
-					new GuiDieuthinti2();
+					new ManagerChoiceFrame(conn);
 				}
 				else {
 					
 					 JOptionPane.showMessageDialog(CentralPanel, "Ο κωδικός δεν είναι έγκυρος");
 				}
-				
-				//(Για δοκιμή μέχρι να μπει η βάση)
-			//	setVisible(false);
-				//new GuiDieuthinti2();
+		
 				
 			}
 			
