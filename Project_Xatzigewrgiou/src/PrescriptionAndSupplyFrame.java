@@ -72,7 +72,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				    dm.removeRow(i);
 				}
 				
-				textFieldForCost.setText("");
+				textFieldForCost.setText("0");
 				order.clearOrder();
 	
 			}
@@ -98,7 +98,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		
 		// Dimiourgia tou text poy tha periexei to synoliko kostos
 		
-		textFieldForCost = new JTextField();
+		textFieldForCost = new JTextField("0");
 		
 		// Anathesi timwn ( 0 gia prescription kai 1 gia supply ) kai prosdiorismos tou typou paraggelias
 		
@@ -214,7 +214,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
                 if (text.trim().length() == 0) {
                     sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));           
                 }
             }
 	   
@@ -226,6 +226,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
                     sorter.setRowFilter(null);
                 } else {
                     sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    
                 }
             }
 
@@ -308,28 +309,27 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	  
  	    	if(!e.getValueIsAdjusting() ) {
  	    		
- 	    	
+ 	    	  
  	    	  String medicineName = "";
  	    	  String medicineCode = "";
  	    	  String totalCost = "";
- 	    	  
- 	    	 if(storageTable.getSelectedRow() != -1) {
- 	    		 
- 	    		 
+   	
+ 	    	 int selectedRow = storageTable.getSelectedRow();
+ 	    	 
+ 	    	 if(selectedRow != -1) {
+ 	    		
  	    	 // Apothikeyetai se metablites o kwdikos kai to onoma tou farmakou pou epilexthike apo ton prwto pinaka (apothikis)
- 	    		 
- 	    	  for (int j = 0; j < 2; j++) {
- 	        	  
- 	        	  	if( j==0 )
- 	        	  		medicineCode = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(),j);
- 	        	  	else if( j==1 )
- 	        	  		medicineName = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(), j);
- 	        	  	}
+ 	    	
+ 	    	 medicineCode = (String) storageTable.getModel().getValueAt(selectedRow,0);
+ 	        
+ 	         medicineName = (String) storageTable.getModel().getValueAt(selectedRow, 1);
+ 	        	  	
  	    	  
  	    	  // Dimiourgeitai antikeimeno typou medicine me xrisi twn 2 parapanw metablitwn
  	       
  	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
  	    	  
+ 	    	 
  	    	  // Elegxetai an to dhmiourgimeno farmako yparxei mesa sthn lista ths twrinis paraggelias
  		    
  	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {

@@ -1,0 +1,4 @@
+001 aspirini 20
+002 depon 30
+003 panadol 40
+004 siropi 20

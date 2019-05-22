@@ -254,40 +254,35 @@ public class DeleteFrame extends JFrame {
 		  	    	
 		  	    	  String medicineName = "";
 		  	    	  String medicineCode = "";
+		  	    	  int selectedRow = storageTable.getSelectedRow();
 		  	    	  
-		  	    	 if(storageTable.getSelectedRow() != -1) {
+		  	    	 if(selectedRow != -1) {
 		  
-		  	    	  for (int j = 0; j < 2; j++) {
-		  	        	  
-		  	        	  	if( j==0 )
-		  	        	  		medicineCode = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(),j);
-		  	        	  	else if( j==1 )
-		  	        	  		medicineName = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(), j);
+		  	    		 medicineCode = (String) storageTable.getModel().getValueAt(selectedRow,0);
 		  	        	  	
-		  	    	  }
-		  	       
-		  	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
-		  		    
-		  	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
-		  	    		  
-		  	    		  order.addMedicineInTheOrder(clickedMedicine, 1); 		// Arxika 1 kai meta ginetai tropopoihsh
-		  		    
-		  	    		  DefaultTableModel modelForOrderTable = (DefaultTableModel) deleteTable.getModel();
-		  	        
-		  	    		  modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), 1}); 
-		  	    	  
-		  	    		  for(int i=0;i<Storage.getMedicineList().size();i++) {
-		  	    		  
-		  	    	  			int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
-		  	    	  			storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
-		  	    	  			
-		  	    	  			}
-		  	    		  }
-		  	    	  }
+		  	    		 medicineName = (String) storageTable.getModel().getValueAt(selectedRow, 1);
+		  	    		 
+		  	    		 Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
+		  	    		 
+		  	    		 if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
+		  	    			 
+		  	    			 order.addMedicineInTheOrder(clickedMedicine, 1); 		// Arxika 1 kai meta ginetai tropopoihsh
+		  	    			 
+		  	    			 DefaultTableModel modelForOrderTable = (DefaultTableModel) deleteTable.getModel();
+		  	    			 
+		  	    			 modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), 1}); 
+		  	    			 
+		  	    			 for(int i=0;i<Storage.getMedicineList().size();i++) {
+		  	    				 
+		  	    				 int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
+		  	    				 storageTable.getModel().setValueAt(medicineAvailability, i, 2); 
+		  	    				 }
+		  	    			 }
+		  	    		 }
 		  	    	 }
 		  	    	}
 		  	      
-		  	      } );
+		 	   } );
 		 	   
 		 	   
 		 	   

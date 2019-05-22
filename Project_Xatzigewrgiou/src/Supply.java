@@ -49,7 +49,7 @@ public class Supply extends Order {
 		totalCost = 0;
 		
 		for(int i = 0;i<medicines.size();i++) 
-			totalCost += (medicines.get(i).getPrice() / 3);
+			totalCost += (medicines.get(i).getPrice() * quantityOfMedicines.get(i)) / 3;
 			
 		return totalCost;
 	}
