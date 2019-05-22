@@ -72,9 +72,9 @@ public class StatisticsFrame extends JFrame{
 	 		lb.addMouseListener(new MouseAdapter() {
 	 			public void mouseClicked(MouseEvent e) 
 	 		    {	 
-	 		    	setVisible(false);
-	 		        new SupplyChainMainFrame();
-	 		        // kanonika new BasicGui();
+	 				dispose();
+			        new SupplyChainMainFrame();           
+			        // kanonika new BasicGui();
 	 		    }
 	 			
 	 		}	);

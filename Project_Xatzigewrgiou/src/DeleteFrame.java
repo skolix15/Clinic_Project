@@ -67,8 +67,9 @@ public class DeleteFrame extends JFrame {
 				lb.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) 
 				    {	 
-				    	setVisible(false);
-				        new AddFrame();           
+						dispose();
+				        new SupplyChainMainFrame();           
+				        // kanonika new BasicGui();         
 				    }
 					
 				}	);

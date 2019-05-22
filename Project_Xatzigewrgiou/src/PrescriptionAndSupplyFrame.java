@@ -54,7 +54,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		
 		confirmButton = new JButton("Confirm Order");
 		
-		// Prosthiki listener sto confirmButton
+		/*Prosthiki listener sto confirmButton
+		  Me thn energopoihsh ths epilogis "Confirm Order" adeiazei o pinakas ths paraggelias 
+		  kai taytoxrona enhmerwnetai to katallilo arxeio me tous kwdikous, ta onomata kai tis posotites
+		  twn farmakwn pou yphrxan sthn paraggelia*/
 		
 		confirmButton.addActionListener(new ActionListener(){
 			
@@ -75,7 +78,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 			}
 		});
 		
-		// Prosthiki eikonas kai listener gia aythn
+		 /*Prosthiki eikonas kai listener gia aythn
+		 Me thn energopoihsh ths epilogis ths eikonas to programma metaferetai sto arxiko
+		 parathyro tou programmatos*/
 		
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
@@ -83,8 +88,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		lb.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
-		        new AddFrame();           
+		    	dispose();
+		        new SupplyChainMainFrame();           
+		        // kanonika new BasicGui();
 		    }
 			
 		}	);
@@ -159,7 +165,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    mb.add(statisticsMenu);
 	    mb.add(lb);
 	    
-	    // Eisagwgi twn farmakwn pou briskontai sthn apothiki tou iatreiou, ston pinaka pou antistoixizetai se aythn
+	    // Dimiourgia model kai sthlwn-kathgoriwn gia tous 2 pinakes ( apothikis kai paraggelias )
 	    
 	    storageModel = new DefaultTableModel();
 	    basketModel = new DefaultTableModel();
@@ -171,6 +177,8 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    basketModel.addColumn("Code");
 	    basketModel.addColumn("Name");
 	    basketModel.addColumn("Quantity");
+	    
+	 // Eisagwgi twn farmakwn pou briskontai sthn apothiki tou iatreiou, ston pinaka pou antistoixizetai se aythn
 	    
 	    String medicineName = null;
 	    String medicineCode = null;
@@ -184,10 +192,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    	storageModel.addRow(new Object[] {medicineCode,medicineName,medicineAvailability});
 	    }
 	    
-	    // Dimiourgia tou pinaka me basi tis parapanw stiles kai grammes
+	    // Dimiourgia tou pinaka me basi tis parapanw stiles kai grammes (parathetontas san parametro ta model)
 	    
 	    storageTable = new JTable(storageModel);
 	    orderTable = new JTable(basketModel);
+	    
+	    // Dimiourgia search baras
 	   
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(storageTable.getModel());
 	    storageTable.setRowSorter(sorter);
@@ -304,7 +314,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	  String totalCost = "";
  	    	  
  	    	 if(storageTable.getSelectedRow() != -1) {
- 
+ 	    		 
+ 	    		 
+ 	    	 // Apothikeyetai se metablites o kwdikos kai to onoma tou farmakou pou epilexthike apo ton prwto pinaka (apothikis)
+ 	    		 
  	    	  for (int j = 0; j < 2; j++) {
  	        	  
  	        	  	if( j==0 )
@@ -312,14 +325,21 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	        	  	else if( j==1 )
  	        	  		medicineName = (String) storageTable.getModel().getValueAt(storageTable.getSelectedRow(), j);
  	        	  	}
+ 	    	  
+ 	    	  // Dimiourgeitai antikeimeno typou medicine me xrisi twn 2 parapanw metablitwn
  	       
  	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
  	    	  
- 	    	  
+ 	    	  // Elegxetai an to dhmiourgimeno farmako yparxei mesa sthn lista ths twrinis paraggelias
  		    
  	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
  	    		  
+ 	    		  // Protrepei ton xristi na plhktrologisei ena noumero pou tha apotelesei thn posotita tou farmakou
+ 	    		  // pou tha eisagei sthn lista paraggelias
+ 	    		  
  	    		  String inputAvailabilityString = JOptionPane.showInputDialog(null,"Enter quantity of the medicine you want to buy: ");
+ 	    		  
+ 	    		  // Elegxos gia thn periptwsh pou o xristis den plhktrologisei akeraio arithmo
  	    		  
  	    		  if(inputAvailabilityString == null || inputAvailabilityString.equals("") )
  	    			  JOptionPane.showMessageDialog(null,"You dind't enter any number.","Error..",JOptionPane.ERROR_MESSAGE);
@@ -329,28 +349,42 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 
  	    		  else {
  	    			  
+ 	    			  //Metatropi ths posotitas poy plhktrologithike apo String se Integer
+ 	    			  
  	    			  int inputAvailabilityInteger = Integer.parseInt(inputAvailabilityString);
+ 	    			  
+ 	    			  // Elegxos an h posotita poy plhktrologithike einai mikroteri tou midenos
  	    			  
  	    			  if(inputAvailabilityInteger <= 0) 
  	    				  JOptionPane.showMessageDialog(null,"Invalid quantity of medicine.","Error..",JOptionPane.ERROR_MESSAGE);
+ 	    			  
+ 	    			  // Elegxos an h posotita pou plhktrologithike einai egyri me basi to apothema poy yparxei sto iatreio 
  	    			  
  	    			  else if(typeOfOrder == true && !(clickedMedicine.getAvailability() >= inputAvailabilityInteger))
 	    			  		JOptionPane.showMessageDialog(null,"Not enough stocks for this medicine.","Error..",JOptionPane.ERROR_MESSAGE);
  	    			  
  	    			  else  {
+ 	    				  
+ 	    				  	// Prosthithetai to epilegmeno farmako (apo thn apothiki ) sthn lista paraggelias
  	    		  
  	    			  		order.addMedicineInTheOrder(clickedMedicine, inputAvailabilityInteger); 	
- 		    
- 	    			  		DecimalFormat df = new DecimalFormat("#.##");
+ 	    			  		
+ 	    			  		// Periorizoyme to total cost pou tha emfanizetai sto na exei 2 mono dekadika psifia
+ 	    			  		
+ 	    			  		DecimalFormat df = new DecimalFormat("##.##");
 	    			
  	    			  		totalCost = String.valueOf(df.format(order.getTotalCost()));
 	     		    
  	    			  		textFieldForCost.setText(totalCost);
  		    
  	    			  		DefaultTableModel modelForOrderTable = (DefaultTableModel) orderTable.getModel();
- 	        
+ 	    			  		
+ 	    			  		// Prostithetai to epilegmeno farmako (apo thn apothiki) ston neo pinaka (ths paraggelias)
+ 	    			  		
  	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), inputAvailabilityInteger}); 
- 	    	  
+ 	    			  		
+ 	    			  		// Metatrepoume katallila thn diathesimotita toy farmakou pou mpike sthn paraggelia
+ 	    			  		
  	    			  		for(int i=0;i<Storage.getMedicineList().size();i++) {
  	    		  
  	    	  						int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
@@ -364,6 +398,8 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	}
  	      
  	    } ); 
+
+ 	    // Listener gia thn diagrafi farmakou apo ton pinaka paraggelias
  	    
  	    orderTable.addMouseListener(new MouseAdapter() {
  	    	
@@ -373,10 +409,13 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    		  String medicineName = "";
  		    	  String medicineCode = "";
  		    	  String totalCost = "";
+ 		    	  
+ 		    	 // Entopisi tou farmakou pou epilexthike
 
  		    	 int selectedRowFromOrderTable = e.getY()/orderTable.getRowHeight();
  		    	  
- 		    	  
+ 		    	 // Katagrafi twn stoixeiwn (code,name) tou farmakou pou epilexthike
+ 		    	 
  		    	 for (int j = 0; j < 2; j++) {
  		        	  
  		    		 
@@ -387,20 +426,32 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  		        	  	
  		    	  }
  		    	  
+ 		    	// Dimiourgia antikeimenou typou Medicine
+ 		    	 
  		    	Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
  		    	
- 	    		
+ 	    		// MouseEvent.BUTTON3 gia na elecsei an patithike decsi klik apo ton xristi
+ 		    	
  	    		if( e.getButton() == MouseEvent.BUTTON3) {
  	    			
+ 	    			// Emfanisi katallilou minimatos gia to an o xristis ontws epithymei na diagrapsei to epilegmeno
+ 	    			// farmako apo thn lista paraggelias
  	    			String message = "Are you sure you want to delete this medicine from the list?\n";
  	    	        int returnValue = JOptionPane.showConfirmDialog(null, message,"Delete",JOptionPane.YES_NO_OPTION);
  	    	        
+ 	    	        // Elegxos an patithei h epilogi "yes" apo ton xristi
+ 	    	        
  	    	        if (returnValue == JOptionPane.YES_OPTION) { 	
  	    		        
+ 	    	        	// Diagrafetai to farmako apo thn lista paraggelias
+ 	    	        	
  	    		    	order.deleteMedicineFronTheOrder(clickedMedicine);
  	 	    			
  	 	    			String medCode = "";
  	 	    			
+ 	 	    			// Metatrepetai katallila (ston pinaka apothikis ) h diathesimothta tou farmakou pou epilexthike 
+ 	 	    			//na diagrafei apo ton pinaka paraggelias
+ 	 	    			 
  	 	    			for(int i=0;i<Storage.getMedicineList().size();i++) {
  	 	    				
  	 	    				medCode = (String) storageTable.getModel().getValueAt(i,1);
@@ -413,14 +464,19 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	 	    					}
  	 	    				}
  	 	    			
+ 	 	    			// Diagrafetai to farmako pou epilexthike apo ton pinaka paraggelias
  	 	    			
  	 	    			((DefaultTableModel) orderTable.getModel()).removeRow(selectedRowFromOrderTable);
+ 	 	    			
+ 	 	    			// Periorizoyme to total cost pou tha emfanizetai sto na exei 2 mono dekadika psifia
  	 	    			
  	 	    			DecimalFormat df = new DecimalFormat("#.##");
  	 	    			
  	 	    			totalCost = String.valueOf(df.format(order.getTotalCost()));
  	 	     		    
  	 	   	    	  	textFieldForCost.setText(totalCost);
+ 	 	   	    	  	
+ 	 	   	    	  	// Metatrepetai katallila h diathesimotita tou farmakou pou epilexthike na diagrafei apo ton pinaka paraggelias
  	 	   	    	  	
  	 	   	    	  	for(int i=0;i<Storage.getMedicineList().size();i++) {
  	 	   	    	  		
@@ -456,6 +512,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		
 		}
 	
+	// Methodos pou epistrefei boolean timi analoga, an ena string einai Integer h oxi
 	public static boolean isNumeric(String str) { 
 		  try {  
 		    Integer.parseInt(str);  
@@ -465,6 +522,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		  }  
 		}
 	
+// Listener gia thn katallili metafora parathirwn tou programmatos analoga thn epilogi tou xristi apo to menu bar
 	
 class JTablePopupMenuListener implements ActionListener {
 
