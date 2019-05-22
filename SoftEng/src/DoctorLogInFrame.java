@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 public class DoctorLogInFrame extends JFrame {
     private JPanel G_Panel;
-    private JTextField nameField;
+    private JTextField amField;
     private JTextField codeField;
     private JLabel label;
     private JButton move;
@@ -22,11 +22,11 @@ public class DoctorLogInFrame extends JFrame {
     	conn=connection;
 		G_Panel = new JPanel();
 		label = new JLabel("Είσοδος του Ιατρού");
-		nameField = new JTextField("Εισήγαγε αριθμό μητρώου");
+		amField = new JTextField("Εισήγαγε αριθμό μητρώου");
 		move = new JButton("Συνέχεια");
 		
 		G_Panel.add(label);
-		G_Panel.add(nameField);
+		G_Panel.add(amField);
 		//G_Panel.add(codeField);
 		G_Panel.add(move);
 	
@@ -61,31 +61,40 @@ public class DoctorLogInFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource() == move) {
-				String AM = nameField.getText();
+				String AM = amField.getText();
+				int NumberOfDocs;
+				String password;
+				
 				Boolean flag=true;
+		    	// ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
+				NumberOfDocs = db.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
 				
-				
-				
-				
-				//Αναζήτηση στην βάση άμα υπάρχει το ΑΜ
-				//AFOU teleiwsei i anaziti kai den vrethike tote flag false
-				//Αν βρεθεί
-				/*if(ΑΜ Δεν βρεθηκε) {
-					flag = false;
-				}*/
-				
-				//Εφόσον βρέθηκε το AM
-			/*	if(flag) {
-					if(password(apo vasi) = null) {
-						codeField = new JTextField("Κωδικός");
-					}
-					
-				}*/
-				//αν δημιουργηθει κωδικος να ενημερωθει η βαση
-				
+	  			if (NumberOfDocs == -1)
+	  			{
+	  				  // show error message and exit program??
+	  			}
+	  			else if (NumberOfDocs == 1 )
+	  		    {
+	  		 		// Search if the doctor has created his/her password
+	  				password = db.returnDoctorPassword(AM, conn.getMyConn());
+	  				
+	  				if (password == null) // the password hasn't been created. CREATE NOW
+	  				{
+	  					
+	  				}
+	  				else // The password has been set. LOG IN
+	  				{
+	  					
+	  				}
+	  		    }
+	  			else
+	  		    {
+	  				// show that the doctor with the given AM doesn't exist
+	  		    }
+	  			
+	  			
 		
-				
-				//EGGRAFII STIN VASI
+			
 				
 				setVisible(false);
 

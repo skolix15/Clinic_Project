@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -38,7 +42,7 @@ public class ManagerHomePageFrame extends JFrame {
 	private db conn;
 	
 	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); // this list contains all the doctors
-
+	// ΝΑ ΤΑ ΒΑΛΩ ΣΤΟΝ ΠΙΝΑΚΑ ΕΙΝΑΙ ΟΛΑ ΜΕΣΑ ΣΤΗ ΛΙΣΤΑ
 
 
 	public ManagerHomePageFrame(db connection) {
@@ -62,11 +66,13 @@ public class ManagerHomePageFrame extends JFrame {
 		
 		mainPanel.add(menubar);
 		
-	    //conn.printTable("doctor", doctors, conn.getMyConn());
-
+		// Gets all the doctors from the database and puts them in the ArrayList doctors
+		db.getAllDoctors(doctors, conn.getMyConn());
 		
-		 
-		//Εισαγωγή εικόνας για επσιτροφή στο αρχικό μενού
+		// Insert the doctors to the JTable
+		
+		
+		//Εισαγωγή εικόνας για επιστροφή στο αρχικό μενού
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
 		mainPanel.add(lb);
@@ -144,12 +150,16 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  secondPanel.removeAll();
 				    	  JLabel label = new JLabel("Δημιουργία Εργαζομένου");
 				    	  JButton button = new JButton("Προσθήκη εργαζομένου");
-				    	  JTextField nameField = new JTextField("Ονοματεπώνυμο");
+				    	  JTextField firstNameField = new JTextField("Όνομα");
+				    	  JTextField lastNameField = new JTextField("Επώνυμο");
+				    	  //προσθήκη και επιθέτου 
 				    	  JTextField amField = new JTextField("ΑΜ");
+				    	  String AM, firstName, lastName;
 				    
 				    	  
 				    	  secondPanel.add(label, BorderLayout.NORTH);
-				    	  secondPanel.add(nameField, BorderLayout.CENTER);
+				    	  secondPanel.add(firstNameField, BorderLayout.CENTER);
+				    	  secondPanel.add(lastNameField, BorderLayout.CENTER);
 				    	  secondPanel.add(amField, BorderLayout.CENTER);
 				   
 				    	  secondPanel.add(button, BorderLayout.CENTER);
@@ -160,12 +170,34 @@ public class ManagerHomePageFrame extends JFrame {
 						    {	
 							      public void actionPerformed(ActionEvent e)
 							      { 
-							    	  //ΑΝΑΖΗΤΗΣΗ, υπαρχει εργαζομενος με τετοιο ΑΜ? αν οχι εισαγωγη
+							    	 
+							    	  String AM, firstName, lastName;
+							    	  int NumberOfDocs;
 							    	  
+							    	  firstName = firstNameField.getText();
+							    	  lastName = lastNameField.getText();
+							    	  AM = amField.getText();
 							    	  
-							    	  //Εισαγωγή νέου εργαζομένου στην βάση
-							    	  /*Μήπως να προηγηθεί έλεγχος για το αν υπάρχει ήδη κάποιο απο τα στοιχεία
-							    	  του εργαζομένου στην βαση;*/
+							    	  // ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
+							    	  //check if the typed AM already exists
+							    	  NumberOfDocs =  db.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
+							    	  
+				    	  			  if (NumberOfDocs == -1)
+				    	  			  {
+				    	  				  // show error message and exit program??
+				    	  			  }
+				    	  			  else if (NumberOfDocs == 1 )
+				    	  			  {
+				    	  				  // show that the doctor with the given AM already exists
+				    	  			  }
+				    	  			  else
+				    	  			  {
+								    	  //-----------INSERT DOCTOR-----------
+					    	  			  Doctor d = new Doctor(firstName, lastName, AM);
+					    	  			  
+					    	  			  // add the doctor
+					    	  			  db.addDoctor(d, conn.getMyConn()); 
+				    	  			  }	
 							      }
 						    });
 				    	  
@@ -173,7 +205,9 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  button2.addActionListener(new ActionListener()
 						    {	
 						      public void actionPerformed(ActionEvent e)
-						      {		//ΑΝΑΖΗΤΗΣΗ, υπαρχει εργαζομενος με τετοιο ΑΜ? αν οχι αφαιρεση
+						      {		
+						    	  
+						    	  
 						    	  
 						    	  //Διαγραφη εργαζομένου από βάση
 						    	  

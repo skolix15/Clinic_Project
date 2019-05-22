@@ -99,7 +99,7 @@ public class DoctorPreferenceFrame extends JFrame{
 			
 			if(e.getSource() == button) {
 			int count=0;
-			//while(count!=3) {
+			
 				for(int i=1; i<8; i++) {
 					for(int j=0; j<3; j++) {
 						if(table.getModel().getValueAt(j,i).toString() =="true") {
@@ -116,7 +116,7 @@ public class DoctorPreferenceFrame extends JFrame{
 						}
 					}
 				}
-			
+				
 				String help = preference;
 				char ch;
 				for(int j=0; j<help.length(); j++) {
