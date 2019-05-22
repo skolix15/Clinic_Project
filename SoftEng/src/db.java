@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class db{
 	private static Connection myConn=null;
@@ -43,7 +44,7 @@ public class db{
 	
    
 	
-	public static void printTable (String name, Connection myConn) {
+	public static void printTable (String name, ArrayList<Doctor> doctors, Connection myConn) {
 		
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -64,9 +65,11 @@ public class db{
 			int columnCount = rsmd.getColumnCount();
 
 			// The column count starts from 1
+			Doctor d;
 			while (myRs.next()) {
 				for (int i = 1; i <= columnCount; i++ ) {
 					  String n = rsmd.getColumnName(i);
+					  
 					  System.out.print(myRs.getString(n) + "       \t");
 					  
 					}
@@ -111,7 +114,7 @@ public class db{
 			myStmt = myConn.createStatement();
 			myStmt.executeUpdate("Insert into doctor (`First Name`, `Last Name`, `RN`, `Password`, `Timetable`)  Values ('" + d.firstName + "', '" + d.lastName + "', '" + d.rn + "', '" + d.password + "', '" + d.timetable + "')");;
 							
-			printTable("doctor", myConn);
+		//	printTable("doctor", myConn);
 				
 		}
 		catch (Exception exc) {
@@ -154,7 +157,7 @@ public class db{
 				//String query = "delete from doctor where RN = " + d.rn;
 				myStmt.executeUpdate();
 				
-				printTable("doctor", myConn);
+			//	printTable("doctor", myConn);
 					
 			}
 			catch (Exception exc) {

@@ -7,13 +7,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class GuiProgramma extends JFrame{
+public class DoctorPreferenceFrame extends JFrame{
 	
 	private JPanel centralPanel;
 	
@@ -24,9 +25,12 @@ public class GuiProgramma extends JFrame{
 	private JLabel label;
 	
 	private String preference;
+	private db conn;
+
 
 	
-	public GuiProgramma() {
+	public DoctorPreferenceFrame(db connection) {
+		conn=connection;
 		centralPanel=new JPanel();
 		label=new JLabel("Εγγραφή γιατρού - επιλογή προτιμήσεων");
 		
@@ -55,7 +59,7 @@ public class GuiProgramma extends JFrame{
 	 
 	   // scrollPane.setBounds(36, 37, 407, 79);
 		
-		button=new JButton("Καταχώρηση προτιμήσεων");
+		button=new JButton("Καταχώρηση τριών προτιμήσεων");
 		centralPanel.add(label);
 		centralPanel.add(scrollPane);
 		centralPanel.add(button);
@@ -70,7 +74,7 @@ public class GuiProgramma extends JFrame{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	setVisible(false);
-		        new BasicGUI();           
+		        new GlobalHomeFrame(conn);           
 		    }
 		});
 		
@@ -92,6 +96,8 @@ public class GuiProgramma extends JFrame{
 			
 			//Μετατροπή των καταχωρήσεων του γιατρού σε μορφή 0(false) και 1(true)
 			if(e.getSource() == button) {
+			int count=0;
+			//while(count!=3) {
 				for(int i=1; i<8; i++) {
 					for(int j=0; j<3; j++) {
 						if(table.getModel().getValueAt(j,i).toString() =="true") {
@@ -108,10 +114,28 @@ public class GuiProgramma extends JFrame{
 						}
 					}
 				}
+			/*
+				String help = preference;
+				help.split("");
+				System.out.println(help  );
+				for(int i=0; i<21; i++) {
+					if(help.charAt(i)==1) {
+						count++;
+					}
+					if(count>3) {
+						JOptionPane.showMessageDialog(centralPanel, "Έβαλες περισσότερες προτιμήσεις, χρειάζονται 3");
+					}
+				}
+				if(count<3) {
+					JOptionPane.showMessageDialog(centralPanel, "Έβαλες λίγες προτιμήσεις, χρείαζονται 3");
+				}
+		//	}
+				if(count==3) {*/
 				// To string preference είναι έτοιμο(μορφή με 0 και 1 ανά ημέρα) και στέλνεται στην βάση!
+				
 				setVisible(false);
-				new GuiGiatros2();
-			}
+				new DoctorHomePageFrame(conn);}
+			//}
 			
 		}
 	}

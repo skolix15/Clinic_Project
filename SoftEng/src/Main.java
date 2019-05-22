@@ -8,10 +8,22 @@ import java.sql.Statement;
 
 public class Main {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 
-		new BasicGUI();
+		db conn = null;
+		try {
+			conn = new db();
 	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		new GlobalHomeFrame(conn);
+
+
+			
+		
+		
 	}
 	
 

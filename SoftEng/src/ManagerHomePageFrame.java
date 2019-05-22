@@ -1,16 +1,13 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -20,10 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 
-public class GuiEfimeries extends JFrame {
+public class ManagerHomePageFrame extends JFrame {
 	
 	private JPanel centralPanel;
 	private JPanel mainPanel;
@@ -39,9 +35,14 @@ public class GuiEfimeries extends JFrame {
 	private JScrollPane scrollPane, scrollPane2;
 	private JTable table, program;
 	private JLabel hrLabel;
+	private db conn;
+	
+	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); // this list contains all the doctors
 
-	public GuiEfimeries() {
-		
+
+
+	public ManagerHomePageFrame(db connection) {
+		conn= connection;
 		centralPanel = new JPanel(new BorderLayout());
 		mainPanel= new JPanel();
 		secondPanel= new JPanel();
@@ -61,6 +62,9 @@ public class GuiEfimeries extends JFrame {
 		
 		mainPanel.add(menubar);
 		
+	    //conn.printTable("doctor", doctors, conn.getMyConn());
+
+		
 		 
 		//Εισαγωγή εικόνας για επσιτροφή στο αρχικό μενού
 		ImageIcon icon = new ImageIcon("hospital1.png");
@@ -72,7 +76,7 @@ public class GuiEfimeries extends JFrame {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	setVisible(false);
-		        new BasicGUI();           
+		        new GlobalHomeFrame(conn);           
 		    }
 		});
 		
@@ -101,12 +105,14 @@ public class GuiEfimeries extends JFrame {
 				
 				hrLabel = new JLabel ("Το διαθέσιμο δυναμικό");
 			
+				// get all doctors from the database
+				
+				
 				String columnNames[] = {"Ονοματεπώνυμο" , "ΑΜ" };
 			    String rowData[][] = { {"Μαρία Παπανικολάου","99"},
 			    					   {"Γιώργος Παπαδόπουλος","888"}	};
 			    
 			    table = new JTable(rowData,columnNames);
-			    
 			    // Kathorismos topothetisis tou pinaka
 		
 			    table.setAlignmentX(Component.LEFT_ALIGNMENT);
