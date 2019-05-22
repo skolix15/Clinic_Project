@@ -3,6 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -23,7 +27,7 @@ public class StatisticsFrame extends JFrame{
 	private JMenu centralMenu_Menu;
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
-	
+
 	private JLabel title = new JLabel("Testing");
 
 	JFrame frame = this;
@@ -69,7 +73,8 @@ public class StatisticsFrame extends JFrame{
 	 			public void mouseClicked(MouseEvent e) 
 	 		    {	 
 	 		    	setVisible(false);
-	 		        new AddFrame();           
+	 		        new SupplyChainMainFrame();
+	 		        // kanonika new BasicGui();
 	 		    }
 	 			
 	 		}	);
@@ -116,6 +121,7 @@ public class StatisticsFrame extends JFrame{
 	    
 	    panel.add(menuPanel);
 	   
+	    
 		
 		
 		
@@ -128,6 +134,13 @@ public class StatisticsFrame extends JFrame{
 		this.setSize(600,400);
 		this.setTitle("/Supply Chain/Pharmacist/Statistics/Show Statistics");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	
+	public static void collectInformationsFromFile(/*tha doume*/) {
+		
+		// Kwdikas tha symplirwthei
+		
 	}
 	
 	

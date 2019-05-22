@@ -19,7 +19,6 @@ public class IdentityFrame extends JFrame{
 	private JButton logInButton;
 	private JPanel panel;
 	private String correct = "aris";
-	private JLabel lb;
 	
 	
 	public IdentityFrame() {

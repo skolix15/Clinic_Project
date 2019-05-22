@@ -1,31 +1,3 @@
-aspirini 1
-depon 1
-panadol 1
-siropi 1
-aspirini 1
-depon 1
-panadol 1
-siropi 1
-depon 1
-panadol 1
-siropi 1
-aspirini 1
-panadol 1
-depon 1
-aspirini 1
-aspirini 1
-panadol 1
-panadol 1
-aspirini 1
-depon 1
-depon 1
-depon 1
-panadol 1
-panadol 1
-depon 1
-panadol 1
-siropi 1
-aspirini 1
-depon 1
-panadol 1
-siropi 1
+001 aspirini 3
+002 depon 2
+001 aspirini 2
