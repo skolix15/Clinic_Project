@@ -95,6 +95,8 @@ public class DoctorPreferenceFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			
 			//Μετατροπή των καταχωρήσεων του γιατρού σε μορφή 0(false) και 1(true)
+			
+			
 			if(e.getSource() == button) {
 			int count=0;
 			//while(count!=3) {
@@ -114,29 +116,33 @@ public class DoctorPreferenceFrame extends JFrame{
 						}
 					}
 				}
-			/*
-				String help = preference;
-				help.split("");
-				System.out.println(help  );
-				for(int i=0; i<21; i++) {
-					if(help.charAt(i)==1) {
-						count++;
-					}
-					if(count>3) {
-						JOptionPane.showMessageDialog(centralPanel, "Έβαλες περισσότερες προτιμήσεις, χρειάζονται 3");
-					}
-				}
-				if(count<3) {
-					JOptionPane.showMessageDialog(centralPanel, "Έβαλες λίγες προτιμήσεις, χρείαζονται 3");
-				}
-		//	}
-				if(count==3) {*/
-				// To string preference είναι έτοιμο(μορφή με 0 και 1 ανά ημέρα) και στέλνεται στην βάση!
-				
-				setVisible(false);
-				new DoctorHomePageFrame(conn);}
-			//}
 			
+				String help = preference;
+				char ch;
+				for(int j=0; j<help.length(); j++) {
+					
+					ch=help.charAt(j);
+						if(ch== '1') {
+							count++;
+						}
+						if(count>3) {
+							JOptionPane.showMessageDialog(centralPanel, "Έβαλες περισσότερες προτιμήσεις, χρειάζονται 3");
+							break;
+						}
+			
+				}
+					if(count<3) {
+						JOptionPane.showMessageDialog(centralPanel, "Έβαλες λίγες προτιμήσεις, χρείαζονται 3");
+					
+					}
+		
+					if(count==3) {
+					// To string preference είναι έτοιμο(μορφή με 0 και 1 ανά ημέρα) και στέλνεται στην βάση!
+					
+					setVisible(false);
+					new DoctorHomePageFrame(conn);}
+					}
+				
 		}
 	}
 }
