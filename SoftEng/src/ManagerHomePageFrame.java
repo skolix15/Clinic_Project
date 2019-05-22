@@ -155,8 +155,8 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  secondPanel.add(button, BorderLayout.CENTER);
 				    	  pack();
 				    	  
-				    	  //button1 ->κουμπι της προσθηκης
-				    	  button1.addActionListener(new ActionListener()
+				    	  //button ->κουμπι της προσθηκης
+				    	  button.addActionListener(new ActionListener()
 						    {	
 							      public void actionPerformed(ActionEvent e)
 							      { 

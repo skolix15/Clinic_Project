@@ -62,6 +62,10 @@ public class DoctorLogInFrame extends JFrame {
 			if(e.getSource() == move) {
 				String AM = nameField.getText();
 				Boolean flag=true;
+				
+				
+				
+				
 				//Αναζήτηση στην βάση άμα υπάρχει το ΑΜ
 				//AFOU teleiwsei i anaziti kai den vrethike tote flag false
 				//Αν βρεθεί
