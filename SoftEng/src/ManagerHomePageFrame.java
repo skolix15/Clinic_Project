@@ -106,7 +106,7 @@ public class ManagerHomePageFrame extends JFrame {
 		this.setContentPane(centralPanel);
 		this.setVisible(true);
 		this.setSize(600, 600);
-		this.setTitle("Διευθυντής/Εφημερίες");
+		this.setTitle("Manager/Shifts");
 		
 	}
 	
@@ -268,6 +268,8 @@ public class ManagerHomePageFrame extends JFrame {
 					    	  			  db.addDoctor(d, conn.getMyConn());
 					    	  			  // add the doctor in ArrayList doctors 
 					    	  			  doctors.add(d);
+					    	  			  setVisible(false);
+					    	  			  new ManagerHomePageFrame(conn);
 				    	  			  }	
 							      }
 						    });
@@ -364,8 +366,9 @@ public class ManagerHomePageFrame extends JFrame {
 			      public void actionPerformed(ActionEvent e)
 			      {	  
 			    	  
-			    	  secondPanel.removeAll();
-			    	  pack();
+			    	  setVisible(false);
+		  		      new ManagerHomePageFrame(conn);
+			    	//  pack();
 			      }
 			    });
 
