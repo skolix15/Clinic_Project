@@ -368,7 +368,7 @@ public class ManagerHomePageFrame extends JFrame {
 			    	  
 			    	  setVisible(false);
 		  		      new ManagerHomePageFrame(conn);
-			    	//  pack();
+			    	
 			      }
 			    });
 
