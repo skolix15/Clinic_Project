@@ -16,9 +16,9 @@ import javax.swing.JTextField;
 
 public class ManagerLogInFrame extends JFrame  {
 
-	private JPasswordField code = new JPasswordField(10);
+	private JPasswordField code_pass = new JPasswordField(10);
 	
-	private JButton button =new JButton("Είσοδος");
+	private JButton log_in_But =new JButton("Log In");
 
 	private JLabel label= new JLabel();
 	private JPanel CentralPanel;
@@ -30,14 +30,14 @@ public class ManagerLogInFrame extends JFrame  {
 		conn = connection;
 		CentralPanel=new JPanel();
 		
-		label.setText("Εισάγεται τον κωδικό του διευθυντή");
+		label.setText("Please enter Manager's password");
 		
 		CentralPanel.add(label);
-		CentralPanel.add(code);
-		CentralPanel.add(button);
+		CentralPanel.add(code_pass);
+		CentralPanel.add(log_in_But);
 		
 		ButtonListener listener = new ButtonListener();
-		button.addActionListener(listener);
+		log_in_But.addActionListener(listener);
 		
 
 		ImageIcon icon = new ImageIcon("hospital1.png");
@@ -56,7 +56,7 @@ public class ManagerLogInFrame extends JFrame  {
 		this.setContentPane(CentralPanel);
 		this.setVisible(true);
 		this.setSize(500, 250);
-		this.setTitle("Διευθυντής/Κωδικός");
+		this.setTitle("Manager/Password");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -66,13 +66,14 @@ public class ManagerLogInFrame extends JFrame  {
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e)  {
 			
-			if(e.getSource() == button) {
-				String password= code.getText();
-				//Έλεγχος για εγκυρότητα κωδικού(μέσω βάσεων δεδομένων)
+			if(e.getSource() == log_in_But) {
+				String password= code_pass.getText();
 			
 				
-				//όπου 1 ο διευθυντής στην βάση δεδομένων
-				//o κωδικός είναι 1111
+				/*Manager Code is 1111
+				 * The given password must be the same with database's password
+				 * All the Managers have the same password
+				 */
 				String result = db.returnPasswordUser(1, db.getMyConn());
 		
 				if (password.equals(result)) {
@@ -81,7 +82,7 @@ public class ManagerLogInFrame extends JFrame  {
 				}
 				else {
 					
-					 JOptionPane.showMessageDialog(CentralPanel, "Ο κωδικός δεν είναι έγκυρος");
+					 JOptionPane.showMessageDialog(CentralPanel, "Wrong password");
 				}
 		
 				

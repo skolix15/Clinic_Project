@@ -17,10 +17,17 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class ManagerHomePageFrame extends JFrame {
@@ -32,18 +39,20 @@ public class ManagerHomePageFrame extends JFrame {
 	private JMenuBar menubar;
 	private JMenu employeeMenu;
 	private JMenu programMenu;
-	private JMenuItem item1,item2;
+	private JMenuItem change,create;
 	
-	private JButton button1, button2;
+	private JButton add, remove;
 	private JTextField FindField;
 	private JScrollPane scrollPane, scrollPane2;
 	private JTable table, program;
 	private JLabel hrLabel;
 	private db conn;
 	
-	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); // this list contains all the doctors
-	// ΝΑ ΤΑ ΒΑΛΩ ΣΤΟΝ ΠΙΝΑΚΑ ΕΙΝΑΙ ΟΛΑ ΜΕΣΑ ΣΤΗ ΛΙΣΤΑ
+	private DefaultTableModel model;
 
+	
+	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); 
+	// this list contains all the doctors
 
 	public ManagerHomePageFrame(db connection) {
 		conn= connection;
@@ -52,14 +61,14 @@ public class ManagerHomePageFrame extends JFrame {
 		secondPanel= new JPanel();
 		
 		menubar= new JMenuBar();
-		employeeMenu= new JMenu("Εργαζόμενοι");
-		programMenu= new JMenu("Πρόγραμμα");
+		employeeMenu= new JMenu("Employee");
+		programMenu= new JMenu("Program");
 		
-		item1= new JMenuItem("Μεταβολή");
-		item2= new JMenuItem("Δημιουργία");
+		change= new JMenuItem("Change");
+		create= new JMenuItem("Create");
 		
-		employeeMenu.add(item1);
-		programMenu.add(item2);
+		employeeMenu.add(change);
+		programMenu.add(create);
 		
 		menubar.add(employeeMenu);
 		menubar.add(programMenu);
@@ -72,7 +81,7 @@ public class ManagerHomePageFrame extends JFrame {
 		// Insert the doctors to the JTable
 		
 		
-		//Εισαγωγή εικόνας για επιστροφή στο αρχικό μενού
+		//Insert image to return at the Home Page
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
 		mainPanel.add(lb);
@@ -88,8 +97,8 @@ public class ManagerHomePageFrame extends JFrame {
 		
 		
 		ButtonListener listener = new ButtonListener();
-		item1.addActionListener(listener);
-		item2.addActionListener(listener);
+		change.addActionListener(listener);
+		create.addActionListener(listener);
 		
 		centralPanel.add(mainPanel, BorderLayout.NORTH);
 		centralPanel.add(secondPanel, BorderLayout.CENTER);
@@ -106,53 +115,111 @@ public class ManagerHomePageFrame extends JFrame {
 		
 			secondPanel.removeAll();
 			
-			//Κουμπί: Εργαζόμενοι->Μεταβολή
-			if(e.getSource()== item1 ) {
+			//Button: Employee->Change
+			if(e.getSource()== change ) {
 				
-				hrLabel = new JLabel ("Το διαθέσιμο δυναμικό");
+				hrLabel = new JLabel ("Workforce availability");
 			
+				
 				// get all doctors from the database
 				
+				model = new DefaultTableModel();
+				model.addColumn("First Name");
+				model.addColumn("Last Name");
+				model.addColumn("RN");
+				String firstname_db=null; 
+				String lastname_db=null;
+				String rn_db=null;
 				
-				String columnNames[] = {"Ονοματεπώνυμο" , "ΑΜ" };
-			    String rowData[][] = { {"Μαρία Παπανικολάου","99"},
-			    					   {"Γιώργος Παπαδόπουλος","888"}	};
-			    
-			    table = new JTable(rowData,columnNames);
-			    // Kathorismos topothetisis tou pinaka
-		
-			    table.setAlignmentX(Component.LEFT_ALIGNMENT);
+				for(Doctor doct: doctors) {
+					firstname_db= doct.firstName;
+					lastname_db=doct.lastName;
+					rn_db=doct.rn;
+					model.addRow(new Object[] {firstname_db, lastname_db, rn_db});
+				}
 			
-			    // Dimiourgia scrollPane gia ton pinaka 
-			   
+			    table = new JTable(model);
+				
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+			    table.setRowSorter(sorter);
+				
+			    
+				FindField= new JTextField("Search Employee"); 
+				
+				add =new JButton("Add"); 
+				remove =new JButton("Remove");
+				
+				//Search Employee in all Fields (LastName, FirstName, RN)
+	
+				FindField.getDocument().addDocumentListener(new DocumentListener() {
+
+					public void changedUpdate(DocumentEvent e) {
+						throw new UnsupportedOperationException("Not supported yet.");
+					}
+
+					public void insertUpdate(DocumentEvent e) {
+						
+						String text = FindField.getText();
+
+		                if (text.trim().length() == 0) {
+		                    sorter.setRowFilter(null);
+		                } else {
+		                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+		                }
+						
+					}
+
+					public void removeUpdate(DocumentEvent e) {
+						
+						String text = FindField.getText();
+
+		                if (text.trim().length() == 0) {
+		                    sorter.setRowFilter(null);
+		                } else {
+		                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+		                }
+					}
+				});
+				
+				table.setAlignmentX(Component.LEFT_ALIGNMENT);
+			  
+				// Create ScrollPane for the table
+				   
 			    scrollPane = new JScrollPane(table);
 				scrollPane.setBounds(36, 37, 407, 79);
-					
-				
-				FindField= new JTextField("Αναζήτηση εργαζομένου"); 
-				
-				button1 =new JButton("Προσθήκη"); 
-				button2 =new JButton("Αφαίρεση");
 			
 				secondPanel.add(hrLabel);
 				secondPanel.add(scrollPane);
 				secondPanel.add(FindField);
-				secondPanel.add(button1);
-				secondPanel.add(button2);
+				secondPanel.add(add);
+				secondPanel.add(remove);
 				pack(); 
 				
 				
-				//Προσθήκη νέου εργαζομένου στην βάση μου
-				button1.addActionListener(new ActionListener()
+				//Add a new employee in database
+				add.addActionListener(new ActionListener()
 			    {	
 				      public void actionPerformed(ActionEvent e)
 				      {
+				    	  
 				    	  secondPanel.removeAll();
-				    	  JLabel label = new JLabel("Δημιουργία Εργαζομένου");
-				    	  JButton button = new JButton("Προσθήκη εργαζομένου");
-				    	  JTextField firstNameField = new JTextField("Όνομα");
-				    	  JTextField lastNameField = new JTextField("Επώνυμο");
-				    	  //προσθήκη και επιθέτου 
+				    	//Insert image to return at the Home Page
+				  		 ImageIcon icon = new ImageIcon("back1.png");
+				  		 JLabel lb = new JLabel(icon);
+				  		 mainPanel.add(lb);
+				  		
+				  		 lb.addMouseListener(new MouseAdapter() 
+				  		 {
+				  		 	public void mouseClicked(MouseEvent e) 
+				  		    {	 
+				  		    	setVisible(false);
+				  		        new ManagerHomePageFrame(conn);           
+				  		    }
+				  		  });
+				    	  JLabel label = new JLabel("Create a New Employee");
+				    	  JButton add_employee = new JButton("Add Employee");
+				    	  JTextField firstNameField = new JTextField("First Name");
+				    	  JTextField lastNameField = new JTextField("Last  Name");
 				    	  JTextField amField = new JTextField("ΑΜ");
 				    	  String AM, firstName, lastName;
 				    
@@ -162,11 +229,11 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  secondPanel.add(lastNameField, BorderLayout.CENTER);
 				    	  secondPanel.add(amField, BorderLayout.CENTER);
 				   
-				    	  secondPanel.add(button, BorderLayout.CENTER);
+				    	  secondPanel.add(add_employee, BorderLayout.CENTER);
 				    	  pack();
 				    	  
-				    	  //button ->κουμπι της προσθηκης
-				    	  button.addActionListener(new ActionListener()
+				    	  //add_employee -> Button to add a new employee
+				    	  add_employee.addActionListener(new ActionListener()
 						    {	
 							      public void actionPerformed(ActionEvent e)
 							      { 
@@ -181,35 +248,36 @@ public class ManagerHomePageFrame extends JFrame {
 							    	  // ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
 							    	  //check if the typed AM already exists
 							    	  NumberOfDocs =  db.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
-							    	  
+					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
-				    	  				  // show error message and exit program??
+				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error");
 				    	  			  }
 				    	  			  else if (NumberOfDocs == 1 )
 				    	  			  {
-				    	  				  // show that the doctor with the given AM already exists
+				    	  				// show that the doctor with the given RN already exists
+				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists");
+				    	  				  
 				    	  			  }
 				    	  			  else
 				    	  			  {
 								    	  //-----------INSERT DOCTOR-----------
 					    	  			  Doctor d = new Doctor(firstName, lastName, AM);
 					    	  			  
-					    	  			  // add the doctor
-					    	  			  db.addDoctor(d, conn.getMyConn()); 
+					    	  			  // add the doctor in database 
+					    	  			  db.addDoctor(d, conn.getMyConn());
+					    	  			  // add the doctor in ArrayList doctors 
+					    	  			  doctors.add(d);
 				    	  			  }	
 							      }
 						    });
 				    	  
-				    	  //button2 -> κουμπι της αφαίρεσης
-				    	  button2.addActionListener(new ActionListener()
+				    	  //remove -> button to remove an employee
+				    	  remove.addActionListener(new ActionListener()
 						    {	
 						      public void actionPerformed(ActionEvent e)
 						      {		
-						    	  
-						    	  
-						    	  
-						    	  //Διαγραφη εργαζομένου από βάση
+						    	  //Remove employee from database
 						    	  
 						  
 						      }
@@ -219,48 +287,46 @@ public class ManagerHomePageFrame extends JFrame {
 			    });
 				
 			}
-			//Κουμπί: Πρόγραμμα-> Δημιουργία
-			else if(e.getSource() == item2) {
+			//Button: Program-> Create
+			else if(e.getSource() == create) {
 				JLabel label= new JLabel();
-				JTextField text1 = new JTextField("Πλήθος γιατρών");
-				JButton button1 = new JButton("Εμφανιση Προγράμματος");
-				JButton button2 = new JButton("’κυρο");
+				JTextField text1 = new JTextField("Number of doctors in db");
+				JButton show_program = new JButton("Show Program");
+				JButton cancel_but = new JButton("Cancel");
 				
 				//text1.setText(); Πλήθος γιατρών, το παίρνει από την βάση
 		
 				
-				label.setText("Δημιουργία - Εξαγωγή Ωρολογίου Προγράμματος");
+				label.setText("Create - Export TimeTable");
 				secondPanel.add(label, BorderLayout.NORTH);
 				secondPanel.add(text1, BorderLayout.CENTER);
-				secondPanel.add(button1, BorderLayout.SOUTH);
-				secondPanel.add(button2, BorderLayout.SOUTH);
+				secondPanel.add(show_program, BorderLayout.SOUTH);
+				secondPanel.add(cancel_but, BorderLayout.SOUTH);
 				pack();
 				
-				button1.addActionListener(new ActionListener()
+				show_program.addActionListener(new ActionListener()
 			    {	
 			      public void actionPerformed(ActionEvent e)
 			      {
 			    	  secondPanel.removeAll();
 			    	  JLabel label= new JLabel();
-			    	 // JTable program; 
-			    	  JButton save = new JButton("Αποθήκευση");
-			    	  JButton amendment = new JButton("Τροποποίηση");
+			    	  JButton save = new JButton("Save");
+			    	  JButton amendment = new JButton("Amendment");
 			    	  
-			    	  label.setText("Εβδομαδιαίο Πρόγραμμα Εφημεριών");
+			    	  label.setText("Shift's Program ");
 			    	 
-			    	  Object[] columnNames = {"Ωράριο" , "Δευτέρα" , "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββτο", "Κυριακή"};
+			    	  Object[] columnNames = {"Schedule" , "Monday" , "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 			  	      Object[][] rowData = { {"06:00-14:00", "-" , "-", "-", "-", "-", "-", "-" },
 			  	    					   {"14:00-22:00", "-", "-", "-", "-", "-", "-", "-"},
 			  	    					   {"22:00-06:00", "-", "-", "-", "-", "-", "-", "-"} };
 			    	 
 			    	 
 			  	       program = new JTable(rowData,columnNames);
-			  	       
-			  	       // Kathorismos topothetisis tou pinaka
+			  
 		
 			  	       program.setAlignmentX(Component.LEFT_ALIGNMENT);
 			
-			  	       // Dimiourgia scrollPane gia ton pinaka 
+			  	       // Create ScrollPane for the table
 			   
 			  	       scrollPane2 = new JScrollPane(program);
 			  	       scrollPane2.setBounds(20, 20, 10, 30);
@@ -293,7 +359,7 @@ public class ManagerHomePageFrame extends JFrame {
 			    	  }
 			    });
 				
-				button2.addActionListener(new ActionListener()
+				cancel_but.addActionListener(new ActionListener()
 			    {	
 			      public void actionPerformed(ActionEvent e)
 			      {	  

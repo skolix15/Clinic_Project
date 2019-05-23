@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 
 
 class ManagerChoiceFrame extends JFrame{
-		private JButton b1 =new JButton("Εφοδιασιτκή Αλυσίδα");
-		private JButton b2 =new JButton("Εφημερίες - Βάρδιες");
+		private JButton s_chain =new JButton("Supply Chain");
+		private JButton shift =new JButton("Shift Work");
 
 		private JPanel D_Panel;
 		
@@ -22,12 +22,12 @@ class ManagerChoiceFrame extends JFrame{
 		public ManagerChoiceFrame(db connection) {
 			conn=connection;
 			D_Panel = new JPanel();
-			D_Panel.add(b1);
-			D_Panel.add(b2);
+			D_Panel.add(s_chain);
+			D_Panel.add(shift);
 			
 			ButtonListener listener = new ButtonListener();
-			b1.addActionListener(listener);
-			b2.addActionListener(listener);
+			s_chain.addActionListener(listener);
+			shift.addActionListener(listener);
 			
 
 			ImageIcon icon = new ImageIcon("hospital1.png");
@@ -46,7 +46,7 @@ class ManagerChoiceFrame extends JFrame{
 			this.setContentPane(D_Panel);
 			this.setVisible(true);
 			this.setSize(400, 300);
-			this.setTitle("Διευθυντής");
+			this.setTitle("Manager");
 						 
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
@@ -55,14 +55,14 @@ class ManagerChoiceFrame extends JFrame{
 		class ButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				
-				//Κουμπί: Εφοδιαστική Αλυσίδα
-				if(e.getSource() == b1) {
+				//Button: Supply Chain
+				if(e.getSource() == s_chain) {
 					setVisible(false);
 
 					//  GUI για όταν πατιέται το κουμπί εφοδιαστικής αλυσίδας
 				}
-				//Κουμπί: Εφημερίες-Βάρδιες
-				else if(e.getSource() == b2){
+				//Button: Shift Work
+				else if(e.getSource() == shift){
 					setVisible(false);
 
 					new ManagerHomePageFrame(conn);

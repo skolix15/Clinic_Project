@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,32 +10,33 @@ import java.awt.event.MouseEvent;
 
 
 public class DoctorLogInFrame extends JFrame {
-    private JPanel G_Panel;
+    private JPanel panel1,panel2, central_panel;
     private JTextField amField;
     private JTextField codeField;
     private JLabel label;
     private JButton move;
 	private db conn;
-
-
+	
    
 	
     public DoctorLogInFrame(db connection) {
     	conn=connection;
-		G_Panel = new JPanel();
-		label = new JLabel("Είσοδος του Ιατρού");
-		amField = new JTextField("Εισήγαγε αριθμό μητρώου");
-		move = new JButton("Συνέχεια");
+    	central_panel = new JPanel(new BorderLayout());
+		panel1 = new JPanel();
+		panel2 = new JPanel();
+		label = new JLabel("Doctor's Log in");
+		amField = new JTextField("Input RN");
+		move = new JButton("Continue");
 		
-		G_Panel.add(label);
-		G_Panel.add(amField);
+		panel1.add(label);
+		panel1.add(amField);
 		//G_Panel.add(codeField);
-		G_Panel.add(move);
+		panel1.add(move);
 	
 
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
-		G_Panel.add(lb);
+		panel1.add(lb);
 		
 		lb.addMouseListener(new MouseAdapter() 
 		{
@@ -44,15 +47,17 @@ public class DoctorLogInFrame extends JFrame {
 		    }
 		});
 		
+		
 		ButtonListener listener = new ButtonListener();
 		move.addActionListener(listener);
 	
-		
-		this.setContentPane(G_Panel);
+		central_panel.add(panel1, BorderLayout.CENTER);
+		central_panel.add(panel2, BorderLayout.SOUTH);
+		this.setContentPane(central_panel);
 		this.setVisible(true);
 		this.setSize(530, 250);
 		this.setTitle("Ιατρός");
-					 
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
     
@@ -67,39 +72,89 @@ public class DoctorLogInFrame extends JFrame {
 				
 				Boolean flag=true;
 		    	// ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
-				NumberOfDocs = db.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
+				NumberOfDocs = db.getNumberOfEntries("doctor", "RN", AM , conn.getMyConn());
 				
 	  			if (NumberOfDocs == -1)
 	  			{
-	  				  // show error message and exit program??
+					 JOptionPane.showMessageDialog(panel1, "Error");
+
 	  			}
 	  			else if (NumberOfDocs == 1 )
 	  		    {
 	  		 		// Search if the doctor has created his/her password
 	  				password = db.returnDoctorPassword(AM, conn.getMyConn());
-	  				
 	  				if (password == null) // the password hasn't been created. CREATE NOW
 	  				{
+	  					JPasswordField create_password = new JPasswordField(10);
+	  					JPasswordField check_password = new JPasswordField(10);
+	  					JLabel label1 = new JLabel("Give a New Password");
+	  					JLabel label2 = new JLabel("Write again the Password");
+	  					JButton confirm1 = new JButton("confirm");
 	  					
+	  					panel2.removeAll();
+	  					panel2.add(label1);
+	  					panel2.add(create_password);
+	  					panel2.add(label2 );
+	  					panel2.add(check_password);
+	  					panel2.add(confirm1);
+	  					
+	  					confirm1.addActionListener(new ActionListener()
+	  					{	
+	  						public void actionPerformed(ActionEvent e)
+	  						{
+	  							String pass1 = create_password.getText();
+	  							String pass2 = check_password.getText();
+	  							if(pass1.equals(pass2)) {
+	  								//APOTHIKEUSE TON KWDIKO STN VASI
+	  								setVisible(false);
+	  								new DoctorPreferenceFrame(conn);
+	  							}
+	  							else {
+	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!");
+	  							}
+	  						}
+				     });
+	  					pack();
 	  				}
 	  				else // The password has been set. LOG IN
 	  				{
+	  					JPasswordField give_password = new JPasswordField(10);
+	  					JLabel label1 = new JLabel("Give your Password");
+	  					JButton confirm2 = new JButton("confirm");
 	  					
+	  					panel2.removeAll();
+	  					panel2.add(label1);
+	  					panel2.add(give_password);
+	  					panel2.add(confirm2);
+	  					
+	  					confirm2.addActionListener(new ActionListener()
+	  					{	
+	  						public void actionPerformed(ActionEvent e)
+	  						{
+	  							String read_pass = give_password.getText();
+	  							if(password.equals(read_pass)) {
+	  								
+	  								// an o giatros exei dwsei protimiseis, mipws na pigainw sto manager
+	  								// home page?
+	  								setVisible(false);
+	  								new DoctorPreferenceFrame(conn);
+	  							}
+	  							else {
+	  								//If you Can't remember your password?
+	  								JOptionPane.showMessageDialog(panel2, "Wrong Password!");
+	
+	  							}
+	  						}
+				     });
+	  				
+	  					pack();
 	  				}
 	  		    }
 	  			else
 	  		    {
 	  				// show that the doctor with the given AM doesn't exist
-	  		    }
-	  			
-	  			
-		
-			
-				
-				setVisible(false);
-
-				new DoctorPreferenceFrame(conn);
-			
+	  				JOptionPane.showMessageDialog(panel1, "The doctor with the RN " + AM + " doesn't exist");
+	  		    }	
 			}
 			
 		}

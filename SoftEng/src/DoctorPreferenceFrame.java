@@ -18,7 +18,7 @@ public class DoctorPreferenceFrame extends JFrame{
 	
 	private JPanel centralPanel;
 	
-	private JButton button;
+	private JButton prefer;
 	private JScrollPane scrollPane;
 	private JTable table;
 	
@@ -32,11 +32,11 @@ public class DoctorPreferenceFrame extends JFrame{
 	public DoctorPreferenceFrame(db connection) {
 		conn=connection;
 		centralPanel=new JPanel();
-		label=new JLabel("Εγγραφή γιατρού - επιλογή προτιμήσεων");
+		label=new JLabel("Doctor's preference");
 		
 		 
 		//πινακας ωρών για επιλογή απο τον γιατρό
-		Object[] columnNames = {"Ωράριο" , "Δευτέρα" , "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββτο", "Κυριακή"};
+		Object[] columnNames = {"Schedule" , "Monday" , "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"};
 	    Object[][] rowData = { {"06:00-14:00", false , false, false, false, false, false, false },
 	    					   {"14:00-22:00", false, false, false, false, false, false, false},
 	    					   {"22:00-06:00", false, false, false, false, false, false, false} };
@@ -59,10 +59,10 @@ public class DoctorPreferenceFrame extends JFrame{
 	 
 	   // scrollPane.setBounds(36, 37, 407, 79);
 		
-		button=new JButton("Καταχώρηση τριών προτιμήσεων");
+		prefer=new JButton("Input 3 preferences");
 		centralPanel.add(label);
 		centralPanel.add(scrollPane);
-		centralPanel.add(button);
+		centralPanel.add(prefer);
 		
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
@@ -79,13 +79,13 @@ public class DoctorPreferenceFrame extends JFrame{
 		});
 		
 		ButtonListener listener = new ButtonListener();
-		button.addActionListener(listener);
+		prefer.addActionListener(listener);
 		
 		
 		this.setContentPane(centralPanel);
 		this.setVisible(true);
 		this.setSize(950, 600);
-		this.setTitle("Γιατρός/Εγγραφή/Επιλογή Προτιμήσεων");
+		this.setTitle("Doctor/Sign-up/Preference");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -97,7 +97,7 @@ public class DoctorPreferenceFrame extends JFrame{
 			//Μετατροπή των καταχωρήσεων του γιατρού σε μορφή 0(false) και 1(true)
 			
 			
-			if(e.getSource() == button) {
+			if(e.getSource() == prefer) {
 			int count=0;
 			
 				for(int i=1; i<8; i++) {

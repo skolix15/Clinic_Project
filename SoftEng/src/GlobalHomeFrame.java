@@ -11,36 +11,36 @@ import javax.swing.JPanel;
 
 public class GlobalHomeFrame extends JFrame {
 	
-	private JButton button1 = new JButton("Φαρμακοποιός");
-	private JButton button2 = new JButton("Διευθυντής  ");
-	private JButton button3 = new JButton("Ιατρός      ");
+	private JButton pharmacist = new JButton("Pharmacist");
+	private JButton manager = new JButton("Manager  ");
+	private JButton doctor = new JButton("Doctor      ");
 	private JPanel basicPanel = new JPanel(new BorderLayout());
 	private JPanel panel = new JPanel();
 	private db conn;
 	
 	private JLabel label;
-	private JLabel user = new JLabel("Χρήση προγράμματος ως:");
+	private JLabel user = new JLabel("Select user:");
 
 	public GlobalHomeFrame(db connection) {
 	
 		conn = connection;
-		label = new JLabel("Πρόγραμμα Διαχείρισης Διαθέσιμων Ανθρώπινων & Υλικών Πόρων σε Νοσοκομειακές Μονάδες");
+		label = new JLabel("Program managment of human & material resources");
 		panel.add(label);
 		panel.add(user);
-		basicPanel.add(button1, BorderLayout.WEST);
-		basicPanel.add(button2, BorderLayout.CENTER);
-		basicPanel.add(button3, BorderLayout.EAST);
+		basicPanel.add(pharmacist, BorderLayout.WEST);
+		basicPanel.add(manager, BorderLayout.CENTER);
+		basicPanel.add(doctor, BorderLayout.EAST);
 	
 		ButtonListener listener = new ButtonListener();
-		button1.addActionListener(listener);
-		button2.addActionListener(listener);
-		button3.addActionListener(listener);
+		pharmacist.addActionListener(listener);
+		manager.addActionListener(listener);
+		doctor.addActionListener(listener);
 		
 		panel.add(basicPanel);
 		this.setContentPane(panel);
 		this.setVisible(true);
 		this.setSize(600, 200);
-		this.setTitle("Καλώς όρισες!");
+		this.setTitle("Welcome!");
 					 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -52,17 +52,16 @@ public class GlobalHomeFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 
-			if(e.getSource() == button1) { //Φαρμακοποιού
+			if(e.getSource() == pharmacist) { 
 		
 				//Πρώτο GUI για τον φαρμακοποίο
 			}
 			
-			else if(e.getSource() == button2) { // Διευθυντή
-			
+			else if(e.getSource() == manager) { 		
 				new ManagerLogInFrame(conn);
 			}
 			
-			else if(e.getSource() == button3) { //Γιατρού
+			else if(e.getSource() == doctor) { 
 				new DoctorLogInFrame(conn);
 			}
 			
