@@ -1,15 +1,15 @@
 
-public class Medicine {
+public class Drug {
 	
 	private String name;
-	private String code;
+	private String id;
 	private double price;
 	private int availability;
 
 	
-	public Medicine(String name, String code, double price, int availability) {
+	public Drug(String name, String Id, double price, int availability) {
 		this.name = name;
-		this.code = code;
+		this.id = Id;
 		this.price = price;
 		this.availability = availability;
 	}
@@ -20,8 +20,8 @@ public class Medicine {
 	}
 
 	
-	public String getCode() {
-		return code;
+	public String getId() {
+		return id;
 	}
 	
 	

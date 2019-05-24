@@ -188,7 +188,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    for(int i=0;i<Storage.getMedicineList().size();i++) {
 	    	
 	    	medicineName = Storage.getMedicineList().get(i).getName();
-	    	medicineCode = Storage.getMedicineList().get(i).getCode();
+	    	medicineCode = Storage.getMedicineList().get(i).getId();
 	    	medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
 	    	storageModel.addRow(new Object[] {medicineCode,medicineName,medicineAvailability});
 	    }
@@ -328,12 +328,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	  
  	    	  // Dimiourgeitai antikeimeno typou medicine me xrisi twn 2 parapanw metablitwn
  	       
- 	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
+ 	    	  Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
  	    	  
  	    	 
  	    	  // Elegxetai an to dhmiourgimeno farmako yparxei mesa sthn lista ths twrinis paraggelias
  		    
- 	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
+ 	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getId())) {
  	    		  
  	    		  // Protrepei ton xristi na plhktrologisei ena noumero pou tha apotelesei thn posotita tou farmakou
  	    		  // pou tha eisagei sthn lista paraggelias
@@ -382,7 +382,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    			  		
  	    			  		// Prostithetai to epilegmeno farmako (apo thn apothiki) ston neo pinaka (ths paraggelias)
  	    			  		
- 	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), inputAvailabilityInteger}); 
+ 	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getId(), clickedMedicine.getName(), inputAvailabilityInteger}); 
  	    			  		
  	    			  		// Metatrepoume katallila thn diathesimotita toy farmakou pou mpike sthn paraggelia
  	    			  		
@@ -429,7 +429,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  		    	  
  		    	// Dimiourgia antikeimenou typou Medicine
  		    	 
- 		    	Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
+ 		    	Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
  		    	
  	    		// MouseEvent.BUTTON3 gia na elecsei an patithike decsi klik apo ton xristi
  		    	
@@ -457,7 +457,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	 	    				
  	 	    				medCode = (String) storageTable.getModel().getValueAt(i,1);
  	 	    				
- 	 	    				if(clickedMedicine.getCode().equals(medCode)) {
+ 	 	    				if(clickedMedicine.getId().equals(medCode)) {
  	 	    					
  	 	    					DefaultTableModel model = (DefaultTableModel)storageTable.getModel();
  	 	    					model.setValueAt(clickedMedicine.getAvailability(),i, 2);

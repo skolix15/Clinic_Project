@@ -23,7 +23,7 @@ import javax.swing.border.TitledBorder;
 public class AddFrame extends JFrame{
 	
 	private JPanel panel;
-	private JTextField code;
+	private JTextField id;
 	private JTextField name;
 	private JTextField price;
 	private JButton confirm;
@@ -52,9 +52,9 @@ public class AddFrame extends JFrame{
 			    title.setAlignmentX(Component.LEFT_ALIGNMENT);
 				
 				//Δημιουργία πεδίων για εισαγωγή τιμών απο χρήστες
-				code = new JTextField("");
-				code.setBorder(new TitledBorder("Code"));
-				code.setPreferredSize(new Dimension(75,4));
+				id = new JTextField("");
+				id.setBorder(new TitledBorder("id"));
+				id.setPreferredSize(new Dimension(75,4));
 				price = new JTextField("");
 				price.setBorder(new TitledBorder("Price"));
 				price.setPreferredSize(new Dimension(75,4));
@@ -145,7 +145,7 @@ public class AddFrame extends JFrame{
 				//Προσθήκη στο panel
 			    
 				panel.add(title);	
-				panel.add(code);
+				panel.add(id);
 				panel.add(name);
 				panel.add(price);
 				panel.add(spinner);
@@ -221,7 +221,7 @@ public class AddFrame extends JFrame{
 				
 				public void actionPerformed(ActionEvent e) {
 						
-					String	codeText = code.getText();
+					String	idText = id.getText();
 					String	nameText = name.getText();
 					String 	priceText = price.getText();
 					String 	quantityText = spinner.getValue().toString();
@@ -233,8 +233,8 @@ public class AddFrame extends JFrame{
 					int quantityInt = Integer.parseInt(quantityText);
 					
 					
-					if (Storage.searchMedicine(nameText, codeText) == null)
-						Storage.addMedicine(nameText, codeText, priceDouble, quantityInt);	
+					if (Storage.searchMedicine(nameText, idText) == null)
+						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);	
 					else
 						JOptionPane.showMessageDialog(null, nameText + " already exists");
 						

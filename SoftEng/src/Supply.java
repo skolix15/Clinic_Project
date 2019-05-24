@@ -7,7 +7,7 @@ public class Supply extends Order {
 	
 	public Supply() {
 			
-		medicines = new ArrayList<Medicine>();
+		medicines = new ArrayList<Drug>();
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
 	}
@@ -15,23 +15,23 @@ public class Supply extends Order {
 	// Prostithetai ena neo farmako stis lista me ta farmaka kai h posotita tou sthn antistoixi thesi sthn lista me tis posothtes.
 	// Taytoxrona ayxanetai h diathesimotita tou farmakou apo to iatreio.
 		
-	public void addMedicineInTheOrder (Medicine orderedMedicine,int quantity) {
+	public void addMedicineInTheOrder (Drug orderedMedicine,int quantity) {
 			
 		super.addMedicineInTheOrder(orderedMedicine, quantity);
 		orderedMedicine.setAvailability(orderedMedicine.getAvailability() + quantity);
 		
 	}
 	
-	public void deleteMedicineFronTheOrder(Medicine orderedMedicine) {
+	public void deleteMedicineFronTheOrder(Drug orderedMedicine) {
 		
-		Iterator<Medicine> iterator = medicines.iterator();
+		Iterator<Drug> iterator = medicines.iterator();
 		int i = 0;
 		
 		while( iterator.hasNext() ) {
 		
-		    Medicine medicine = iterator.next();
+		    Drug medicine = iterator.next();
 		    
-		    if(medicine.getCode().equals(orderedMedicine.getCode())) {
+		    if(medicine.getId().equals(orderedMedicine.getId())) {
 		        iterator.remove();
 		        orderedMedicine.setAvailability(orderedMedicine.getAvailability() - quantityOfMedicines.get(i));
 		        quantityOfMedicines.remove(i);

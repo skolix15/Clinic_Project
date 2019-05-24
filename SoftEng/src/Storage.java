@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Storage {
 	
-	private static ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+	private static ArrayList<Drug> medicineList = new ArrayList<Drug>();
 	
 	
 	public static void updateStorage() {
@@ -12,23 +12,23 @@ public class Storage {
 		
 	}
 	
-	public static void addMedicine(String name, String code, double price, int availability) {
-		Medicine med = new Medicine(name, code, price, availability);
+	public static void addMedicine(String name, String id, double price, int availability) {
+		Drug med = new Drug(name, id, price, availability);
 		medicineList.add(med);
 	}
 	
-	public static void removeMedicine(String name, String code) {
+	public static void removeMedicine(String name, String id) {
 		
-		if (Storage.searchMedicine(name, code) != null)
-			medicineList.remove(Storage.searchMedicine(name, code));
+		if (Storage.searchMedicine(name, id) != null)
+			medicineList.remove(Storage.searchMedicine(name, id));
 		else 
 			System.out.println("This medicine does not exist in storage");
 	}
 	
-	public static Medicine searchMedicine(String name, String code) {
+	public static Drug searchMedicine(String name, String id) {
 		
 		for (int i=0; i<medicineList.size(); i++) {
-			if (medicineList.get(i).getName().equals(name) && (medicineList.get(i).getCode().equals(code))) {
+			if (medicineList.get(i).getName().equals(name) && (medicineList.get(i).getId().equals(id))) {
 				return medicineList.get(i);
 			}
 		}
@@ -37,7 +37,7 @@ public class Storage {
 		
 	}
 
-	public static ArrayList<Medicine> getMedicineList(){
+	public static ArrayList<Drug> getMedicineList(){
 		
 		return medicineList;
 	}
