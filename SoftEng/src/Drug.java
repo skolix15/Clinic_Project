@@ -5,6 +5,7 @@ public class Drug {
 	private String id;
 	private double price;
 	private int availability;
+	private int soldUnits;
 
 	
 	public Drug(String name, String Id, double price, int availability) {
@@ -12,6 +13,7 @@ public class Drug {
 		this.id = Id;
 		this.price = price;
 		this.availability = availability;
+		this.soldUnits = 0;
 	}
 	
 	
@@ -42,6 +44,16 @@ public class Drug {
 
 	public void setAvailability(int availability) {
 		this.availability = availability;
+	}
+	
+	public void addSoldUnits(int quantity) {
+		
+		soldUnits += quantity;
+	}
+	
+	public int getSoldUnit() {
+		
+		return soldUnits;
 	}
 	
 }
