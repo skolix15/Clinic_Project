@@ -171,11 +171,11 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    storageModel = new DefaultTableModel();
 	    basketModel = new DefaultTableModel();
 	    
-	    storageModel.addColumn("Code");
+	    storageModel.addColumn("Id");
 	    storageModel.addColumn("Name");
 	    storageModel.addColumn("Availability");
 	    
-	    basketModel.addColumn("Code");
+	    basketModel.addColumn("Id");
 	    basketModel.addColumn("Name");
 	    basketModel.addColumn("Quantity");
 	    

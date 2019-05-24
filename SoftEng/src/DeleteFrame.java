@@ -80,24 +80,24 @@ public class DeleteFrame extends JFrame {
 				storageModel = new DefaultTableModel();
 			    basketModel = new DefaultTableModel();
 			    
-			    storageModel.addColumn("id");
+			    storageModel.addColumn("Id");
 			    storageModel.addColumn("Name");
 			    storageModel.addColumn("Availability");
 			    
-			    basketModel.addColumn("id");
+			    basketModel.addColumn("Id");
 			    basketModel.addColumn("Name");
 			    basketModel.addColumn("Quantity");
 				
 			    String medicineName = null;
-			    String medicineid = null;
+			    String medicineId = null;
 			    int medicineAvailability = -1;
 			    
 			    for(int i=0;i<Storage.getMedicineList().size();i++) {
 			    	
 			    	medicineName = Storage.getMedicineList().get(i).getName();
-			    	medicineid = Storage.getMedicineList().get(i).getId();
+			    	medicineId = Storage.getMedicineList().get(i).getId();
 			    	medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
-			    	storageModel.addRow(new Object[] {medicineid,medicineName,medicineAvailability});
+			    	storageModel.addRow(new Object[] {medicineId,medicineName,medicineAvailability});
 			    }
 				
 			    // Dimiourgia tou pinaka me basi tis parapanw stiles kai grammes
@@ -212,16 +212,16 @@ public class DeleteFrame extends JFrame {
 		  	    		
 		  	    	
 		  	    	  String medicineName = "";
-		  	    	  String medicineid = "";
+		  	    	  String medicineId= "";
 		  	    	  int selectedRow = storageTable.getSelectedRow();
 		  	    	  
 		  	    	 if(selectedRow != -1) {
 		  
-		  	    		 medicineid = (String) storageTable.getModel().getValueAt(selectedRow,0);
+		  	    		 medicineId = (String) storageTable.getModel().getValueAt(selectedRow,0);
 		  	        	  	
 		  	    		 medicineName = (String) storageTable.getModel().getValueAt(selectedRow, 1);
 		  	    		 
-		  	    		 Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineid);
+		  	    		 Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineId);
 		  	    		 
 		  	    		 if(!order.searchForMedicineInOrder( clickedMedicine.getId())) {
 		  	    			 
@@ -251,7 +251,7 @@ public class DeleteFrame extends JFrame {
 		 	    	public void mousePressed (MouseEvent e) {
 		 	    		
 		 	    		 String medicineName = "";
-		 	    		 String medicineid = "";
+		 	    		 String medicineId = "";
 
 		 		    	 int selectedRowFromOrderTable = e.getY()/deleteTable.getRowHeight();
 		 		    	  
@@ -260,13 +260,13 @@ public class DeleteFrame extends JFrame {
 		 		        	  
 		 		    		 
 		 		        	  	if( j==0 )
-		 		        	  		medicineid = (String) deleteTable.getModel().getValueAt(selectedRowFromOrderTable,j);
+		 		        	  		medicineId = (String) deleteTable.getModel().getValueAt(selectedRowFromOrderTable,j);
 		 		        	  	else if( j==1 )
 		 		        	  		medicineName = (String) deleteTable.getModel().getValueAt(selectedRowFromOrderTable, j);
 		 		        	  	
 		 		    	  }
 		 		    	  
-		 		    	Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineid);
+		 		    	Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineId);
 		 		    	
 		 	    		
 		 	    		if( e.getButton() == MouseEvent.BUTTON3) {
@@ -278,13 +278,13 @@ public class DeleteFrame extends JFrame {
 		 	    			
 		 	    			order.deleteMedicineFronTheOrder(clickedMedicine);
 		 	    			
-		 	    			String medid = "";
+		 	    			String medId = "";
 		 	    			
 		 	    			for(int i=0;i<Storage.getMedicineList().size();i++) {
 		 	    				
-		 	    				medid = (String) storageTable.getModel().getValueAt(i,1);
+		 	    				medId = (String) storageTable.getModel().getValueAt(i,1);
 		 	    				
-		 	    				if(clickedMedicine.getId().equals(medid)) {
+		 	    				if(clickedMedicine.getId().equals(medId)) {
 		 	    					
 		 	    					DefaultTableModel model = (DefaultTableModel)storageTable.getModel();
 		 	    					model.setValueAt(clickedMedicine.getAvailability(),i, 2);

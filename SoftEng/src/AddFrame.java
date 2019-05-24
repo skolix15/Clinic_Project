@@ -53,7 +53,7 @@ public class AddFrame extends JFrame{
 				
 				//Δημιουργία πεδίων για εισαγωγή τιμών απο χρήστες
 				id = new JTextField("");
-				id.setBorder(new TitledBorder("id"));
+				id.setBorder(new TitledBorder("Id"));
 				id.setPreferredSize(new Dimension(75,4));
 				price = new JTextField("");
 				price.setBorder(new TitledBorder("Price"));
