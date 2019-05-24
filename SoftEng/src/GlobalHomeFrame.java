@@ -53,9 +53,8 @@ public class GlobalHomeFrame extends JFrame {
 			setVisible(false);
 
 			if(e.getSource() == pharmacist) { 
-		
-				//Πρώτο GUI για τον φαρμακοποίο Gia LogIN prepei na allaksei
-				   new SupplyChainMainFrame(conn);
+	
+				new IdentityFrame(conn);
 
 			}
 			

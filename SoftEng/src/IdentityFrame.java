@@ -10,12 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class IdentityFrame extends JFrame{
 	
 	private JLabel firstTitleOfPage;
-	private JTextField textFieldForPassword;
+	private JPasswordField textFieldForPassword;
 	private JButton logInButton;
 	private JPanel panel;
 	private String correct = "aris";
@@ -26,7 +27,7 @@ public class IdentityFrame extends JFrame{
 		panel = new JPanel();
 		
 		firstTitleOfPage = new JLabel("Central Page Of Pharmacist. Enter Password: ");
-		textFieldForPassword = new JTextField(10);
+		textFieldForPassword = new JPasswordField(10);
 		logInButton = new JButton("Log in");
 		
 		ImageIcon icon = new ImageIcon("hospital1.png");
