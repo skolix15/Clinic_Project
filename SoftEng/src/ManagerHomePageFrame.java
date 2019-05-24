@@ -44,11 +44,11 @@ public class ManagerHomePageFrame extends JFrame {
 	private JButton add, remove;
 	private JTextField FindField;
 	private JScrollPane scrollPane, scrollPane2;
-	private JTable table, program;
+	private JTable doctorsTable, program;
 	private JLabel hrLabel;
-	private db conn;
+	private db conn ;
 	
-	private DefaultTableModel model;
+	private DefaultTableModel model, model2;
 
 	
 	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); 
@@ -72,11 +72,11 @@ public class ManagerHomePageFrame extends JFrame {
 		
 		menubar.add(employeeMenu);
 		menubar.add(programMenu);
-		
+	
 		mainPanel.add(menubar);
 		
 		// Gets all the doctors from the database and puts them in the ArrayList doctors
-		db.getAllDoctors(doctors, conn.getMyConn());
+		conn.getAllDoctors(doctors, conn.getMyConn());
 		
 		// Insert the doctors to the JTable
 		
@@ -138,10 +138,10 @@ public class ManagerHomePageFrame extends JFrame {
 					model.addRow(new Object[] {firstname_db, lastname_db, rn_db});
 				}
 			
-			    table = new JTable(model);
+			    doctorsTable = new JTable(model);
 				
-				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
-			    table.setRowSorter(sorter);
+				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(doctorsTable.getModel());
+			    doctorsTable.setRowSorter(sorter);
 				
 			    
 				FindField= new JTextField("Search Employee"); 
@@ -181,11 +181,11 @@ public class ManagerHomePageFrame extends JFrame {
 					}
 				});
 				
-				table.setAlignmentX(Component.LEFT_ALIGNMENT);
+				doctorsTable.setAlignmentX(Component.LEFT_ALIGNMENT);
 			  
 				// Create ScrollPane for the table
 				   
-			    scrollPane = new JScrollPane(table);
+			    scrollPane = new JScrollPane(doctorsTable);
 				scrollPane.setBounds(36, 37, 407, 79);
 			
 				secondPanel.add(hrLabel);
@@ -221,9 +221,8 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  JTextField firstNameField = new JTextField("First Name");
 				    	  JTextField lastNameField = new JTextField("Last  Name");
 				    	  JTextField amField = new JTextField("ΑΜ");
-				    	  String AM, firstName, lastName;
-				    
 				    	  
+				       	  
 				    	  secondPanel.add(label, BorderLayout.NORTH);
 				    	  secondPanel.add(firstNameField, BorderLayout.CENTER);
 				    	  secondPanel.add(lastNameField, BorderLayout.CENTER);
@@ -247,7 +246,7 @@ public class ManagerHomePageFrame extends JFrame {
 							    	  
 							    	  // ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
 							    	  //check if the typed AM already exists
-							    	  NumberOfDocs =  db.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
+							    	  NumberOfDocs =  conn.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
 					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
@@ -265,7 +264,7 @@ public class ManagerHomePageFrame extends JFrame {
 					    	  			  Doctor d = new Doctor(firstName, lastName, AM);
 					    	  			  
 					    	  			  // add the doctor in database 
-					    	  			  db.addDoctor(d, conn.getMyConn());
+					    	  			  conn.addDoctor(d, conn.getMyConn());
 					    	  			  // add the doctor in ArrayList doctors 
 					    	  			  doctors.add(d);
 					    	  			  setVisible(false);
@@ -277,13 +276,9 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  //remove -> button to remove an employee
 				    	  remove.addActionListener(new ActionListener()
 						    {	
-						      public void actionPerformed(ActionEvent e)
-						      {		
-						    	  //Remove employee from database
-						    	  
-						  
-						      }
-					    });
+							      public void actionPerformed(ActionEvent e)
+							      { }
+							   });
 				    	  
 				      }
 			    });
@@ -292,11 +287,11 @@ public class ManagerHomePageFrame extends JFrame {
 			//Button: Program-> Create
 			else if(e.getSource() == create) {
 				JLabel label= new JLabel();
-				JTextField text1 = new JTextField("Number of doctors in db");
+				JLabel text1 = new JLabel("Number of doctors in db: __");//Arithmos apo vasi
 				JButton show_program = new JButton("Show Program");
 				JButton cancel_but = new JButton("Cancel");
 				
-				//text1.setText(); Πλήθος γιατρών, το παίρνει από την βάση
+			
 		
 				
 				label.setText("Create - Export TimeTable");
@@ -317,30 +312,38 @@ public class ManagerHomePageFrame extends JFrame {
 			    	  
 			    	  label.setText("Shift's Program ");
 			    	 
-			    	  Object[] columnNames = {"Schedule" , "Monday" , "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-			  	      Object[][] rowData = { {"06:00-14:00", "-" , "-", "-", "-", "-", "-", "-" },
-			  	    					   {"14:00-22:00", "-", "-", "-", "-", "-", "-", "-"},
-			  	    					   {"22:00-06:00", "-", "-", "-", "-", "-", "-", "-"} };
-			    	 
-			    	 
-			  	       program = new JTable(rowData,columnNames);
+			    	  model2 = new DefaultTableModel();
+			  		  model2.addColumn("Schedule");
+			  		  model2.addColumn("Monday");
+			  		  model2.addColumn("Tuesday");
+			  		  model2.addColumn("Wednesday");
+			  		  model2.addColumn("Thursday");
+			  		  model2.addColumn("Friday");
+			  		  model2.addColumn("Saturday");
+			  		  model2.addColumn("Sunday");
+			  		  model2.addRow( new Object[] {"06:00-14:00", "-" , "-", "-", "-", "-", "-", "-" });
+			  		  model2.addRow( new Object[] {"14:00-22:00", "-" , "-", "-", "-", "-", "-", "-" });
+			  		  model2.addRow( new Object[] {"22:00-00:00", "-" , "-", "-", "-", "-", "-", "-" });
+			  		  program = new JTable(model2);
+			  		
+			  		  program.setAlignmentX(Component.LEFT_ALIGNMENT);
 			  
 		
-			  	       program.setAlignmentX(Component.LEFT_ALIGNMENT);
+			  	      program.setAlignmentX(Component.LEFT_ALIGNMENT);
 			
 			  	       // Create ScrollPane for the table
 			   
-			  	       scrollPane2 = new JScrollPane(program);
-			  	       scrollPane2.setBounds(20, 20, 10, 30);
+			  	      scrollPane2 = new JScrollPane(program);
+			  	      scrollPane2.setBounds(20, 20, 10, 30);
 			  	      
 			  	       
-			    	   secondPanel.add(label);
-			    	   secondPanel.add(scrollPane2);
-			    	   secondPanel.add(save);	
-			    	   secondPanel.add(amendment);
-			    	   pack();
+			    	  secondPanel.add(label);
+			    	  secondPanel.add(scrollPane2);
+			    	  secondPanel.add(save);	
+			          secondPanel.add(amendment);
+			          pack();
 			    	   
-			    	   save.addActionListener(new ActionListener()
+			    	  save.addActionListener(new ActionListener()
 					    {	
 					      public void actionPerformed(ActionEvent e)
 					      {
@@ -376,4 +379,5 @@ public class ManagerHomePageFrame extends JFrame {
 	
 		}	
 	}
+		
 }

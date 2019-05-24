@@ -72,7 +72,7 @@ public class DoctorLogInFrame extends JFrame {
 				
 				Boolean flag=true;
 		    	// ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
-				NumberOfDocs = db.getNumberOfEntries("doctor", "RN", AM , conn.getMyConn());
+				NumberOfDocs = conn.getNumberOfEntries("doctor", "RN", AM , conn.getMyConn());
 				
 	  			if (NumberOfDocs == -1)
 	  			{
@@ -82,14 +82,14 @@ public class DoctorLogInFrame extends JFrame {
 	  			else if (NumberOfDocs == 1 )
 	  		    {
 	  		 		// Search if the doctor has created his/her password
-	  				password = db.returnDoctorPassword(AM, conn.getMyConn());
+	  				password = conn.returnDoctorPassword(AM, conn.getMyConn());
 	  				if (password == null) // the password hasn't been created. CREATE NOW
 	  				{
 	  					JPasswordField create_password = new JPasswordField(10);
 	  					JPasswordField check_password = new JPasswordField(10);
-	  					JLabel label1 = new JLabel("Give a New Password");
+	  					JLabel label1 = new JLabel(" Create a Password");
 	  					JLabel label2 = new JLabel("Write again the Password");
-	  					JButton confirm1 = new JButton("confirm");
+	  					JButton confirm1 = new JButton("Done");
 	  					
 	  					panel2.removeAll();
 	  					panel2.add(label1);
@@ -120,7 +120,7 @@ public class DoctorLogInFrame extends JFrame {
 	  				{
 	  					JPasswordField give_password = new JPasswordField(10);
 	  					JLabel label1 = new JLabel("Give your Password");
-	  					JButton confirm2 = new JButton("confirm");
+	  					JButton confirm2 = new JButton("Confirm");
 	  					
 	  					panel2.removeAll();
 	  					panel2.add(label1);

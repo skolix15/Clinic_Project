@@ -57,11 +57,10 @@ public class db{
 	 *            and puts them in the ArrayList that was sent as input
 	 *  Output: The list that contains the doctors
 	 */
-	public static void getAllDoctors(ArrayList<Doctor> doctors, Connection myConn)
+	public void getAllDoctors(ArrayList<Doctor> doctors, Connection myConn)
 	{
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		String Query;
 		try {
 			myStmt = myConn.createStatement();
 			// 3. Execute SQL query
@@ -108,7 +107,7 @@ public class db{
 	 * Output: returns: -1 in the case of an error
 	 * 					a positive integer that states the number of satisfied entries 
 	 */
-	public static int getNumberOfEntries(String table, String field, String value, Connection myConn)
+	public int getNumberOfEntries(String table, String field, String value, Connection myConn)
 	{
 		int Number = -1; 
 		 
@@ -138,7 +137,7 @@ public class db{
 	 * Function: inserts  doctor to the database with null values in password and timetable
 	 * Output: -----------------------
 	 */
-	 public static void addDoctor (Doctor d, Connection myConn) {
+	 public void addDoctor (Doctor d, Connection myConn) {
 		Statement myStmt = null;
 		ResultSet myRs = null;
 			
@@ -173,7 +172,7 @@ public class db{
 		}
 	 }
 	 
-	 public static void removeDoctor (Doctor d, Connection myConn) {
+	 public void removeDoctor (Doctor d, Connection myConn) {
 			PreparedStatement myStmt = null;
 			ResultSet myRs = null;
 				
@@ -217,7 +216,7 @@ public class db{
 		 }
 	 
 	 
-	 public static String returnDoctorPassword(String AM, Connection myConn)
+	 public String returnDoctorPassword(String AM, Connection myConn)
 	 {
 			Statement myStmt = null;
 			ResultSet myRs = null;
@@ -245,7 +244,7 @@ public class db{
 	  * Function: gets the password of the wanted entity
 	  * Output: the password
 	  */
-	 public static String returnPasswordUser (int code, Connection myConn) {
+	 public String returnPasswordUser (int code, Connection myConn) {
 			
 			Statement myStmt = null;
 			ResultSet myRs = null;
@@ -287,11 +286,11 @@ public class db{
 
 
 
-	public static Connection getMyConn() {
+	public Connection getMyConn() {
 		return myConn;
 	}
 
-	public static String getResult() {
+	public String getResult() {
 		return result;
 	}
 

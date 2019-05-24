@@ -1,11 +1,11 @@
-
+import java.util.ArrayList;
 
 public class Doctor {
-	String firstName;
-	String lastName;
-	String rn;
-	String password;
-	String timetable;
+	 String firstName;
+	 String lastName;
+	 String rn;
+	 String password;
+	 String timetable;
 	
 	public Doctor(String firstN, String lastN, String rn)
 	{
@@ -66,5 +66,18 @@ public class Doctor {
 		this.timetable = timetable;
 	}
 	
+
+	public static Doctor searchDoctor(String firstName, String lastName, String rn, ArrayList<Doctor> doctors) {
+		for (Doctor doct: doctors) {
+			if (doct.getFirstName().equals(firstName) && (doct.getLastName().equals(lastName))
+					&& (doct.getRn().equals(rn))
+				){
+				return doct;
+			}
+		}
+
+		return null;
+	}
+
 	
 }
