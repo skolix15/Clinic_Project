@@ -109,6 +109,7 @@ public class ManagerHomePageFrame extends JFrame {
 		this.setTitle("Manager/Shifts");
 		
 	}
+    
 	
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -273,19 +274,97 @@ public class ManagerHomePageFrame extends JFrame {
 							      }
 						    });
 				    	  
-				    	  //remove -> button to remove an employee
-				    	  remove.addActionListener(new ActionListener()
-						    {	
-							      public void actionPerformed(ActionEvent e){
-							    
-							      }
-							      
-							   });
-				    	  
+				    	 
 				    	 
 				       	  
 				      }
 			    });
+				
+				 //remove -> button to remove an employee
+		    	  remove.addActionListener(new ActionListener()
+				    {	
+					      public void actionPerformed(ActionEvent e){
+					    	  
+					    	  
+					    	  DefaultTableModel model =
+					    			  (DefaultTableModel)doctorsTable.getModel();
+					    			model.removeRow(doctorsTable.getSelectedRow());
+					      }
+					      
+					   });
+		    	  
+				
+				
+				
+				doctorsTable.addMouseListener(new MouseAdapter() {
+		 	    	
+		 	    	public void mousePressed (MouseEvent e) {
+		 	    		
+		 	    		 String firstName = "";
+		 	    		 String lastName = "";
+		 	    		 String rn="";
+
+		 		    	 int selectedRowFromOrderTable = e.getY()/doctorsTable.getRowHeight();
+		 		    	  
+		 		    	  
+		 		    	 
+		 		    	 for (int j = 0; j < 3; j++) {
+		 		        	  
+		 		    		    if( j==0 )
+		 		        	  		lastName = (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable,j);
+		 		        	  	else if( j==1 )
+		 		        	  		firstName = (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable, j);
+		 		        	  	else {
+		 		        	  		rn= (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable, j);
+		 		        	  	}
+		 		    	  }
+		 		    	  
+			 		    Doctor clickedDoct = Doctor.searchDoctor(lastName, firstName, rn, doctors);
+			 		   
+			 		  
+
+		 	    		
+		 	    		if( e.getButton() == MouseEvent.BUTTON2) {
+		 	    			
+		 	    			String message = "Would you like to delete this medicine from the list?\n";
+		 	    	        int returnValue = JOptionPane.showConfirmDialog(null, message,"Delete",JOptionPane.YES_NO_OPTION);
+		 	    	        
+		 	    	        if (returnValue == JOptionPane.YES_OPTION) {
+		 	    			
+		 	    			
+		 	    			String doctCode = "";
+		 	    			
+		 	    			for(int i=0; i<doctors.size(); i++) {
+		 	    				
+		 	    				doctCode = (String) doctorsTable.getModel().getValueAt(i,2);
+		 	    				
+		 	    				if(doctors.get(i).getRn().equals(doctCode)) {
+		 	    					
+		 	    					DefaultTableModel model = (DefaultTableModel)doctorsTable.getModel();
+		 	    					//model.setValueAt(clickedMedicine.getAvailability(),i, 2);
+		 	    					
+		 	    					}
+		 	    				}
+		 	    			
+		 	    			
+		 	    			((DefaultTableModel) doctorsTable.getModel()).removeRow(selectedRowFromOrderTable);
+		 	   	    	  	
+		 	   	    	  /*	for(int i=0;i<Storage.getMedicineList().size();i++) {
+		 	   	    	  		
+		 	   	    	  		int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
+		 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2);
+		 	   	    	  		
+		 	   	    	  	}*/
+		 	    	       }
+		 	    	      }
+		 	            }
+		 	    	
+		 	    	} 	);
+				
+				
+				
+				
+				
 				
 			}
 			//Button: Program-> Create
