@@ -75,6 +75,7 @@ public class ManagerHomePageFrame extends JFrame {
 	
 		mainPanel.add(menubar);
 		
+		
 		// Gets all the doctors from the database and puts them in the ArrayList doctors
 		conn.getAllDoctors(doctors, conn.getMyConn());
 		
@@ -274,9 +275,6 @@ public class ManagerHomePageFrame extends JFrame {
 							      }
 						    });
 				    	  
-				    	 
-				    	 
-				       	  
 				      }
 			    });
 				
@@ -286,84 +284,26 @@ public class ManagerHomePageFrame extends JFrame {
 					      public void actionPerformed(ActionEvent e){
 					    	  
 					    	  
+					    	  int row= doctorsTable.getSelectedRow();
+					    	  
+					    	  //Get RN from the selected employee
+					    	  String valueInCell = (String)doctorsTable.getModel().getValueAt(row, 2);
+					    	 
+					    	  //Delete the selected employee from JTable
 					    	  DefaultTableModel model =
 					    			  (DefaultTableModel)doctorsTable.getModel();
 					    			model.removeRow(doctorsTable.getSelectedRow());
+					    		
+					    	 //Delete the selected employee(with RN=(String)valueInCell) from List doctors
+					       	doctors = Doctor.RemoveDoctor(valueInCell, doctors);
+					   
+					       	//UPDATE THE DATABASE
+	
+					    	
 					      }
+					   
 					      
 					   });
-		    	  
-				
-				
-				
-				doctorsTable.addMouseListener(new MouseAdapter() {
-		 	    	
-		 	    	public void mousePressed (MouseEvent e) {
-		 	    		
-		 	    		 String firstName = "";
-		 	    		 String lastName = "";
-		 	    		 String rn="";
-
-		 		    	 int selectedRowFromOrderTable = e.getY()/doctorsTable.getRowHeight();
-		 		    	  
-		 		    	  
-		 		    	 
-		 		    	 for (int j = 0; j < 3; j++) {
-		 		        	  
-		 		    		    if( j==0 )
-		 		        	  		lastName = (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable,j);
-		 		        	  	else if( j==1 )
-		 		        	  		firstName = (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable, j);
-		 		        	  	else {
-		 		        	  		rn= (String) doctorsTable.getModel().getValueAt(selectedRowFromOrderTable, j);
-		 		        	  	}
-		 		    	  }
-		 		    	  
-			 		    Doctor clickedDoct = Doctor.searchDoctor(lastName, firstName, rn, doctors);
-			 		   
-			 		  
-
-		 	    		
-		 	    		if( e.getButton() == MouseEvent.BUTTON2) {
-		 	    			
-		 	    			String message = "Would you like to delete this medicine from the list?\n";
-		 	    	        int returnValue = JOptionPane.showConfirmDialog(null, message,"Delete",JOptionPane.YES_NO_OPTION);
-		 	    	        
-		 	    	        if (returnValue == JOptionPane.YES_OPTION) {
-		 	    			
-		 	    			
-		 	    			String doctCode = "";
-		 	    			
-		 	    			for(int i=0; i<doctors.size(); i++) {
-		 	    				
-		 	    				doctCode = (String) doctorsTable.getModel().getValueAt(i,2);
-		 	    				
-		 	    				if(doctors.get(i).getRn().equals(doctCode)) {
-		 	    					
-		 	    					DefaultTableModel model = (DefaultTableModel)doctorsTable.getModel();
-		 	    					//model.setValueAt(clickedMedicine.getAvailability(),i, 2);
-		 	    					
-		 	    					}
-		 	    				}
-		 	    			
-		 	    			
-		 	    			((DefaultTableModel) doctorsTable.getModel()).removeRow(selectedRowFromOrderTable);
-		 	   	    	  	
-		 	   	    	  /*	for(int i=0;i<Storage.getMedicineList().size();i++) {
-		 	   	    	  		
-		 	   	    	  		int medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
-		 	   	    	  		storageTable.getModel().setValueAt(medicineAvailability, i, 2);
-		 	   	    	  		
-		 	   	    	  	}*/
-		 	    	       }
-		 	    	      }
-		 	            }
-		 	    	
-		 	    	} 	);
-				
-				
-				
-				
 				
 				
 			}

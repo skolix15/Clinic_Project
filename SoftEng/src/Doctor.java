@@ -26,58 +26,32 @@ public class Doctor {
 		this.timetable = timetable;
 	}
 
+	
 	public String getFirstName() {
 		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
 	}
 
 	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public String getRn() {
 		return rn;
 	}
 
-	public void setRn(String rn) {
-		this.rn = rn;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getTimetable() {
-		return timetable;
-	}
-
-	public void setTimetable(String timetable) {
-		this.timetable = timetable;
+	public static ArrayList<Doctor> RemoveDoctor(String RN, ArrayList<Doctor> doctors) {
+		ArrayList<Doctor> helpList= new ArrayList<Doctor>();
+		
+		for(Doctor doct: doctors) {
+    		if(!(doct.rn.equals(RN))) {
+    			//diagrafi autou tou employee apo tin vasi
+    			helpList.add(doct);
+    		}
+    	}
+		return helpList;
 	}
 	
 
-	public static Doctor searchDoctor(String firstName, String lastName, String rn, ArrayList<Doctor> doctors) {
-		for (Doctor doct: doctors) {
-			if (doct.getFirstName().equals(firstName) && (doct.getLastName().equals(lastName))
-					&& (doct.getRn().equals(rn))
-				){
-				return doct;
-			}
-		}
-
-		return null;
-	}
 
 	
 }
