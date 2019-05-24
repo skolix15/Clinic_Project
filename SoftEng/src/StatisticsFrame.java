@@ -75,7 +75,7 @@ public class StatisticsFrame extends JFrame{
 	 		    {	 
 	 				dispose();
 	 				new GlobalHomeFrame(conn);              
-			        // kanonika new BasicGui();
+			     
 	 		    }
 	 			
 	 		}	);

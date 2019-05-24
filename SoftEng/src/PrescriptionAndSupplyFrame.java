@@ -90,8 +90,8 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	dispose();
-		    	new GlobalHomeFrame(conn);   ;           
-		        // kanonika new BasicGui();
+		    	new GlobalHomeFrame(conn);              
+		    
 		    }
 			
 		}	);
@@ -198,45 +198,6 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    storageTable = new JTable(storageModel);
 	    orderTable = new JTable(basketModel);
 	    
-	    // Dimiourgia search baras
-	   
-	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(storageTable.getModel());
-	    storageTable.setRowSorter(sorter);
-	    
-	    JLabel label = new JLabel("Search...");
-	    JTextField filterText = new JTextField();
-
-	    filterText.getDocument().addDocumentListener(new DocumentListener(){
-
-            public void insertUpdate(DocumentEvent e) {
-            	
-                String text = filterText.getText();
-
-                if (text.trim().length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));           
-                }
-            }
-	   
-            public void removeUpdate(DocumentEvent e) {
-            	
-                String text = filterText.getText();
-
-                if (text.trim().length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                    
-                }
-            }
-
-            public void changedUpdate(DocumentEvent e) {
-            	
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-        });
 	    
 	    // Kathorismos topothetisis tou pinaka
 	    
@@ -292,10 +253,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    
 	    panel.add(totalCostTitle);
 	    panel.add(textFieldForCost);
-	    
-	    panel.add(label, BorderLayout.WEST);
-	    panel.add(filterText, BorderLayout.CENTER);
-	    
+	
 	    panel.add(confirmButton);
 	    
 	 // Epikoinwnia pinakwn ( Epilogi apo thn apothiki kai gemisma kalathiou me farmaka )
