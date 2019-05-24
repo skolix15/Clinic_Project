@@ -276,10 +276,14 @@ public class ManagerHomePageFrame extends JFrame {
 				    	  //remove -> button to remove an employee
 				    	  remove.addActionListener(new ActionListener()
 						    {	
-							      public void actionPerformed(ActionEvent e)
-							      { }
+							      public void actionPerformed(ActionEvent e){
+							    
+							      }
+							      
 							   });
 				    	  
+				    	 
+				       	  
 				      }
 			    });
 				

@@ -59,7 +59,8 @@ class ManagerChoiceFrame extends JFrame{
 				if(e.getSource() == s_chain) {
 					setVisible(false);
 
-					//  GUI για όταν πατιέται το κουμπί εφοδιαστικής αλυσίδας
+					  new SupplyChainMainFrame(conn);
+
 				}
 				//Button: Shift Work
 				else if(e.getSource() == shift){
