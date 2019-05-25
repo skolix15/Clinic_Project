@@ -40,6 +40,7 @@ public class IdentityFrame extends JFrame{
 		    {	 
 		    	dispose();
 		    	new GlobalHomeFrame(conn);
+		    	
 		    	}
 			
 		});
