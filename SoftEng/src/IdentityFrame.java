@@ -35,6 +35,15 @@ public class IdentityFrame extends JFrame{
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
 		
+		lb.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) 
+		    {	 
+		    	dispose();
+		    	new GlobalHomeFrame(conn);
+		    	}
+			
+		});
+		
 
 		panel.add(firstTitleOfPage);
 		panel.add(textFieldForPassword);

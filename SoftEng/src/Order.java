@@ -72,7 +72,7 @@ public abstract class Order {
 			
 			
 			System.out.println("Name: " + medicines.get(i).getName());
-			System.out.println("id: " + medicines.get(i).getId());
+			System.out.println("Id: " + medicines.get(i).getId());
 			System.out.println("Availability: " + medicines.get(i).getAvailability());
 			System.out.println("Price: " + medicines.get(i).getPrice());
 		}
