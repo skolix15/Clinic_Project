@@ -77,7 +77,7 @@ public class ManagerHomePageFrame extends JFrame {
 		
 		
 		// Gets all the doctors from the database and puts them in the ArrayList doctors
-		conn.getAllDoctors(doctors, conn.getMyConn());
+		conn.getAllDoctors(doctors);
 		
 		// Insert the doctors to the JTable
 		
@@ -248,7 +248,7 @@ public class ManagerHomePageFrame extends JFrame {
 							    	  
 							    	  // ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
 							    	  //check if the typed AM already exists
-							    	  NumberOfDocs =  conn.getNumberOfEntries("doctor", "RN", AM, conn.getMyConn());
+							    	  NumberOfDocs =  conn.getNumberOfEntriesWithCondition("doctor", "RN", AM);
 					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
@@ -266,7 +266,7 @@ public class ManagerHomePageFrame extends JFrame {
 					    	  			  Doctor d = new Doctor(firstName, lastName, AM);
 					    	  			  
 					    	  			  // add the doctor in database 
-					    	  			  conn.addDoctor(d, conn.getMyConn());
+					    	  			  conn.addDoctor(d);
 					    	  			  // add the doctor in ArrayList doctors 
 					    	  			  doctors.add(d);
 					    	  			  dispose();
@@ -298,7 +298,7 @@ public class ManagerHomePageFrame extends JFrame {
 					       	doctors = Doctor.RemoveDoctor(valueInCell, doctors);
 					   
 					       	//UPDATE THE DATABASE
-	
+					       	conn.removeDoctor(valueInCell);
 					    	
 					      }
 					   
@@ -310,10 +310,22 @@ public class ManagerHomePageFrame extends JFrame {
 			//Button: Program-> Create
 			else if(e.getSource() == create) {
 				JLabel label= new JLabel();
-				JLabel text1 = new JLabel("Number of doctors in db: __");//Arithmos apo vasi
+				JLabel text1 = new JLabel("Number of doctors in db: ");//Arithmos apo vasi
 				JButton show_program = new JButton("Show Program");
 				JButton cancel_but = new JButton("Cancel");
 				
+				// Get the number of the doctors that exist in the database
+				int NumberOfDocs = conn.getNumberOfEntries("doctor");
+				
+				if (NumberOfDocs == -1) // an error occurred during the db query
+				{
+					// AN ERROR HAS OCCURRED
+				}
+				else // query was successful
+				{
+					// add the number to the text
+					text1.setText(text1.getText() + " '" + NumberOfDocs + "'");
+				}
 			
 		
 				
@@ -370,8 +382,7 @@ public class ManagerHomePageFrame extends JFrame {
 					    {	
 					      public void actionPerformed(ActionEvent e)
 					      {
-					    	 // APOTHIKEUSH STIN VASI DEDOMENWN
-					    	   
+					    	  //Save the global timetable in the database
 					      }
 					    });
 			    	  

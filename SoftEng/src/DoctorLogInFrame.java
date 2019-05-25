@@ -82,7 +82,7 @@ public class DoctorLogInFrame extends JFrame {
 				
 				Boolean flag=true;
 		    	// ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
-				NumberOfDocs = conn.getNumberOfEntries("doctor", "RN", AM , conn.getMyConn());
+				NumberOfDocs = conn.getNumberOfEntriesWithCondition("doctor", "RN", AM);
 				
 	  			if (NumberOfDocs == -1)
 	  			{
@@ -92,7 +92,7 @@ public class DoctorLogInFrame extends JFrame {
 	  			else if (NumberOfDocs == 1 )
 	  		    {
 	  		 		// Search if the doctor has created his/her password
-	  				password = conn.returnDoctorPassword(AM, conn.getMyConn());
+	  				password = conn.returnDoctorPassword(AM);
 	  				if (password == null) // the password hasn't been created. CREATE NOW
 	  				{
 	  					JPasswordField create_password = new JPasswordField(10);
@@ -125,9 +125,11 @@ public class DoctorLogInFrame extends JFrame {
 	  							String pass1 = create_password.getText();
 	  							String pass2 = check_password.getText();
 	  							if(pass1.equals(pass2)) {
-	  								//APOTHIKEUSE TON KWDIKO STN VASI
+	  								//--------SAVE PASSWORD TO DATABASE-------
+	  								conn.saveFieldDoctor("Password", pass1, AM);
+	  								
 	  								dispose();
-	  								new DoctorPreferenceFrame(conn);
+	  								new DoctorPreferenceFrame(conn, AM);
 	  							}
 	  							else {
 	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!");
@@ -163,10 +165,21 @@ public class DoctorLogInFrame extends JFrame {
 	  							String read_pass = give_password.getText();
 	  							if(password.equals(read_pass)) {
 	  								
-	  								// an o giatros exei dwsei protimiseis, mipws na pigainw sto manager
-	  								// home page?
-	  								dispose();
-	  								new DoctorPreferenceFrame(conn);
+	  								// check if the doctor has already stated his/her preferences
+	  								String pref = conn.returnDoctorTimetable(AM);
+	  								
+	  								if (pref == null)
+	  								{
+	  									dispose();
+		  								new DoctorPreferenceFrame(conn, AM);
+
+	  								}
+	  								else
+	  								{
+		  								dispose();
+	  									new DoctorHomePageFrame(conn, AM);
+	  								}
+
 	  							}
 	  							else {
 	  								//If you Can't remember your password?

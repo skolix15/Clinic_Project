@@ -87,7 +87,7 @@ public class ManagerLogInFrame extends JFrame  {
 				 * The given password must be the same with database's password
 				 * All the Managers have the same password
 				 */
-				String result = conn.returnPasswordUser(1, conn.getMyConn());
+				String result = conn.returnPasswordUser(1);
 		
 				if (password.equals(result)) {
 					dispose();

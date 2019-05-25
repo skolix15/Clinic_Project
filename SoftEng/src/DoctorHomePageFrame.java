@@ -6,12 +6,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,10 +32,12 @@ public class DoctorHomePageFrame extends JFrame {
 	
 	private JLabel label1;
 	private db conn;
+	private String AM;
 	
 	private DefaultTableModel model;
 	
-	public DoctorHomePageFrame(db connection) {
+	public DoctorHomePageFrame(db connection, String AM) {
+		this.AM=AM;
 		conn=connection;
 		centralPanel = new JPanel(new BorderLayout());
 		mainPanel= new JPanel();
@@ -78,7 +80,7 @@ public class DoctorHomePageFrame extends JFrame {
  			public void mouseClicked(MouseEvent e) 
  		    {	 
  				dispose();
- 		        new DoctorPreferenceFrame(conn);           
+ 		        new DoctorPreferenceFrame(conn, AM);           
  		    }
  		  });
 
@@ -124,16 +126,27 @@ public class DoctorHomePageFrame extends JFrame {
 	
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			String ttable;
 			//κουμπί ωρολόγιο πρόγραμμα
 			if(e.getSource()== timetable ) {
-				//πίνακας με όλες τις εφημερίες των γιατρών
-				//gemizw to model me oti uparxei stin vasi
+				// get the global timetable from the database
+				ttable = conn.returnTimetable(); 
+				
+				if (ttable == null)
+				{
+					JOptionPane.showMessageDialog(centralPanel, "The program hasn't been created yet.");
+				}
+				else
+				{
+					// handle the program
+				}
 	
 			}
 			else {
 				//gemizw mono tis grammes opou leei to onoma tou giatrou
 				
+				ttable = conn.returnDoctorTimetable(AM);
+				System.out.println(AM +" " + ttable);
 			}
 		}
 	}

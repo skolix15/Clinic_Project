@@ -430,7 +430,7 @@ public class db {
 		 * Function: inserts drug to the database
 		 * Output: -----------------------
 		 */
-	 public void addDrug (Medicine d) {
+	 public void addDrug (Drug d) {
 			Statement myStmt = null;
 			ResultSet myRs = null;
 				
@@ -440,7 +440,7 @@ public class db {
 				myStmt = myConn.createStatement();
 				
 				// 3. Execute SQL query
-				myStmt.executeUpdate("Insert into drug (`id`, `Availability`, `Price`, `Name`, `SoldUnits`)  Values ('" + d.getCode() + "', '" + d.getAvailability() + "', '" + d.getPrice() + "', '" + d.getName() + "', '" + d.getSoldUnits() + "')");
+				myStmt.executeUpdate("Insert into drug (`id`, `Availability`, `Price`, `Name`, `SoldUnits`)  Values ('" + d.getId() + "', '" + d.getAvailability() + "', '" + d.getPrice() + "', '" + d.getName() + "', '" + d.getSoldUnits() + "')");
 				
 				// 4. Display the result
 				printTable("drug", myConn);
@@ -475,7 +475,7 @@ public class db {
 	 * database Function: deletes drug from the database Output:
 	 * -----------------------
 	 */
-	public void removeDrug(Medicine d) {
+	public void removeDrug(Drug d) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 
