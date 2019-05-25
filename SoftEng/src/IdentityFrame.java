@@ -1,6 +1,8 @@
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,7 +17,7 @@ import javax.swing.JTextField;
 
 public class IdentityFrame extends JFrame{
 	
-	private JLabel firstTitleOfPage;
+	private JLabel titleOfPage;
 	private JPasswordField textFieldForPassword;
 	private JButton logInButton;
 	private JPanel panel;
@@ -26,15 +28,25 @@ public class IdentityFrame extends JFrame{
 		conn=connection;
 		panel = new JPanel();
 		
-		firstTitleOfPage = new JLabel("Central Page Of Pharmacist. Enter Password: ");
+		titleOfPage = new JLabel("Central Page Of Pharmacist. Enter Password: ");
 		textFieldForPassword = new JPasswordField(10);
 		logInButton = new JButton("Log in");
+		
+		textFieldForPassword.addKeyListener(new KeyAdapter() {
+	        
+	        public void keyPressed(KeyEvent e) {
+	            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	            	logInButton.doClick();
+	            }
+	        }
+
+	    });
 		
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
 		
 
-		panel.add(firstTitleOfPage);
+		panel.add(titleOfPage);
 		panel.add(textFieldForPassword);
 		panel.add(logInButton);
 
@@ -61,7 +73,7 @@ public class IdentityFrame extends JFrame{
 		
 		
 		panel.add(lb);
-		panel.add(firstTitleOfPage);
+		panel.add(titleOfPage);
 
 
 		panel.add(textFieldForPassword);
