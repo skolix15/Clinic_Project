@@ -53,7 +53,6 @@ public class GlobalHomeFrame extends JFrame {
 			setVisible(false);
 
 			if(e.getSource() == pharmacist) { 
-	
 				new IdentityFrame(conn);
 
 			}

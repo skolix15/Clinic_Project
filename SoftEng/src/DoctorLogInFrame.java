@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -42,12 +44,20 @@ public class DoctorLogInFrame extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
+				dispose();
 		        new GlobalHomeFrame(conn);           
 		    }
 		});
 		
-		
+
+		amField.addKeyListener(new KeyAdapter() {
+		        
+		        public void keyPressed(KeyEvent e) {
+		            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+		            	move.doClick();
+		            }
+		        }
+		});
 		ButtonListener listener = new ButtonListener();
 		move.addActionListener(listener);
 	
@@ -98,6 +108,16 @@ public class DoctorLogInFrame extends JFrame {
 	  					panel2.add(check_password);
 	  					panel2.add(confirm1);
 	  					
+	  					check_password.addKeyListener(new KeyAdapter() {
+	  				        
+	  				        public void keyPressed(KeyEvent e) {
+	  				            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	  				            	confirm1.doClick();
+	  				            }
+	  				        }
+
+	  				    });
+	  					
 	  					confirm1.addActionListener(new ActionListener()
 	  					{	
 	  						public void actionPerformed(ActionEvent e)
@@ -106,7 +126,7 @@ public class DoctorLogInFrame extends JFrame {
 	  							String pass2 = check_password.getText();
 	  							if(pass1.equals(pass2)) {
 	  								//APOTHIKEUSE TON KWDIKO STN VASI
-	  								setVisible(false);
+	  								dispose();
 	  								new DoctorPreferenceFrame(conn);
 	  							}
 	  							else {
@@ -127,6 +147,15 @@ public class DoctorLogInFrame extends JFrame {
 	  					panel2.add(give_password);
 	  					panel2.add(confirm2);
 	  					
+	  					give_password.addKeyListener(new KeyAdapter() {
+	  				        
+	  				        public void keyPressed(KeyEvent e) {
+	  				            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	  				            	confirm2.doClick();
+	  				            }
+	  				        }
+
+	  				    });
 	  					confirm2.addActionListener(new ActionListener()
 	  					{	
 	  						public void actionPerformed(ActionEvent e)
@@ -136,7 +165,7 @@ public class DoctorLogInFrame extends JFrame {
 	  								
 	  								// an o giatros exei dwsei protimiseis, mipws na pigainw sto manager
 	  								// home page?
-	  								setVisible(false);
+	  								dispose();
 	  								new DoctorPreferenceFrame(conn);
 	  							}
 	  							else {

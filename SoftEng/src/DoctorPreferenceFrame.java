@@ -73,7 +73,7 @@ public class DoctorPreferenceFrame extends JFrame{
 		{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
+				dispose();
 		        new GlobalHomeFrame(conn);           
 		    }
 		});
@@ -139,10 +139,9 @@ public class DoctorPreferenceFrame extends JFrame{
 					if(count==3) {
 					// To string preference είναι έτοιμο(μορφή με 0 και 1 ανά ημέρα) και στέλνεται στην βάση!
 					
-					setVisible(false);
-					new DoctorHomePageFrame(conn);}
+						dispose();
+						new DoctorHomePageFrame(conn);}
 					}
-				
+				}
 		}
-	}
 }

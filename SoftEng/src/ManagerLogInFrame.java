@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -36,6 +38,16 @@ public class ManagerLogInFrame extends JFrame  {
 		CentralPanel.add(code_pass);
 		CentralPanel.add(log_in_But);
 		
+		code_pass.addKeyListener(new KeyAdapter() {
+	        
+	        public void keyPressed(KeyEvent e) {
+	            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	            	log_in_But.doClick();
+	            }
+	        }
+
+	    });
+		
 		ButtonListener listener = new ButtonListener();
 		log_in_But.addActionListener(listener);
 		
@@ -44,11 +56,12 @@ public class ManagerLogInFrame extends JFrame  {
 		JLabel lb = new JLabel(icon);
 		CentralPanel.add(lb);
 		
+		
 		lb.addMouseListener(new MouseAdapter() 
 		{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
+				dispose();
 		        new GlobalHomeFrame(conn);           
 		    }
 		});
@@ -77,7 +90,7 @@ public class ManagerLogInFrame extends JFrame  {
 				String result = conn.returnPasswordUser(1, conn.getMyConn());
 		
 				if (password.equals(result)) {
-					setVisible(false);
+					dispose();
 					new ManagerChoiceFrame(conn);
 				}
 				else {
