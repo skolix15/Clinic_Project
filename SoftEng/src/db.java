@@ -266,7 +266,6 @@ public class db {
 	 */
 	public void addDoctor(Doctor d) {
 		Statement myStmt = null;
-		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
@@ -277,15 +276,6 @@ public class db {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
-			if (myRs != null) {
-				try {
-					myRs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
 			if (myStmt != null) {
 				try {
 					myStmt.close();
@@ -432,7 +422,6 @@ public class db {
 		 */
 	 public void addDrug (Drug d) {
 			Statement myStmt = null;
-			ResultSet myRs = null;
 				
 			
 			try {
@@ -450,15 +439,6 @@ public class db {
 				exc.printStackTrace();
 			}
 			finally {
-				if (myRs != null) {
-					try {
-						myRs.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-					
 				if (myStmt != null) {
 					try {
 						myStmt.close();
@@ -477,7 +457,6 @@ public class db {
 	 */
 	public void removeDrug(Drug d) {
 		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
 
 		try {
 			// 2. Prepare Statement
@@ -495,15 +474,6 @@ public class db {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
-			if (myRs != null) {
-				try {
-					myRs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
 			if (myStmt != null) {
 				try {
 					myStmt.close();
@@ -515,35 +485,57 @@ public class db {
 		}
 	}
 
-	/*
-	 * Input: A list that will contain all the data from all the drugs and a
-	 * connection with the database Function: Gets all the drugs from the database
-	 * and all their data and puts them in the ArrayList that was sent as input
-	 * Output: The list that contains the drugs
-	 * 
-	 * public static void getAllDrugs(ArrayList<Drug> drugs, Connection myConn) {
-	 * Statement myStmt = null; ResultSet myRs = null; try { // 2. Create a
-	 * Statement myStmt = myConn.createStatement();
-	 * 
-	 * // 3. Execute SQL query String query = "select * from drug"; myRs =
-	 * myStmt.executeQuery(query);
-	 * 
-	 * // 4. Process the result set and put the data in the drug list Drug d; while
-	 * (myRs.next()) {
-	 * 
-	 * 
-	 * d = new Drug(myRs.getInt("id"), myRs.getInt("Availability"),
-	 * myRs.getDouble("Price") , myRs.getString("Name"), myRs.getInt("SoldUnits"));
-	 * 
-	 * // add the drug to the drug's list drugs.add(d); } }catch (Exception exc) {
-	 * exc.printStackTrace(); }finally { if (myRs != null) { try { myRs.close(); }
-	 * catch (SQLException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } }
-	 * 
-	 * if (myStmt != null) { try { myStmt.close(); } catch (SQLException e) { //
-	 * TODO Auto-generated catch block e.printStackTrace(); } } } }
-	 */
-
+	 /*  Input: A list that will contain all the data from all the drugs
+		 * 		   and a connection with the database
+		 *  Function: Gets all the drugs from the database and all their data
+		 *            and puts them in the ArrayList that was sent as input
+		 *  Output: The list that contains the drugs
+		 */
+		public void getAllDrugs(ArrayList<Drug> drugs)
+		{
+			Statement myStmt = null;
+			ResultSet myRs = null;
+			try {
+				// 2. Create a Statement
+				myStmt = myConn.createStatement();
+				
+				// 3. Execute SQL query
+				String query = "select * from drug";
+				myRs = myStmt.executeQuery(query);
+				
+				// 4. Process the result set and put the data in the drug list
+				Drug d;
+				while (myRs.next()) {
+					
+					
+					d = new Drug(myRs.getInt("id"), myRs.getInt("Availability"), myRs.getDouble("Price")
+							, myRs.getString("Name"),  myRs.getInt("SoldUnits"));
+					
+					// add the drug to the drug's list
+					drugs.add(d);
+				}
+			}catch (Exception exc) {
+					exc.printStackTrace();
+				}finally {
+					if (myRs != null) {
+						try {
+							myRs.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					if (myStmt != null) {
+						try {
+							myStmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+			}	
+		}
 	public Connection getMyConn() {
 		return myConn;
 	}
