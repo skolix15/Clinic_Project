@@ -110,18 +110,18 @@ public class SupplyChainMainFrame extends JFrame{
 	    // Gemisma toy pinaka apothiki me ta farmaka pou periexei h apothiki
 	    
 	    model = new DefaultTableModel();
-	    model.addColumn("Id");
+	    model.addColumn("Code");
 	    model.addColumn("Name");
 	    model.addColumn("Availability");
 	    String medicineName = null;
-	    String medicineId = null;
+	    String medicineCode = null;
 	    int medicineAvailability = -1;
 	    
 	    for(int i=0;i<Storage.getMedicineList().size();i++) {
 	    	medicineName = Storage.getMedicineList().get(i).getName();
-	    	medicineId = Storage.getMedicineList().get(i).getId();
+	    	medicineCode = Storage.getMedicineList().get(i).getCode();
 	    	medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
-	    	model.addRow(new Object[] {medicineId,medicineName,medicineAvailability});
+	    	model.addRow(new Object[] {medicineCode,medicineName,medicineAvailability});
 	    }				 
 	    
 	    // Dimiourgia tou pinaka me basi tis parapanw stiles kai grammes

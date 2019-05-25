@@ -1,18 +1,18 @@
-public class Drug {
+
+public class Medicine {
 	
 	private String name;
-	private String id;
+	private String code;
 	private double price;
 	private int availability;
 	private int soldUnits;
 
-	public Drug(String name, String Id, double price, int availability) {
+	
+	public Medicine(String name, String code, double price, int availability) {
 		this.name = name;
-		this.id = Id;
+		this.code = code;
 		this.price = price;
 		this.availability = availability;
-		this.soldUnits = 0;
-
 	}
 	
 	
@@ -21,8 +21,8 @@ public class Drug {
 	}
 
 	
-	public String getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 	
 	
@@ -45,14 +45,14 @@ public class Drug {
 		this.availability = availability;
 	}
 
-	public void addSoldUnits(int quantity) {
-		
-		soldUnits += quantity;
-	}
 
 	public int getSoldUnits() {
-		
 		return soldUnits;
+	}
+
+
+	public void setSoldUnits(int soldUnits) {
+		this.soldUnits = soldUnits;
 	}
 	
 }

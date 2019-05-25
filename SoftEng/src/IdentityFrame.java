@@ -19,7 +19,7 @@ public class IdentityFrame extends JFrame{
 	private JPasswordField textFieldForPassword;
 	private JButton logInButton;
 	private JPanel panel;
-	private String correct = "aris";
+	private String correct;
 	private db conn;
 	
 	public IdentityFrame(db connection) {
@@ -44,6 +44,8 @@ public class IdentityFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String password = textFieldForPassword.getText();
+				
+				correct = conn.returnPasswordUser(2);
 				
 				if( password.equals(correct)) {
 					dispose();

@@ -25,11 +25,13 @@ public class DoctorPreferenceFrame extends JFrame{
 	private JLabel label;
 	
 	private String preference;
+	private String AM;
 	private db conn;
 
 
 	
-	public DoctorPreferenceFrame(db connection) {
+	public DoctorPreferenceFrame(db connection, String AM) {
+		this.AM=AM;
 		conn=connection;
 		centralPanel=new JPanel();
 		label=new JLabel("Doctor's preference");
@@ -137,10 +139,11 @@ public class DoctorPreferenceFrame extends JFrame{
 					}
 		
 					if(count==3) {
-					// To string preference είναι έτοιμο(μορφή με 0 και 1 ανά ημέρα) και στέλνεται στην βάση!
-					
-					setVisible(false);
-					new DoctorHomePageFrame(conn);}
+						//save the doctor's preferences in the database
+						conn.saveFieldDoctor("timetable", preference, AM); 
+						
+						setVisible(false);
+						new DoctorHomePageFrame(conn, AM);}
 					}
 				
 		}

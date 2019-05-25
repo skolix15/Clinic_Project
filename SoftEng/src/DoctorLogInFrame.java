@@ -72,23 +72,23 @@ public class DoctorLogInFrame extends JFrame {
 				
 				Boolean flag=true;
 		    	// ----------SEARCH IF THE DOCTOR ALREADY EXISTS------------
-				NumberOfDocs = conn.getNumberOfEntries("doctor", "RN", AM , conn.getMyConn());
+				NumberOfDocs = conn.getNumberOfEntriesWithCondition("doctor", "RN", AM);
 				
 	  			if (NumberOfDocs == -1)
 	  			{
-					 JOptionPane.showMessageDialog(panel1, "Error");
+					 JOptionPane.showMessageDialog(panel1, "An unexpected error has occurred.");
 
 	  			}
 	  			else if (NumberOfDocs == 1 )
 	  		    {
 	  		 		// Search if the doctor has created his/her password
-	  				password = conn.returnDoctorPassword(AM, conn.getMyConn());
+	  				password = conn.returnDoctorPassword(AM);
 	  				if (password == null) // the password hasn't been created. CREATE NOW
 	  				{
 	  					JPasswordField create_password = new JPasswordField(10);
 	  					JPasswordField check_password = new JPasswordField(10);
 	  					JLabel label1 = new JLabel(" Create a Password");
-	  					JLabel label2 = new JLabel("Write again the Password");
+	  					JLabel label2 = new JLabel(" Confirm Password");
 	  					JButton confirm1 = new JButton("Done");
 	  					
 	  					panel2.removeAll();
@@ -105,12 +105,16 @@ public class DoctorLogInFrame extends JFrame {
 	  							String pass1 = create_password.getText();
 	  							String pass2 = check_password.getText();
 	  							if(pass1.equals(pass2)) {
-	  								//APOTHIKEUSE TON KWDIKO STN VASI
+	  								
+	  								//--------SAVE PASSWORD TO DATABASE-------
+	  								conn.saveFieldDoctor("Password", pass1, AM);
+	  								
+	  								
 	  								setVisible(false);
-	  								new DoctorPreferenceFrame(conn);
+	  								new DoctorPreferenceFrame(conn, AM);
 	  							}
 	  							else {
-	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!");
+	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match. Try again!");
 	  							}
 	  						}
 				     });
@@ -120,7 +124,7 @@ public class DoctorLogInFrame extends JFrame {
 	  				{
 	  					JPasswordField give_password = new JPasswordField(10);
 	  					JLabel label1 = new JLabel("Give your Password");
-	  					JButton confirm2 = new JButton("Confirm");
+	  					JButton confirm2 = new JButton("Log In");
 	  					
 	  					panel2.removeAll();
 	  					panel2.add(label1);
@@ -133,11 +137,19 @@ public class DoctorLogInFrame extends JFrame {
 	  						{
 	  							String read_pass = give_password.getText();
 	  							if(password.equals(read_pass)) {
+	  								// check if the doctor has already stated his/her preferences
+	  								String pref = conn.returnDoctorTimetable(AM);
 	  								
-	  								// an o giatros exei dwsei protimiseis, mipws na pigainw sto manager
-	  								// home page?
-	  								setVisible(false);
-	  								new DoctorPreferenceFrame(conn);
+	  								if (pref == null)// he/she hasn't set his/her preferences. DO IT NOW
+	  								{
+		  								setVisible(false);
+		  								new DoctorPreferenceFrame(conn, AM);
+	  								}
+	  								else // go to the doctor's home page. there are alredy preferences set
+	  								{
+		  								setVisible(false);	
+	  									new DoctorHomePageFrame(conn, AM);
+	  								}
 	  							}
 	  							else {
 	  								//If you Can't remember your password?

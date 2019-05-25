@@ -90,8 +90,8 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) 
 		    {	 
 		    	dispose();
-		    	new GlobalHomeFrame(conn);              
-		    
+		    	new GlobalHomeFrame(conn);   ;           
+		        // kanonika new BasicGui();
 		    }
 			
 		}	);
@@ -171,11 +171,11 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    storageModel = new DefaultTableModel();
 	    basketModel = new DefaultTableModel();
 	    
-	    storageModel.addColumn("Id");
+	    storageModel.addColumn("Code");
 	    storageModel.addColumn("Name");
 	    storageModel.addColumn("Availability");
 	    
-	    basketModel.addColumn("Id");
+	    basketModel.addColumn("Code");
 	    basketModel.addColumn("Name");
 	    basketModel.addColumn("Quantity");
 	    
@@ -188,7 +188,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    for(int i=0;i<Storage.getMedicineList().size();i++) {
 	    	
 	    	medicineName = Storage.getMedicineList().get(i).getName();
-	    	medicineCode = Storage.getMedicineList().get(i).getId();
+	    	medicineCode = Storage.getMedicineList().get(i).getCode();
 	    	medicineAvailability = Storage.getMedicineList().get(i).getAvailability();
 	    	storageModel.addRow(new Object[] {medicineCode,medicineName,medicineAvailability});
 	    }
@@ -198,6 +198,45 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    storageTable = new JTable(storageModel);
 	    orderTable = new JTable(basketModel);
 	    
+	    // Dimiourgia search baras
+	   
+	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(storageTable.getModel());
+	    storageTable.setRowSorter(sorter);
+	    
+	    JLabel label = new JLabel("Search...");
+	    JTextField filterText = new JTextField();
+
+	    filterText.getDocument().addDocumentListener(new DocumentListener(){
+
+            public void insertUpdate(DocumentEvent e) {
+            	
+                String text = filterText.getText();
+
+                if (text.trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));           
+                }
+            }
+	   
+            public void removeUpdate(DocumentEvent e) {
+            	
+                String text = filterText.getText();
+
+                if (text.trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    
+                }
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+            	
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
 	    
 	    // Kathorismos topothetisis tou pinaka
 	    
@@ -253,7 +292,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    
 	    panel.add(totalCostTitle);
 	    panel.add(textFieldForCost);
-	
+	    
+	    panel.add(label, BorderLayout.WEST);
+	    panel.add(filterText, BorderLayout.CENTER);
+	    
 	    panel.add(confirmButton);
 	    
 	 // Epikoinwnia pinakwn ( Epilogi apo thn apothiki kai gemisma kalathiou me farmaka )
@@ -286,12 +328,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    	  
  	    	  // Dimiourgeitai antikeimeno typou medicine me xrisi twn 2 parapanw metablitwn
  	       
- 	    	  Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
+ 	    	  Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);		
  	    	  
  	    	 
  	    	  // Elegxetai an to dhmiourgimeno farmako yparxei mesa sthn lista ths twrinis paraggelias
  		    
- 	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getId())) {
+ 	    	  if(!order.searchForMedicineInOrder( clickedMedicine.getCode())) {
  	    		  
  	    		  // Protrepei ton xristi na plhktrologisei ena noumero pou tha apotelesei thn posotita tou farmakou
  	    		  // pou tha eisagei sthn lista paraggelias
@@ -340,7 +382,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	    			  		
  	    			  		// Prostithetai to epilegmeno farmako (apo thn apothiki) ston neo pinaka (ths paraggelias)
  	    			  		
- 	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getId(), clickedMedicine.getName(), inputAvailabilityInteger}); 
+ 	    			  		modelForOrderTable.addRow(new Object[]{clickedMedicine.getCode(), clickedMedicine.getName(), inputAvailabilityInteger}); 
  	    			  		
  	    			  		// Metatrepoume katallila thn diathesimotita toy farmakou pou mpike sthn paraggelia
  	    			  		
@@ -387,7 +429,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  		    	  
  		    	// Dimiourgia antikeimenou typou Medicine
  		    	 
- 		    	Drug clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
+ 		    	Medicine clickedMedicine = Storage.searchMedicine(medicineName,medicineCode);
  		    	
  	    		// MouseEvent.BUTTON3 gia na elecsei an patithike decsi klik apo ton xristi
  		    	
@@ -415,7 +457,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
  	 	    				
  	 	    				medCode = (String) storageTable.getModel().getValueAt(i,1);
  	 	    				
- 	 	    				if(clickedMedicine.getId().equals(medCode)) {
+ 	 	    				if(clickedMedicine.getCode().equals(medCode)) {
  	 	    					
  	 	    					DefaultTableModel model = (DefaultTableModel)storageTable.getModel();
  	 	    					model.setValueAt(clickedMedicine.getAvailability(),i, 2);
