@@ -1,6 +1,8 @@
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,6 +39,17 @@ public class IdentityFrame extends JFrame{
 		panel.add(firstTitleOfPage);
 		panel.add(textFieldForPassword);
 		panel.add(logInButton);
+		
+		textFieldForPassword.addKeyListener(new KeyAdapter() {
+	        
+	        public void keyPressed(KeyEvent e) {
+	            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+	            	logInButton.doClick();
+	            }
+	        }
+
+	    });
+		
 
 		logInButton.addActionListener(new ActionListener() {
 
