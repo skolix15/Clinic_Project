@@ -63,7 +63,7 @@ public class DoctorHomePageFrame extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
+				dispose();
 		        new GlobalHomeFrame(conn);           
 		    }
 		});
@@ -77,7 +77,7 @@ public class DoctorHomePageFrame extends JFrame {
  		 {
  			public void mouseClicked(MouseEvent e) 
  		    {	 
- 				setVisible(false);
+ 				dispose();
  		        new DoctorPreferenceFrame(conn);           
  		    }
  		  });

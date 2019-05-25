@@ -38,7 +38,7 @@ class ManagerChoiceFrame extends JFrame{
 			{
 				public void mouseClicked(MouseEvent e) 
 			    {	 
-			    	setVisible(false);
+					dispose();
 			        new GlobalHomeFrame(conn);           
 			    }
 			});
@@ -57,21 +57,16 @@ class ManagerChoiceFrame extends JFrame{
 				
 				//Button: Supply Chain
 				if(e.getSource() == s_chain) {
-					setVisible(false);
-
-					  new SupplyChainMainFrame(conn);
+					dispose();
+					new SupplyChainMainFrame(conn);
 
 				}
 				//Button: Shift Work
 				else if(e.getSource() == shift){
-					setVisible(false);
-
+					dispose();
 					new ManagerHomePageFrame(conn);
-				}
-				
+				}			
 			}
 		}
-		
-		
 	}
 

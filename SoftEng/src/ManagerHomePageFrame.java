@@ -91,7 +91,7 @@ public class ManagerHomePageFrame extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e) 
 		    {	 
-		    	setVisible(false);
+				dispose();
 		        new GlobalHomeFrame(conn);           
 		    }
 		});
@@ -214,7 +214,7 @@ public class ManagerHomePageFrame extends JFrame {
 				  		 {
 				  		 	public void mouseClicked(MouseEvent e) 
 				  		    {	 
-				  		    	setVisible(false);
+				  		 		dispose();
 				  		        new ManagerHomePageFrame(conn);           
 				  		    }
 				  		  });
@@ -269,7 +269,7 @@ public class ManagerHomePageFrame extends JFrame {
 					    	  			  conn.addDoctor(d, conn.getMyConn());
 					    	  			  // add the doctor in ArrayList doctors 
 					    	  			  doctors.add(d);
-					    	  			  setVisible(false);
+					    	  			  dispose();
 					    	  			  new ManagerHomePageFrame(conn);
 				    	  			  }	
 							      }
@@ -392,7 +392,7 @@ public class ManagerHomePageFrame extends JFrame {
 			      public void actionPerformed(ActionEvent e)
 			      {	  
 			    	  
-			    	  setVisible(false);
+			    	  dispose();
 		  		      new ManagerHomePageFrame(conn);
 			    	
 			      }
