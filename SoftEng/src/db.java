@@ -16,11 +16,11 @@ public class db {
 		try {
 			// Connect to the database
 			myConn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
+					"jdbc:mysql://localhost:3305/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
 			
 			/*Check Functions add and remove of drug
 			 * 
-			 *Drug drug = new Drug (3, 3, 8.1, "lexotanil", 34);
+			 *Drug drug = new Drug ("3", 3, 8.1, "lexotanil", 34);
 			 *
 			 *addDrug(drug, myConn);
 			 *removeDrug(drug, myConn);
@@ -41,15 +41,17 @@ public class db {
 			//result = returnPasswordUser(1, myConn);
 			//printTable("drug", myConn);
 			//System.out.println(result);
+			printTable("drug", myConn);
 			
-//----------Drugs---------------			
-			//getAllDrugs(drugs, myConn);
+ArrayList<Drug> drugs = new ArrayList<>();
+			//----------Drugs---------------			
+			getAllDrugs(drugs);
 //			for(int i = 0; i < drugs.size(); i++) {   
-//				System.out.println(drugs.getName());
+//				System.out.println(drugs);
 //			} 
-//			for(Drug drug : drugs) {
-//	            System.out.println(drug.getName());
-//	        }
+			for(Drug drug : drugs) {
+	            System.out.println(drug.getName());
+	        }
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
@@ -541,8 +543,8 @@ public class db {
 				while (myRs.next()) {
 					
 					
-					d = new Drug(myRs.getInt("id"), myRs.getInt("Availability"), myRs.getDouble("Price")
-							, myRs.getString("Name"),  myRs.getInt("SoldUnits"));
+					d = new Drug(myRs.getString("Name"), myRs.getString("id"), myRs.getDouble("Price")
+							, myRs.getInt("Availability"),  myRs.getInt("SoldUnits"));
 					
 					// add the drug to the drug's list
 					drugs.add(d);

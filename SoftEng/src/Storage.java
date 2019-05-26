@@ -12,8 +12,8 @@ public class Storage {
 		
 	}
 	
-	public static void addMedicine(String name, String id, double price, int availability) {
-		Drug med = new Drug(name, id, price, availability);
+	public static void addMedicine(String name, String id, double price, int availability, int soldunits) {
+		Drug med = new Drug(name, id, price, availability, soldunits);
 		medicineList.add(med);
 	}
 	
