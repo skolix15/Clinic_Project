@@ -17,6 +17,39 @@ public class db {
 			// Connect to the database
 			myConn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
+			
+			/*Check Functions add and remove of drug
+			 * 
+			 *Drug drug = new Drug (3, 3, 8.1, "lexotanil", 34);
+			 *
+			 *addDrug(drug, myConn);
+			 *removeDrug(drug, myConn);
+			 *
+			 */
+			
+			/*Check Functions add and remove of doctor
+			 * 
+			 *Doctor d = new Doctor ("Evag", "Myl", "dai18050", null, null);
+			 *
+			 *addDoctor(d, myConn);
+			 *removeDoctor(d, myConn);
+			 *
+			 *Copy, Paste and Run for Check
+			 */
+			
+			//Some more check Functions:
+			//result = returnPasswordUser(1, myConn);
+			//printTable("drug", myConn);
+			//System.out.println(result);
+			
+//----------Drugs---------------			
+			//getAllDrugs(drugs, myConn);
+//			for(int i = 0; i < drugs.size(); i++) {   
+//				System.out.println(drugs.getName());
+//			} 
+//			for(Drug drug : drugs) {
+//	            System.out.println(drug.getName());
+//	        }
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
