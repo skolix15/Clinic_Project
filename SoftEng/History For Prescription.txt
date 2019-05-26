@@ -1,4 +1,6 @@
-001 aspirini 5
-002 depon 5
-003 panadol 5
-004 siropi 5
+001 aspirini 5 26/05/2019
+002 depon 10 26/05/2019
+004 siropi 5 26/05/2019
+003 panadol 4 26/05/2019
+002 depon 10 26/05/2019
+004 siropi 5 26/05/2019

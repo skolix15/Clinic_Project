@@ -10,6 +10,7 @@ public class Supply extends Order {
 		medicines = new ArrayList<Drug>();
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
+		super.getDateTime();
 	}
 		
 	// Prostithetai ena neo farmako stis lista me ta farmaka kai h posotita tou sthn antistoixi thesi sthn lista me tis posothtes.

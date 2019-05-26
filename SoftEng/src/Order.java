@@ -1,12 +1,16 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class Order {
 	
 	protected ArrayList<Drug> medicines;
 	protected ArrayList<Integer> quantityOfMedicines;
 	protected double totalCost;
+	protected String date;
 	
 	// prosthetei ena neo farmako sth lista ths syntaghs me ta farmaka kai thn posotita tou sthn antistoixi thesi sth lista ths syntaghs me tis posothtes.
 	
@@ -14,7 +18,7 @@ public abstract class Order {
 		
 		medicines.add(orderedMedicine);
 		quantityOfMedicines.add(quantity);
-	
+		
 	}
 	
 	public abstract void deleteMedicineFronTheOrder(Drug orderedMedicine);
@@ -31,7 +35,8 @@ public abstract class Order {
 		    String textToBeWritten = "";
 		    
 		    for(int i = 0;i<medicines.size();i++) 
-		    	textToBeWritten += (medicines.get(i).getId() + " " + medicines.get(i).getName() + " " + String.valueOf(quantityOfMedicines.get(i)) + "\n");
+		    	textToBeWritten += (medicines.get(i).getId() + " " + medicines.get(i).getName() + 
+		    						" " + String.valueOf(quantityOfMedicines.get(i)) + " " +  this.getDateTime()  + "\n");
 		         
 		    FileWriter fw = new FileWriter(fileName,true);  //the true will append the new data
 		    fw.write(textToBeWritten);						 //appends the string to the file
@@ -97,6 +102,13 @@ public abstract class Order {
 		med.clear();
 		quantityOfMed.clear();
 	}
+	
+	public String getDateTime() {
+		
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
 }
 

@@ -10,6 +10,7 @@ public class Prescription extends Order {
 		medicines = new ArrayList<Drug>();
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
+		date = super.getDateTime();
 		
 	}
 	
@@ -22,6 +23,7 @@ public class Prescription extends Order {
 		
 		super.addMedicineInTheOrder(orderedMedicine, quantity);
 		orderedMedicine.setAvailability(orderedMedicine.getAvailability() - quantity);
+		orderedMedicine.setSoldUnits(orderedMedicine.getSoldUnits() + quantity);
 	
 	}
 	
@@ -37,6 +39,7 @@ public class Prescription extends Order {
 		    if(medicine.getId().equals(orderedMedicine.getId())) {
 		        iterator.remove();
 		        orderedMedicine.setAvailability(orderedMedicine.getAvailability() + quantityOfMedicines.get(i));
+		        orderedMedicine.setSoldUnits(orderedMedicine.getSoldUnits() - quantityOfMedicines.get(i));
 		        quantityOfMedicines.remove(i);
 		        i++;
 		    }
