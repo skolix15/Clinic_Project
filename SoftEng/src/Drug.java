@@ -45,9 +45,9 @@ public class Drug {
 		this.availability = availability;
 	}
 
-	public void setSoldUnits(int quantity) {
+	public void setSoldUnits(int soldUnits) {
 		
-		soldUnits = quantity;
+		this.soldUnits = soldUnits;
 	}
 
 	public int getSoldUnits() {
