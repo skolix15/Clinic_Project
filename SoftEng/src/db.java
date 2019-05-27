@@ -491,7 +491,7 @@ public class db {
 		 *            and puts them in the ArrayList that was sent as input
 		 *  Output: The list that contains the drugs
 		 */
-		public void getAllDrugs(ArrayList<Drug> drugs)
+		/*public void getAllDrugs(ArrayList<Drug> drugs)
 		{
 			Statement myStmt = null;
 			ResultSet myRs = null;
@@ -535,7 +535,9 @@ public class db {
 						}
 					}
 			}	
-		}
+		}*/
+	
+	
 	public Connection getMyConn() {
 		return myConn;
 	}

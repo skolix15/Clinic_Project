@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -99,6 +100,7 @@ public class DoctorPreferenceFrame extends JFrame{
 			//Μετατροπή των καταχωρήσεων του γιατρού σε μορφή 0(false) και 1(true)
 			
 			
+			
 			if(e.getSource() == prefer) {
 			int count=0;
 			
@@ -128,21 +130,23 @@ public class DoctorPreferenceFrame extends JFrame{
 							count++;
 						}
 						if(count>3) {
-							JOptionPane.showMessageDialog(centralPanel, "Έβαλες περισσότερες προτιμήσεις, χρειάζονται 3");
+							JOptionPane.showMessageDialog(centralPanel, "Put only 3 choices!");
 							break;
 						}
 			
 				}
 					if(count<3) {
-						JOptionPane.showMessageDialog(centralPanel, "Έβαλες λίγες προτιμήσεις, χρείαζονται 3");
+						JOptionPane.showMessageDialog(centralPanel, "You have less than 3 choices!");
 					
 					}
 		
 					if(count==3) {
 						//save the doctor's preferences in the database
 						conn.saveFieldDoctor("timetable", preference, AM); 
-						
+						ManagerHomePageFrame mn = new ManagerHomePageFrame(conn);
+						mn.dispose();
 						dispose();
+						mn.setDoctorsTimeTable(AM, preference);
 						new DoctorHomePageFrame(conn, AM);}
 					}
 				}
