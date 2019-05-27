@@ -6,7 +6,7 @@ public class Drug {
 	private int availability;
 	private int soldUnits;
 
-	public Drug(String name, String Id, double price, int availability) {
+	public Drug(String name, String Id, double price, int availability, int soldunits) {
 		this.name = name;
 		this.id = Id;
 		this.price = price;
@@ -46,7 +46,7 @@ public class Drug {
 	}
 
 	public void setSoldUnits(int soldUnits) {
-		
+
 		this.soldUnits = soldUnits;
 	}
 
