@@ -34,9 +34,10 @@ public abstract class Order {
 		{
 		    String textToBeWritten = "";
 		    
+		    textToBeWritten = this.getDateTime() + ": \n\n";
 		    for(int i = 0;i<medicines.size();i++) 
 		    	textToBeWritten += (medicines.get(i).getId() + " " + medicines.get(i).getName() + 
-		    						" " + String.valueOf(quantityOfMedicines.get(i)) + " " +  this.getDateTime()  + "\n");
+		    						" " + String.valueOf(quantityOfMedicines.get(i)) + "\n");
 		         
 		    FileWriter fw = new FileWriter(fileName,true);  //the true will append the new data
 		    fw.write(textToBeWritten);						 //appends the string to the file
