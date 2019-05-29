@@ -16,7 +16,7 @@ public class db {
 		try {
 			// 1. Get a connection to database
 			myConn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3305/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
+					"jdbc:mysql://localhost:3306/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
 			
 			/*Check Functions add and remove of drug
 			 * 

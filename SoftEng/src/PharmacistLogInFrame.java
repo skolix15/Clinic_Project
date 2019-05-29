@@ -15,16 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class IdentityFrame extends JFrame{
+public class PharmacistLogInFrame extends JFrame{
 	
 	private JLabel firstTitleOfPage;
 	private JPasswordField textFieldForPassword;
 	private JButton logInButton;
 	private JPanel panel;
-	private String correct = "aris";
 	private db conn;
 	
-	public IdentityFrame(db connection) {
+	public PharmacistLogInFrame(db connection) {
 		conn=connection;
 		panel = new JPanel();
 		
@@ -66,21 +65,29 @@ public class IdentityFrame extends JFrame{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String password = textFieldForPassword.getText();
+				/*Manager Code is 1111
+				 * The given password must be the same with database's password
+				 * All the Managers have the same password
+				 */
 				
-				if( password.equals(correct)) {
+				String result = textFieldForPassword.getText();
+	
+				String password = conn.returnPasswordUser(2);
+		
+				if (password.equals(result)) {
 					dispose();
 					new SupplyChainMainFrame(conn);
 				}
-				
 				else {
+					
 					JOptionPane.showMessageDialog(null,"Wrong Password","Error..",JOptionPane.ERROR_MESSAGE);
 					textFieldForPassword.setText("");
+					
 				}
-				
+			
 			}
-	
-		}	);
+			
+		});
 		
 		
 		panel.add(lb);

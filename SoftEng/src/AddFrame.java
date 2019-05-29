@@ -41,7 +41,7 @@ public class AddFrame extends JFrame{
 	
 	public AddFrame (db connection) {
 				
-		       conn=connection;
+		        conn=connection;
 		
 				//Δημιουργία panel
 				panel = new JPanel();
@@ -233,8 +233,12 @@ public class AddFrame extends JFrame{
 					int quantityInt = Integer.parseInt(quantityText);
 					
 					
-					if (Storage.searchMedicine(nameText, idText) == null)
+					if (Storage.searchMedicine(nameText, idText) == null) {
 						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);	
+						
+						// Enimerwsi ths bashs
+					
+					}
 					else
 						JOptionPane.showMessageDialog(null, nameText + " already exists");
 						
