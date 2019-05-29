@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -51,34 +52,27 @@ public class SupplyChainMainFrame extends JFrame{
 		
 		mb = new JMenuBar();
 		
-		// Dimiourgia button gia enhmerwsi basis
+		File file = new File("History For Prescription.txt");
 		
-		informBaseButton = new JButton("Inform Base");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		
-		// Listener gia informBaseButton
 		
-		informBaseButton.addActionListener(new ActionListener() {
-
+		if(sdf.format(file.lastModified()) != PrescriptionOrdersTemporalBase.getDate()) {		// or .getDateTime
 			
-			public void actionPerformed(ActionEvent arg0) {
-				
-				// Enhmerwnei thn basi
-				
-				PrescriptionOrdersTemporalBase.setNumberOfLinesInFile(0);
-				File file  = new File("History For Prescription.txt");
-				PrintWriter writer;
-				try {
-					writer = new PrintWriter(file);
-					writer.print("");
-					writer.close();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+			PrescriptionOrdersTemporalBase.setNumberOfLinesInFile(0);
+			PrintWriter writer;
+			try {
+				writer = new PrintWriter(file);
+				writer.print("");
+				writer.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-		});
+			
+			
+			// Enimerwsi thn basis
+		}
 		
 		// Dimiourgia twn triwn menu
 		
