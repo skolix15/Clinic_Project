@@ -54,7 +54,7 @@ public class SupplyChainMainFrame extends JFrame{
 		
 		File file = new File("History For Prescription.txt");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		
 		if(sdf.format(file.lastModified()) != PrescriptionOrdersTemporalBase.getDate()) {		// or .getDateTime
