@@ -235,10 +235,9 @@ public class AddFrame extends JFrame{
 					
 					if (Storage.searchMedicine(nameText, idText) == null) {
 						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);	
-						
-						// Enimerwsi ths bashs
-					
+		
 					}
+					
 					else
 						JOptionPane.showMessageDialog(null, nameText + " already exists");
 						

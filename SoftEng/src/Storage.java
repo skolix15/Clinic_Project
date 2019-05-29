@@ -8,7 +8,7 @@ public class Storage {
 	public static void updateStorage(db connection) {
 		
 		// Enimerwsi apo basi
-		connection.getAllDrugs(medicineList);
+	
 		
 	}
 	

@@ -29,14 +29,7 @@ public class Main {
 	   
 	   new GlobalHomeFrame(conn);
 	   
-	   
-	   Storage.updateStorage(conn);
-	   System.out.println(Storage.getMedicineList().size());
-	   
 
-			
-		
-		
 	}
 	
 

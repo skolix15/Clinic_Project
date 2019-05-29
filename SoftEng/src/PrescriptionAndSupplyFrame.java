@@ -63,12 +63,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(typeOfOrder == true)
+				if(typeOfOrder == true) {
 					PrescriptionOrdersTemporalBase.writeToOrderFile(order.getListOfMedicines(), order.getQuantityOfMedicines());
-					// Enhmerwnetai h basi gia Prescription apeytheias
-				
-				//else if(typeOfOrder == false)
-					// Enhmerwnetai h bash gia Supply apeytheias
+					Storage.updateStorage(connection);
+					}
+				else if(typeOfOrder == false)
+					Storage.updateStorage(connection);
 					
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
 				int rowCount = dm.getRowCount();
