@@ -571,8 +571,8 @@ public class db {
 					
 					
 					d = new Drug(myRs.getString("Name"), myRs.getString("id"), myRs.getDouble("Price")
-							, myRs.getInt("Availability"),  myRs.getInt("SoldUnits"));
-					
+							, myRs.getInt("Availability"));
+					d.setSoldUnits(myRs.getInt("SoldUnits"));
 					// add the drug to the drug's list
 					drugs.add(d);
 				}
