@@ -14,19 +14,28 @@ public class db {
 	public db() throws SQLException {
 
 		try {
-			// Connect to the database
+			// 1. Get a connection to database
 			myConn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3305/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
 			
 			/*Check Functions add and remove of drug
 			 * 
-			 *Drug drug = new Drug ("3", 3, 8.1, "lexotanil", 34);
+			 *Drug drug = new Drug ("lexotanil", "3", 8.1, 3, 34);
 			 *
-			 *addDrug(drug, myConn);
-			 *removeDrug(drug, myConn);
+			 *addDrug(drug);
+			 *removeDrug(drug);
 			 *
 			 */
-			
+			//printTable("drug", myConn);
+			//System.out.println("gamawwwwwwwwwwwwww");
+			//Drug drug1 = new Drug ("lexotanil", "3", 8.1, 3, 34);
+			//Drug drug2 = new Drug ("depon", "4", 0.5, 8, 55);
+			//ArrayList<Drug> drugs = new ArrayList<>();
+			//drugs.add(drug1);
+			//drugs.add(drug2);
+			//addDrug(drug1);
+			//addDrug(drug2);
+			//removeDrug(drugs);
 			/*Check Functions add and remove of doctor
 			 * 
 			 *Doctor d = new Doctor ("Evag", "Myl", "dai18050", null, null);
@@ -41,17 +50,33 @@ public class db {
 			//result = returnPasswordUser(1, myConn);
 			//printTable("drug", myConn);
 			//System.out.println(result);
-			printTable("drug", myConn);
+			//printTable("drug", myConn);
 			
-ArrayList<Drug> drugs = new ArrayList<>();
+//ArrayList<Drug> drugs = new ArrayList<>();
 			//----------Drugs---------------			
-			getAllDrugs(drugs);
-//			for(int i = 0; i < drugs.size(); i++) {   
-//				System.out.println(drugs);
-//			} 
-			for(Drug drug : drugs) {
-	            System.out.println(drug.getName());
-	        }
+			//getAllDrugs(drugs);
+			//for(int i = 0; i < drugs.size(); i++) {   
+			//	System.out.println(drugs);
+			//} 
+//			for(Drug d : drugs) {
+//	            System.out.println(d.getName());
+//	        }
+			//drugs.add(drug1);
+			//addDrug(drug1);
+//			printTable("drug", myConn);
+//			Drug drug1 = new Drug ("xanax", "1", 1.3, 5, 34);
+//			Drug drug2 = new Drug ("viagra", "2", 2.4, 3, 13);
+//			Drug drug3 = new Drug ("lexotanil", "3", 5.5, 55, 55);
+//ArrayList<Drug> ds = new ArrayList<>();
+//			ds.add(drug1);
+//			ds.add(drug2);
+//			ds.add(drug3);
+//			updateDrugList(ds);
+//			for(Drug d : drugs) {
+//	            System.out.println(d.getName());
+//	        }
+//			printTable("drug", myConn);
+			
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
@@ -187,10 +212,10 @@ ArrayList<Drug> drugs = new ArrayList<>();
 	}
 
 	/*
-	 * Input: A list that will contain all the data from all the doctors Function:
-	 * Gets all the doctors from the database and all their data a and puts them in
-	 * the ArrayList that was sent as input Output: The list that contains the
-	 * doctors
+	 * Input: A list that will contain all the data from all the doctors 
+	 * Function: Gets all the doctors from the database and all their data a and puts them in
+	 * the ArrayList that was sent as input 
+	 * Output: The list that contains the doctors
 	 */
 	public void getAllDoctors(ArrayList<Doctor> doctors) {
 		Statement myStmt = null;
@@ -467,7 +492,7 @@ ArrayList<Drug> drugs = new ArrayList<>();
 				myStmt.executeUpdate("Insert into drug (`id`, `Availability`, `Price`, `Name`, `SoldUnits`)  Values ('" + d.getId() + "', '" + d.getAvailability() + "', '" + d.getPrice() + "', '" + d.getName() + "', '" + d.getSoldUnits() + "')");
 				
 				// 4. Display the result
-				printTable("drug", myConn);
+				//printTable("drug", myConn);
 					
 			}
 			catch (Exception exc) {
@@ -486,25 +511,27 @@ ArrayList<Drug> drugs = new ArrayList<>();
 		 } 
 	 
 	/*
-	 * INPUT: the drug to be deleted from the database and a connection with the
-	 * database Function: deletes drug from the database Output:
-	 * -----------------------
+	 * INPUT: a list of drugs to be deleted from the database and a connection with the
+	 * database Function: deletes drugs from the database 
+	 * Output:-----------------------
 	 */
-	public void removeDrug(Drug d) {
+	public void removeDrug(ArrayList<Drug> drugs) {
 		PreparedStatement myStmt = null;
 
 		try {
-			// 2. Prepare Statement
-			myStmt = myConn.prepareStatement("delete from drug where Name = ?");
+			for(Drug d : drugs) {
+				// 2. Prepare Statement
+				myStmt = myConn.prepareStatement("delete from drug where Name = ?");
 
-			// 3. Set the Parameters
-			myStmt.setString(1, d.getName());
+				// 3. Set the Parameters
+				myStmt.setString(1, d.getName());
 
-			// 4. Execute SQL query
-			myStmt.executeUpdate();
-
+				// 4. Execute SQL query
+				myStmt.executeUpdate();
+	        }
+			
 			// 5. Display the result
-			printTable("drug", myConn);
+			//printTable("drug", myConn);
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -520,7 +547,7 @@ ArrayList<Drug> drugs = new ArrayList<>();
 		}
 	}
 
-	 /*  Input: A list that will contain all the data from all the drugs
+	 	/*  Input: A list that will contain all the data from all the drugs
 		 * 		   and a connection with the database
 		 *  Function: Gets all the drugs from the database and all their data
 		 *            and puts them in the ArrayList that was sent as input
@@ -560,7 +587,47 @@ ArrayList<Drug> drugs = new ArrayList<>();
 							e.printStackTrace();
 						}
 					}
-					
+					if (myStmt != null) {
+						try {
+							myStmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}		
+		}
+		
+		/*  Input: A list that will contain all the data from all the drugs
+		 *  Function: Updates all the drugs from the database and all their data
+		 *            and puts them in the ArrayList that was sent as input
+		 *  Output: The list that contains the updated drugs 
+		 */
+		public void updateDrugList(ArrayList<Drug> drugs)
+		{
+			PreparedStatement myStmt = null;
+			
+			try {
+				for(Drug d : drugs) {
+					// 2. Prepare Statement
+					myStmt = myConn.prepareStatement("UPDATE drug SET `Availability` = ?, `Price` = ?, `Name` = ?, `SoldUnits` = ? WHERE (`id` = ?);");
+
+					// 3. Set the Parameters
+					myStmt.setInt(1, d.getAvailability());
+					myStmt.setDouble(2, d.getPrice());
+					myStmt.setString(3, d.getName());
+					myStmt.setInt(4, d.getSoldUnits());
+					myStmt.setString(5, d.getId());
+
+					// 4. Execute SQL query
+					myStmt.executeUpdate();
+		        }
+				
+				// 5. Display the result
+				//printTable("drug", myConn);
+			}catch (Exception exc) {
+					exc.printStackTrace();
+				}finally {
 					if (myStmt != null) {
 						try {
 							myStmt.close();
@@ -571,6 +638,7 @@ ArrayList<Drug> drugs = new ArrayList<>();
 					}
 			}	
 		}
+		
 	public Connection getMyConn() {
 		return myConn;
 	}
@@ -579,4 +647,5 @@ ArrayList<Drug> drugs = new ArrayList<>();
 		return result;
 	}
 
+	
 }
