@@ -3,7 +3,7 @@ import java.util.Iterator;
 
 public class Prescription extends Order {
 
-	// Dimiourgeitai ena kainourgio antikeimeno typou Recipe.
+	// Dimiourgeitai ena kainourgio antikeimeno typou Prescription.
 	
 	public Prescription() {
 		
@@ -57,5 +57,5 @@ public class Prescription extends Order {
 		
 		return totalCost;
 	}
-
+	
 }

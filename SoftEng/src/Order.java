@@ -28,29 +28,6 @@ public abstract class Order {
 	// To kathe arxeio tha grafetai-enhmerwnetai me tis nees syntages h anefodiasmous.
 	// H diakrisi metacsy twn 2 arxeiwn ginetai me basi to "fileName".
 	
-	public void informHistory(String fileName) {
-		
-		try
-		{
-		    String textToBeWritten = "";
-		    
-		    for(int i = 0;i<medicines.size();i++) 
-		    	textToBeWritten += (medicines.get(i).getId() + " " + medicines.get(i).getName() + 
-		    						" " + String.valueOf(quantityOfMedicines.get(i)) + " " +  this.getDateTime()  + "\n");
-		         
-		    FileWriter fw = new FileWriter(fileName,true);  //the true will append the new data
-		    fw.write(textToBeWritten);						 //appends the string to the file
-		    fw.close();
-		    
-		}
-		
-		catch(IOException ioe)
-		{
-		    System.err.println("IOException: " + ioe.getMessage());
-		}
-		
-	} 
-	
 	//Epistrefei thn lista me ta farmaka.
 	
 	public ArrayList<Drug> getListOfMedicines(){
