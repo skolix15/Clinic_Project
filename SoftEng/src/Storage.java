@@ -5,10 +5,10 @@ public class Storage {
 	private static ArrayList<Drug> medicineList = new ArrayList<Drug>();
 	
 	
-	public static void updateStorage() {
+	public static void updateStorage(db connection) {
 		
-		//Ενημέρωση των φαρμάκων της αποθήκης 
-		//σύμφωνα με την βάση δεδομένων
+		// Enimerwsi apo basi
+	
 		
 	}
 	

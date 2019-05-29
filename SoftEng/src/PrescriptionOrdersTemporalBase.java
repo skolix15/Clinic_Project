@@ -15,17 +15,6 @@ public class PrescriptionOrdersTemporalBase {
 	private static ArrayList<Drug> medicines = new ArrayList<Drug>();
 	private static ArrayList<Integer> quantityOfMedicines = new ArrayList<Integer>();
 	private static String date = getDateTime();
-	private static int numberOfLinesInFile = 0;
-	
-	public static void setNumberOfLinesInFile(int numberOfLines) {
-		
-		numberOfLinesInFile = numberOfLines;
-	}
-	
-	public static int getNumberOfLinesInFile() {
-		
-		return numberOfLinesInFile;
-	}
 	
 	public static ArrayList<Drug> getListOfMedicinesFromAllTheDailyOrders(){
 		
@@ -152,7 +141,6 @@ public class PrescriptionOrdersTemporalBase {
 				
 				
 				count += 1;
-				numberOfLinesInFile  = numberOfLinesInFile + 1;
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

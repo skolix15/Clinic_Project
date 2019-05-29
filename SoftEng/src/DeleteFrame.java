@@ -379,8 +379,12 @@ public class DeleteFrame extends JFrame {
 						String name = (String) deleteTable.getValueAt(i, 1);
 						String id = (String) deleteTable.getValueAt(i, 0);
 						Storage.removeMedicine(name, id);
+
+						//Enhmerwsi ths basis
 					
 					}
+					
+					
 					
 					dispose();
 					new DeleteFrame(conn);

@@ -11,7 +11,7 @@ public class Prescription extends Order {
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
 		date = super.getDateTime();
-		
+	
 	}
 	
 	// Prostithetai ena neo farmako stis lista me ta farmaka kai h posotita tou sthn antistoixi thesi sthn lista me tis posothtes.

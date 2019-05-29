@@ -11,6 +11,7 @@ public abstract class Order {
 	protected ArrayList<Integer> quantityOfMedicines;
 	protected double totalCost;
 	protected String date;
+	protected int code;
 	
 	// prosthetei ena neo farmako sth lista ths syntaghs me ta farmaka kai thn posotita tou sthn antistoixi thesi sth lista ths syntaghs me tis posothtes.
 	
@@ -86,6 +87,17 @@ public abstract class Order {
         Date date = new Date();
         return dateFormat.format(date);
     }
+	
+	public int getCode() {
+		
+		return code;
+	}
+	
+	public void setCode(int code) {
+		
+		this.code = code;
+		
+	}
 
 }
 
