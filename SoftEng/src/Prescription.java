@@ -11,6 +11,7 @@ public class Prescription extends Order {
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
 		date = super.getDateTime();
+		// code = enimerwsi apo vasi + 1
 	
 	}
 	

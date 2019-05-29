@@ -515,20 +515,20 @@ public class db {
 	 * database Function: deletes drugs from the database 
 	 * Output:-----------------------
 	 */
-	public void removeDrug(ArrayList<Drug> drugs) {
+	public void removeDrug(String drugName) {
 		PreparedStatement myStmt = null;
 
 		try {
-			for(Drug d : drugs) {
+			
 				// 2. Prepare Statement
 				myStmt = myConn.prepareStatement("delete from drug where Name = ?");
 
 				// 3. Set the Parameters
-				myStmt.setString(1, d.getName());
+				myStmt.setString(1, drugName);
 
 				// 4. Execute SQL query
 				myStmt.executeUpdate();
-	        }
+	        
 			
 			// 5. Display the result
 			//printTable("drug", myConn);

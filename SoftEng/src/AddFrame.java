@@ -234,7 +234,8 @@ public class AddFrame extends JFrame{
 					
 					
 					if (Storage.searchMedicine(nameText, idText) == null) {
-						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);	
+						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);
+						conn.addDrug(new Drug(nameText,idText,priceDouble,quantityInt));
 		
 					}
 					

@@ -65,10 +65,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				
 				if(typeOfOrder == true) {
 					PrescriptionOrdersTemporalBase.writeToOrderFile(order.getListOfMedicines(), order.getQuantityOfMedicines());
-					Storage.updateStorage(connection);
+					connection.updateDrugList(Storage.getMedicineList());
 					}
 				else if(typeOfOrder == false)
-					Storage.updateStorage(connection);
+					connection.updateDrugList(Storage.getMedicineList());
 					
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
 				int rowCount = dm.getRowCount();
