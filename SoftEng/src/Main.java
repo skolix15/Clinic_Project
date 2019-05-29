@@ -30,8 +30,8 @@ public class Main {
 	   new GlobalHomeFrame(conn);
 	   
 	   
-		   
-		   System.out.println(Storage.getMedicineList().size());
+	   Storage.updateStorage(conn);
+	   System.out.println(Storage.getMedicineList().size());
 	   
 
 			

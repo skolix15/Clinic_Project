@@ -576,6 +576,7 @@ public class db {
 					// add the drug to the drug's list
 					drugs.add(d);
 				}
+				
 			}catch (Exception exc) {
 					exc.printStackTrace();
 				}finally {
