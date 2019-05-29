@@ -526,7 +526,7 @@ ArrayList<Drug> drugs = new ArrayList<>();
 		 *            and puts them in the ArrayList that was sent as input
 		 *  Output: The list that contains the drugs
 		 */
-		public void getAllDrugs(ArrayList<Drug> drugs)
+		/*public void getAllDrugs(ArrayList<Drug> drugs)
 		{
 			Statement myStmt = null;
 			ResultSet myRs = null;
@@ -570,7 +570,9 @@ ArrayList<Drug> drugs = new ArrayList<>();
 						}
 					}
 			}	
-		}
+		}*/
+	
+	
 	public Connection getMyConn() {
 		return myConn;
 	}
