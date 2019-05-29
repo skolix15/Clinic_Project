@@ -15,6 +15,12 @@ public class Drug {
 
 	}
 	
+	public Drug(String name, String Id) {
+		
+		this.name = name;
+		this.id = Id;
+	}
+	
 	
 	public String getName() {
 		return name;

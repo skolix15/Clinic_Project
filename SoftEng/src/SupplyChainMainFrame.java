@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -36,6 +40,7 @@ public class SupplyChainMainFrame extends JFrame{
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 	private DefaultTableModel model;
+	private JButton informBaseButton;
 	private db conn;
 	
    
@@ -45,6 +50,35 @@ public class SupplyChainMainFrame extends JFrame{
 		// Dimiourgia baras menu
 		
 		mb = new JMenuBar();
+		
+		// Dimiourgia button gia enhmerwsi basis
+		
+		informBaseButton = new JButton("Inform Base");
+		
+		// Listener gia informBaseButton
+		
+		informBaseButton.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				// Enhmerwnei thn basi
+				
+				PrescriptionOrdersTemporalBase.setNumberOfLinesInFile(0);
+				File file  = new File("History For Prescription.txt");
+				PrintWriter writer;
+				try {
+					writer = new PrintWriter(file);
+					writer.print("");
+					writer.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+
+		});
 		
 		// Dimiourgia twn triwn menu
 		
@@ -208,6 +242,9 @@ public class SupplyChainMainFrame extends JFrame{
 	
 	    panel.add(label, BorderLayout.WEST);
 	    panel.add(filterText, BorderLayout.CENTER);
+	    
+	    if(PrescriptionOrdersTemporalBase.getNumberOfLinesInFile() > 3) // to 3 einai endeiktiko
+	    	panel.add(informBaseButton);
 	 
 	    // Eisagwgi tou panel sto ContentPane
 	

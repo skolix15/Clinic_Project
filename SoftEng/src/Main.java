@@ -24,9 +24,11 @@ public class Main {
 	   Storage.addMedicine("depon","002",4,10, 0);
 	   Storage.addMedicine("panadol","003",2.5,7, 0);
 	   Storage.addMedicine("siropi","004",4,6, 0);
-	   
+
 		
-		new GlobalHomeFrame(conn);
+	   
+	   
+	   new GlobalHomeFrame(conn);
 
 
 			
