@@ -70,7 +70,7 @@ public class DoctorHomePageFrame extends JFrame {
 		    }
 		});
 		
-
+		//Button back
 		ImageIcon icon2 = new ImageIcon("back1.png");
  	    JLabel lab = new JLabel(icon2);
  		mainPanel.add(lab);
