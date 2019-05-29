@@ -11,37 +11,49 @@ public class Drug {
 		this.id = Id;
 		this.price = price;
 		this.availability = availability;
-		this.soldUnits = 0;
+		this.soldUnits =  0 ;
 
+	}
+	
+	public Drug(String name, String Id) {
+		
+		this.name = name;
+		this.id = Id;
 	}
 	
 	
 	public String getName() {
+		
 		return name;
 	}
 
 	
 	public String getId() {
+		
 		return id;
 	}
 	
 	
 	public double getPrice() {
+		
 		return price;
 	}
 	
 	
 	public void setPrice(double price) {
+		
 		this.price = price;
 	}
 	
 	
 	public int getAvailability() {
+		
 		return availability;
 	}
 
 
 	public void setAvailability(int availability) {
+		
 		this.availability = availability;
 	}
 

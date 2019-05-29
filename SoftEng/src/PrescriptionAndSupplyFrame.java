@@ -45,7 +45,6 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	private boolean typeOfOrder;
 	private JTextField textFieldForCost;
 	private Order order = null;
-	private String fileNameForHistory;
 	private JButton confirmButton;
 	private db conn;
    
@@ -64,7 +63,11 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				order.informHistory(fileNameForHistory);
+				if(typeOfOrder == true)
+					PrescriptionOrdersTemporalBase.writeToOrderFile(order.getListOfMedicines(), order.getQuantityOfMedicines());
+				//else if(typeOfOrder == false)
+					// Enhmerwnetai h bash apeytheias
+					
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
 				int rowCount = dm.getRowCount();
 				
@@ -104,18 +107,13 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		// Anathesi timwn ( 0 gia prescription kai 1 gia supply ) kai prosdiorismos tou typou paraggelias
 		
 		typeOfOrder = aTypeOfOrder;
-		fileNameForHistory = "";
 		
-		if( typeOfOrder == true) {
+		if( typeOfOrder == true) 
 	    	order = new Prescription();
-	    	fileNameForHistory = "History For Prescription.txt";
-		}
 		
-	    else if ( typeOfOrder == false) {
+	    else if ( typeOfOrder == false) 
 	    	order = new Supply();
-	    	fileNameForHistory = "History For Supply.txt";
-	    }
-		
+	   
 		// Dimiourgia baras menu
 		
 		mb = new JMenuBar();
