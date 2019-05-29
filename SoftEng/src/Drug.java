@@ -6,12 +6,12 @@ public class Drug {
 	private int availability;
 	private int soldUnits;
 
-	public Drug(String name, String Id, double price, int availability, int soldunits) {
+	public Drug(String name, String Id, double price, int availability) {
 		this.name = name;
 		this.id = Id;
 		this.price = price;
 		this.availability = availability;
-		this.soldUnits = 0;
+		this.soldUnits =  0 ;
 
 	}
 	
