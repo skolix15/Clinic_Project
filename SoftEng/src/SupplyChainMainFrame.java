@@ -41,13 +41,13 @@ public class SupplyChainMainFrame extends JFrame{
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 	private DefaultTableModel model;
-	private JButton informBaseButton;
 	private db conn;
 	
    
 	public SupplyChainMainFrame(db connection) {
 	 
-	 conn=connection;
+		conn=connection;
+	 
 		// Dimiourgia baras menu
 		
 		mb = new JMenuBar();
@@ -57,9 +57,8 @@ public class SupplyChainMainFrame extends JFrame{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		
-		if(sdf.format(file.lastModified()) != PrescriptionOrdersTemporalBase.getDate()) {		// or .getDateTime
+		if(sdf.format(file.lastModified()) != PrescriptionOrdersTemporalBase.getDate()) {
 			
-			PrescriptionOrdersTemporalBase.setNumberOfLinesInFile(0);
 			PrintWriter writer;
 			try {
 				writer = new PrintWriter(file);
@@ -69,9 +68,7 @@ public class SupplyChainMainFrame extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-			// Enimerwsi thn basis
+
 		}
 		
 		// Dimiourgia twn triwn menu
@@ -236,9 +233,6 @@ public class SupplyChainMainFrame extends JFrame{
 	
 	    panel.add(label, BorderLayout.WEST);
 	    panel.add(filterText, BorderLayout.CENTER);
-	    
-	    if(PrescriptionOrdersTemporalBase.getNumberOfLinesInFile() > 3) // to 3 einai endeiktiko
-	    	panel.add(informBaseButton);
 	 
 	    // Eisagwgi tou panel sto ContentPane
 	
