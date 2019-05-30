@@ -98,6 +98,11 @@ public abstract class Order {
 		this.code = code;
 		
 	}
+	
+	public String getDate() {
+		
+		return date;
+	}
 
 }
 
