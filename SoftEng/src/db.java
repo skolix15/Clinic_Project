@@ -620,7 +620,7 @@ public class db {
 		 }
 	 
 	 	/*
-		 * Input: The name of the table 
+		 * Input: the type of Order (Prescription(true) or Supply(false)) 
 		 * Function: counts how many entries exist in the given table
 		 * Output: returns: -1 in the case of an error or a positive integer that states the number entries
 		 */
@@ -670,6 +670,78 @@ public class db {
 					}
 				}	
 			return id;
+		}
+		
+		/*  Input: the type of Order (Prescription(true) or Supply(false)), the 2 dates the the program wants info and 2 array lists
+		 *  Function: after the execution of the query info enters into the 2 array lists for statistic needs
+		 *  Output: 2 array lists id and Quantity
+		 */
+		public void getInfoFromOrderDataBaseForSpecificDates(boolean typeOfOrder, String date1, String date2, ArrayList<Integer> id, ArrayList<Integer> Quantity)
+		{
+			Statement myStmt = null;
+			ResultSet myRs = null;
+			
+			try {
+				// 2. Create a Statement
+				myStmt = myConn.createStatement();
+				
+				// 3. Execute SQL query
+				String query = null;
+				if(typeOfOrder == true) { 
+					query = "SELECT ALL pid ,sum(Quantity) from mydb19.pres_has_drug INNER JOIN mydb19.prescription\r\n" + 
+							"ON mydb19.prescription.id = mydb19.pres_has_drug.pid\r\n" + 
+							"WHERE mydb19.supply.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
+							"GROUP BY drugid;";
+				}else if(typeOfOrder == false) {
+					query = "SELECT ALL did ,sum(Quantity) from mydb19.supply_has_drug INNER JOIN mydb19.supply\r\n" + 
+							"ON mydb19.supply.id = mydb19.supply_has_drug.sid\r\n" + 
+							"WHERE mydb19.supply.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
+							"GROUP BY did;";
+				}
+				
+				myRs = myStmt.executeQuery(query);
+				
+				// 4. Process the result set and put the data in the 2 array lists
+				if(typeOfOrder == true) {
+					while (myRs.next()) {
+					
+						int i = myRs.getInt("did");
+						int q = myRs.getInt("sum(Quantity)");
+						// add id to id's list and quantity to quantity's list
+						id.add(i);
+						Quantity.add(q);
+					}
+				}else if(typeOfOrder == false) {
+					while (myRs.next()) {
+						
+						int i = myRs.getInt("drugid");
+						int q = myRs.getInt("sum(Quantity)");
+						// add id to id's list and quantity to quantity's list
+						id.add(i);
+						Quantity.add(q);
+					}
+				}
+				
+			}catch (Exception exc) {
+					exc.printStackTrace();
+				}finally {
+					if (myRs != null) {
+						try {
+							myRs.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (myStmt != null) {
+						try {
+							myStmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}		
 		}
 		
 
