@@ -69,7 +69,7 @@ public class SupplyChainMainFrame extends JFrame{
 				writer.print("");
 				writer.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
