@@ -3,13 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -28,13 +25,25 @@ public class StatisticsFrame extends JFrame{
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 
-	private JLabel title = new JLabel("Testing");
+	private JButton dailyStatisticsButton;
+	private JButton generalStatisticsButton;
+	private JButton timePeriodStatisticsButton;
+	
+	private JPanel buttonsPanel;
 
 	JFrame frame = this;
 	private db conn;
 
 	public StatisticsFrame(db connection) {
+		
 		conn= connection;
+		
+		// Dimiourgia buttons
+		
+		dailyStatisticsButton = new JButton("Daily Statistics");
+		generalStatisticsButton = new JButton("General Statistics");
+		timePeriodStatisticsButton = new JButton("Time Period Statistics");
+		
 		// Dimiourgia baras menu
 		
 		mb = new JMenuBar();
@@ -105,24 +114,26 @@ public class StatisticsFrame extends JFrame{
 	    
 	    menuPanel = new JPanel();
 	    panel = new JPanel();
+	    buttonsPanel = new JPanel();
 	    
-	    // Kathorismos tou tropou topothetisis twn antikeimenwn sto kathe panel panel ( px katakorifa, orizontia )
-	    
-	    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-	    panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
-	    
-	    
-	    // Prosthiki olwn twn menu sto panel 
+	    // Prosthiki olwn twn menu sto antistoixo panel 
 	    
 	    menuPanel.add(mb);
 	    menuPanel.setAlignmentX(Component.TOP_ALIGNMENT);
 	    
-	    // Prosthiki tou parapanw panel sto teliko panel 
-	    // Epipleon prosthiki tou pinaka (apothiki) kai tou titlou tou sto teliko panel
+	    // Prosthiki olwn twn buttons sto antistoixo panel
+	    
+	    buttonsPanel.add(dailyStatisticsButton);
+	    buttonsPanel.add(timePeriodStatisticsButton);
+	    buttonsPanel.add(generalStatisticsButton);
+	    
+	    buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    
+	    // Prosthiki twn parapanw panel sto teliko panel 
 	    
 	    panel.add(menuPanel);
-	   
 	    
+	    panel.add(buttonsPanel);
 		
 		
 		
