@@ -1,10 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Main {
 
@@ -25,13 +19,10 @@ public class Main {
 	   Storage.addMedicine("panadol","003",2.5,7);
 	   Storage.addMedicine("siropi","004",4,6);
 */
-	   
-	   
+
 	   new GlobalHomeFrame(conn);
 	   
-	   Storage.updateStorage(conn);
-	   System.out.println(Storage.getMedicineList().size());
-
+	   
 	}
 	
 
