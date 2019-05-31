@@ -18,65 +18,6 @@ public class db {
 			myConn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/mydb19?useTimezone=true&serverTimezone=UTC", "root", "1234");
 			
-			/*Check Functions add and remove of drug
-			 * 
-			 *Drug drug = new Drug ("lexotanil", "3", 8.1, 3, 34);
-			 *
-			 *addDrug(drug);
-			 *removeDrug(drug);
-			 *
-			 */
-			//printTable("drug", myConn);
-			//System.out.println("gamawwwwwwwwwwwwww");
-			//Drug drug1 = new Drug ("lexotanil", "3", 8.1, 3, 34);
-			//Drug drug2 = new Drug ("depon", "4", 0.5, 8, 55);
-			//ArrayList<Drug> drugs = new ArrayList<>();
-			//drugs.add(drug1);
-			//drugs.add(drug2);
-			//addDrug(drug1);
-			//addDrug(drug2);
-			//removeDrug(drugs);
-			/*Check Functions add and remove of doctor
-			 * 
-			 *Doctor d = new Doctor ("Evag", "Myl", "dai18050", null, null);
-			 *
-			 *addDoctor(d, myConn);
-			 *removeDoctor(d, myConn);
-			 *
-			 *Copy, Paste and Run for Check
-			 */
-			
-			//Some more check Functions:
-			//result = returnPasswordUser(1, myConn);
-			//printTable("drug", myConn);
-			//System.out.println(result);
-			//printTable("drug", myConn);
-			
-//ArrayList<Drug> drugs = new ArrayList<>();
-			//----------Drugs---------------			
-			//getAllDrugs(drugs);
-			//for(int i = 0; i < drugs.size(); i++) {   
-			//	System.out.println(drugs);
-			//} 
-//			for(Drug d : drugs) {
-//	            System.out.println(d.getName());
-//	        }
-			//drugs.add(drug1);
-			//addDrug(drug1);
-//			printTable("drug", myConn);
-//			Drug drug1 = new Drug ("xanax", "1", 1.3, 5, 34);
-//			Drug drug2 = new Drug ("viagra", "2", 2.4, 3, 13);
-//			Drug drug3 = new Drug ("lexotanil", "3", 5.5, 55, 55);
-//ArrayList<Drug> ds = new ArrayList<>();
-//			ds.add(drug1);
-//			ds.add(drug2);
-//			ds.add(drug3);
-//			updateDrugList(ds);
-//			for(Drug d : drugs) {
-//	            System.out.println(d.getName());
-//	        }
-//			printTable("drug", myConn);
-			
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		} finally {
@@ -623,23 +564,35 @@ public class db {
 			}	
 		}
 		
-		/* INPUT: the drug to be inserted to the database and a connection with the database
-		 * Function: inserts drug to the database
+		/* INPUT: Order inserts into the database and the type of Order (Prescription(true) or Supply(false))
+		 * Function: inserts order into the database table supply and supply_has_drug or prescription and pres_has_drug
 		 * Output: -----------------------
 		 */
-	 public void updateSupplyDataBase (Supply s) {
+	 public void updateOrderDataBase (Order o, boolean typeOfOrder) {
 			Statement myStmt = null;
+			String orderName = null;
+			String orderName_has_drug = null;
 			
+			if(typeOfOrder == true) {
+				o = (Prescription) o;
+				orderName = "prescription";
+				orderName_has_drug = "pres_has_drug";
+			}else if(typeOfOrder == false) {
+				o = (Supply) o;
+				orderName = "supply";
+				orderName_has_drug = "supply_has_drug";
+			}
+				
 			try {
 				// 2. Create a Statement
 				myStmt = myConn.createStatement();
 				
 				// 3. Execute SQL query
-				myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + s.getCode() + "', '" + s.getTotalCost() + "', '" + s.getDate() + "');");
+				myStmt.executeUpdate("INSERT INTO " + orderName + " (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
 			
-				for(int i=0; i<s.getListOfMedicines().size(); i++) {
+				for(int i=0; i<o.getListOfMedicines().size(); i++) {
 					// 3. Execute SQL query
-					myStmt.executeUpdate("INSERT INTO supply (`Quantity`, `sid`, `did`) VALUES ('" + s.getQuantityOfMedicines().get(i) + "', '" + s.getCode() + "', '" + s.getListOfMedicines().get(i).getId() + "');");
+					myStmt.executeUpdate("INSERT INTO " + orderName_has_drug + " (`Quantity`, `sid`, `did`) VALUES ('" + o.getQuantityOfMedicines().get(i) + "', '" + o.getCode() + "', '" + o.getListOfMedicines().get(i).getId() + "');");
 				}
 			}
 			catch (Exception exc) {
@@ -656,6 +609,59 @@ public class db {
 				}
 			}
 		 }
+	 
+	 	/*
+		 * Input: The name of the table 
+		 * Function: counts how many entries exist in the given table
+		 * Output: returns: -1 in the case of an error or a positive integer that states the number entries
+		 */
+		public int getNextOrderCode(boolean typeOfOrder)
+		{
+			Statement myStmt = null;
+			ResultSet myRs = null;
+			String orderName = null;
+			
+			int id = -1;
+			
+			if(typeOfOrder == true) {
+				orderName = "prescription";
+			}else if(typeOfOrder == false) {
+				orderName = "supply";
+			}
+			try {
+				// 2. Create a Statement
+				myStmt = myConn.createStatement();
+				
+				// 3. Execute SQL query
+				String query = "select count(id) from " + orderName;
+				myRs = myStmt.executeQuery(query);
+				
+				// 4. Get the result of the database
+				while (myRs.next())
+					 id = myRs.getInt("id");
+				
+			}catch (Exception exc) {
+					exc.printStackTrace();
+				}finally {
+					if (myRs != null) {
+						try {
+							myRs.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (myStmt != null) {
+						try {
+							myStmt.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}	
+			return id;
+		}
 		
 
 	public Connection getMyConn() {
