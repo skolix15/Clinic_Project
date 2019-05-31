@@ -638,7 +638,7 @@ public class db {
 				
 				// 4. Get the result of the database
 				while (myRs.next())
-					 id = myRs.getInt("id");
+					 id = myRs.getInt("count(id)");
 				
 			}catch (Exception exc) {
 					exc.printStackTrace();
