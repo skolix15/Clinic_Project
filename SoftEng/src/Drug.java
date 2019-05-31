@@ -12,7 +12,6 @@ public class Drug {
 		this.price = price;
 		this.availability = availability;
 		this.soldUnits =  0 ;
-
 	}
 	
 	public Drug(String name, String Id) {
