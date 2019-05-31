@@ -67,11 +67,11 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				if(typeOfOrder == true) {
 					PrescriptionOrdersTemporalBase.writeToOrderFile(order.getListOfMedicines(), order.getQuantityOfMedicines());
 					connection.updateDrugList(Storage.getMedicineList());
-					//connection.updateOrderDataBase(order, typeOfOrder);
+					connection.updateOrderDataBase(order, typeOfOrder);
 					}
 				else if(typeOfOrder == false) {
 					connection.updateDrugList(Storage.getMedicineList());
-					//connection.updateOrderDataBase(order,typeOfOrder);
+					connection.updateOrderDataBase(order,typeOfOrder);
 				}
 					
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
@@ -83,7 +83,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				}
 				
 				textFieldForCost.setText("0");
-				order.clearOrder();
+				if(typeOfOrder == true)
+					order = new Prescription(conn);
+				else if(typeOfOrder == false)
+					order = new Supply(conn);
 	
 			}
 		});
@@ -115,10 +118,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		typeOfOrder = aTypeOfOrder;
 		
 		if( typeOfOrder == true) 
-	    	order = new Prescription();
+	    	order = new Prescription(conn);
 		
 	    else if ( typeOfOrder == false) 
-	    	order = new Supply();
+	    	order = new Supply(conn);
 	   
 		// Dimiourgia baras menu
 		
