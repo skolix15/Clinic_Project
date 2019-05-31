@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,6 +43,20 @@ public class TimePeriodStatisticsFrame extends JFrame{
 	public TimePeriodStatisticsFrame(db connection) {
 		
 		conn= connection;
+		
+		/*// Testing 
+		
+		ArrayList<Integer> id = new ArrayList<Integer>();
+		ArrayList<Integer> quantities = new ArrayList<Integer>();
+		
+		conn.getInfoFromOrderDataBaseForSpecificDates(true, "31/05/2019", "31/05/2019", id, quantities);
+		
+		for(int i=0;i<id.size();i++) {
+			
+			System.out.println(id.get(i) + " | " + quantities.get(i));
+		}
+		*/
+		
 			
 		// Dimiourgia text field
 		

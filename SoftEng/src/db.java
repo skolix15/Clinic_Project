@@ -688,9 +688,9 @@ public class db {
 				// 3. Execute SQL query
 				String query = null;
 				if(typeOfOrder == true) { 
-					query = "SELECT ALL pid ,sum(Quantity) from mydb19.pres_has_drug INNER JOIN mydb19.prescription\r\n" + 
+					query = "SELECT ALL drugid ,sum(Quantity) from mydb19.pres_has_drug INNER JOIN mydb19.prescription\r\n" + 
 							"ON mydb19.prescription.id = mydb19.pres_has_drug.pid\r\n" + 
-							"WHERE mydb19.supply.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
+							"WHERE mydb19.prescription.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
 							"GROUP BY drugid;";
 				}else if(typeOfOrder == false) {
 					query = "SELECT ALL did ,sum(Quantity) from mydb19.supply_has_drug INNER JOIN mydb19.supply\r\n" + 
@@ -705,7 +705,7 @@ public class db {
 				if(typeOfOrder == true) {
 					while (myRs.next()) {
 					
-						int i = myRs.getInt("did");
+						int i = myRs.getInt("drugid");
 						int q = myRs.getInt("sum(Quantity)");
 						// add id to id's list and quantity to quantity's list
 						id.add(i);
@@ -714,7 +714,7 @@ public class db {
 				}else if(typeOfOrder == false) {
 					while (myRs.next()) {
 						
-						int i = myRs.getInt("drugid");
+						int i = myRs.getInt("did");
 						int q = myRs.getInt("sum(Quantity)");
 						// add id to id's list and quantity to quantity's list
 						id.add(i);
