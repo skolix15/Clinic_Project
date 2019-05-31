@@ -46,7 +46,11 @@ public class SupplyChainMainFrame extends JFrame{
    
 	public SupplyChainMainFrame(db connection) {
 	 
-		conn=connection;
+		conn = connection;
+		
+		// Enimerwsi programmatos apo basi
+		
+		Storage.updateStorage(conn);
 	 
 		// Dimiourgia baras menu
 		
