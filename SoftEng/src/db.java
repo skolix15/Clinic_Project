@@ -569,31 +569,42 @@ public class db {
 		 * Output: -----------------------
 		 */
 	 public void updateOrderDataBase (Order o, boolean typeOfOrder) {
+
 			Statement myStmt = null;
-			String orderName = null;
-			String orderName_has_drug = null;
-			
-			if(typeOfOrder == true) {
+
+			if(typeOfOrder == true) 
 				o = (Prescription) o;
-				orderName = "prescription";
-				orderName_has_drug = "pres_has_drug";
-			}else if(typeOfOrder == false) {
+			else if(typeOfOrder == false) 
 				o = (Supply) o;
-				orderName = "supply";
-				orderName_has_drug = "supply_has_drug";
-			}
 				
+				
+
 			try {
 				// 2. Create a Statement
 				myStmt = myConn.createStatement();
 				
 				// 3. Execute SQL query
-				myStmt.executeUpdate("INSERT INTO " + orderName + " (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
-			
-				for(int i=0; i<o.getListOfMedicines().size(); i++) {
-					// 3. Execute SQL query
-					myStmt.executeUpdate("INSERT INTO " + orderName_has_drug + " (`Quantity`, `sid`, `did`) VALUES ('" + o.getQuantityOfMedicines().get(i) + "', '" + o.getCode() + "', '" + o.getListOfMedicines().get(i).getId() + "');");
+				
+				if(typeOfOrder == true) {
+					
+					myStmt.executeUpdate("INSERT INTO prescription (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
+				
+					for(int i=0; i<o.getListOfMedicines().size(); i++) {
+
+						myStmt.executeUpdate("INSERT INTO pres_has_drug (`pid`, `Quantity`, `drugid`) VALUES ('" + o.getCode() + "', '" + o.getQuantityOfMedicines().get(i) + "', '" + o.getListOfMedicines().get(i).getId() + "');");
+					}
+				
+				}else if(typeOfOrder == false) {
+					
+					myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
+					
+					for(int i=0; i<o.getListOfMedicines().size(); i++) {
+
+						myStmt.executeUpdate("INSERT INTO supply_has_drug (`Quantity`, `sid`, `did`) VALUES ('" + o.getQuantityOfMedicines().get(i) + "', '" + o.getCode() + "', '" + o.getListOfMedicines().get(i).getId() + "');");
+					}
+
 				}
+		
 			}
 			catch (Exception exc) {
 				exc.printStackTrace();

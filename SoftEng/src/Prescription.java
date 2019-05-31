@@ -5,13 +5,13 @@ public class Prescription extends Order {
 
 	// Dimiourgeitai ena kainourgio antikeimeno typou Prescription.
 	
-	public Prescription() {
+	public Prescription(db connection) {
 		
 		medicines = new ArrayList<Drug>();
 		quantityOfMedicines = new ArrayList<Integer>();
 		totalCost = 0;
 		date = super.getDateTime();
-		// code = enimerwsi apo vasi + 1
+		code = connection.getNextOrderCode(true) + 1;
 	
 	}
 	

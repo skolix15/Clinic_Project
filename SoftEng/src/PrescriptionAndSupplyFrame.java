@@ -47,6 +47,7 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	private Order order = null;
 	private JButton confirmButton;
 	private db conn;
+	
    
 	public PrescriptionAndSupplyFrame(boolean aTypeOfOrder, db connection) {
 		conn=connection;
@@ -66,9 +67,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				if(typeOfOrder == true) {
 					PrescriptionOrdersTemporalBase.writeToOrderFile(order.getListOfMedicines(), order.getQuantityOfMedicines());
 					connection.updateDrugList(Storage.getMedicineList());
+					connection.updateOrderDataBase(order, typeOfOrder);
 					}
-				else if(typeOfOrder == false)
+				else if(typeOfOrder == false) {
 					connection.updateDrugList(Storage.getMedicineList());
+					connection.updateOrderDataBase(order,typeOfOrder);
+				}
 					
 				DefaultTableModel dm = (DefaultTableModel) orderTable.getModel();
 				int rowCount = dm.getRowCount();
@@ -79,7 +83,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 				}
 				
 				textFieldForCost.setText("0");
-				order.clearOrder();
+				if(typeOfOrder == true)
+					order = new Prescription(conn);
+				else if(typeOfOrder == false)
+					order = new Supply(conn);
 	
 			}
 		});
@@ -111,10 +118,10 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		typeOfOrder = aTypeOfOrder;
 		
 		if( typeOfOrder == true) 
-	    	order = new Prescription();
+	    	order = new Prescription(conn);
 		
 	    else if ( typeOfOrder == false) 
-	    	order = new Supply();
+	    	order = new Supply(conn);
 	   
 		// Dimiourgia baras menu
 		
@@ -531,7 +538,4 @@ class JTablePopupMenuListener implements ActionListener {
 	 }
 
 }
-
-
-
 

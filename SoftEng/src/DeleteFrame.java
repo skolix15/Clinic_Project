@@ -195,7 +195,7 @@ public class DeleteFrame extends JFrame {
 				
 				
 				//Δημιουργία αντικειμένου Supply απλά για τον έλεγχο
-				order = new Supply();
+				order = new Supply(conn);
 				
 				//Epikoinwnia
 				
