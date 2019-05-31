@@ -576,8 +576,6 @@ public class db {
 				o = (Prescription) o;
 			else if(typeOfOrder == false) 
 				o = (Supply) o;
-				
-				
 
 			try {
 				// 2. Create a Statement

@@ -60,8 +60,8 @@ public class SupplyChainMainFrame extends JFrame{
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		
-		if(sdf.format(file.lastModified()) != PrescriptionOrdersTemporalBase.getDate()) {
+		if(!sdf.format(file.lastModified()).equals(PrescriptionOrdersTemporalBase.getDate())){
+			
 			
 			PrintWriter writer;
 			try {

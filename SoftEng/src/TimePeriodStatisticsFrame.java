@@ -1,4 +1,5 @@
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,8 +14,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
-public class StatisticsFrame extends JFrame{
+public class TimePeriodStatisticsFrame extends JFrame{
 	
 	private JPanel panel;
 	private JMenuBar mb;
@@ -25,37 +27,37 @@ public class StatisticsFrame extends JFrame{
 	private JPanel menuPanel;
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 
-	private JButton dailyStatisticsButton;
-	private JButton generalStatisticsButton;
-	private JButton timePeriodStatisticsButton;
+	private JButton supplySatisticsButton;
+	private JButton prescriptionStatisticsButton;
 	
 	private JPanel buttonsPanel;
+	private JPanel textFieldsPanel;
 	
+	private JTextField firstDateTextField;
+	private JTextField secondDateTextField;
+
 	JFrame frame = this;
 	private db conn;
 
-	public StatisticsFrame(db connection) {
+	public TimePeriodStatisticsFrame(db connection) {
 		
 		conn= connection;
+			
+		// Dimiourgia text field
+		
+		firstDateTextField = new JTextField();
+		firstDateTextField.setBorder(new TitledBorder("First Date"));
+		firstDateTextField.setPreferredSize(new Dimension(200,54));
+		
+		secondDateTextField = new JTextField();
+		secondDateTextField.setBorder(new TitledBorder("Second Date"));
+		secondDateTextField.setPreferredSize(new Dimension(200,54));		
 		
 		// Dimiourgia buttons
 		
-		dailyStatisticsButton = new JButton("Daily Statistics");
-		generalStatisticsButton = new JButton("General Statistics");
-		timePeriodStatisticsButton = new JButton("Time Period Statistics");
+		supplySatisticsButton = new JButton("Supply Time Period Statistics");
+		prescriptionStatisticsButton = new JButton("Prescription Time Period Statistics");
 		
-		// Dimiourgia Listener gia ta buttons
-		
-		timePeriodStatisticsButton.addActionListener(new ActionListener() {
-	
-			public void actionPerformed(ActionEvent arg0) {
-
-				new TimePeriodStatisticsFrame(conn);
-				dispose();
-				
-			}
-			
-		});
 		
 		// Dimiourgia baras menu
 		
@@ -128,6 +130,7 @@ public class StatisticsFrame extends JFrame{
 	    menuPanel = new JPanel();
 	    panel = new JPanel();
 	    buttonsPanel = new JPanel();
+	    textFieldsPanel = new JPanel();
 	    
 	    // Prosthiki olwn twn menu sto antistoixo panel 
 	    
@@ -136,28 +139,32 @@ public class StatisticsFrame extends JFrame{
 	    
 	    // Prosthiki olwn twn buttons sto antistoixo panel
 	    
-	    buttonsPanel.add(dailyStatisticsButton);
-	    buttonsPanel.add(timePeriodStatisticsButton);
-	    buttonsPanel.add(generalStatisticsButton);
+	    buttonsPanel.add(supplySatisticsButton);
+	    buttonsPanel.add(prescriptionStatisticsButton);
 	    
-	    buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    buttonsPanel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
+	    
+	    // Prosthiki owln twn textFields sto antistoixo panel
+	    
+	    textFieldsPanel.add(firstDateTextField);
+	    textFieldsPanel.add(secondDateTextField);
+	    
+	    textFieldsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    
 	    // Prosthiki twn parapanw panel sto teliko panel 
 	    
 	    panel.add(menuPanel);
 	    
+	    panel.add(textFieldsPanel);
+	    
 	    panel.add(buttonsPanel);
-		
-		
-		
-		
 		
 		
 		this.setContentPane(panel);
 		
 		this.setVisible(true);;
 		this.setSize(600,400);
-		this.setTitle("/Supply Chain/Pharmacist/Statistics/Show Statistics");
+		this.setTitle("/Supply Chain/Pharmacist/Statistics/Show Statistics/Time Period Statistics");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -209,4 +216,3 @@ public class StatisticsFrame extends JFrame{
 	 }
 
 }
-
