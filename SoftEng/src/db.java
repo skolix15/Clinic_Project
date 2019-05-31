@@ -627,19 +627,24 @@ public class db {
 		 * Function: inserts drug to the database
 		 * Output: -----------------------
 		 */
-	 public void updateSupplyDataBase (Supply s) {
+	 public void updateOrderDataBase (Order o,boolean typeOfOrder) {
 			Statement myStmt = null;
+			
+			if(typeOfOrder == true)
+				o = (Prescription) o;
+			else if(typeOfOrder == false)
+				o =  (Supply)o;
 			
 			try {
 				// 2. Create a Statement
 				myStmt = myConn.createStatement();
 				
 				// 3. Execute SQL query
-				myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + s.getCode() + "', '" + s.getTotalCost() + "', '" + s.getDate() + "');");
+				myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
 			
-				for(int i=0; i<s.getListOfMedicines().size(); i++) {
+				for(int i=0; i<o.getListOfMedicines().size(); i++) {
 					// 3. Execute SQL query
-					myStmt.executeUpdate("INSERT INTO supply (`Quantity`, `sid`, `did`) VALUES ('" + s.getQuantityOfMedicines().get(i) + "', '" + s.getCode() + "', '" + s.getListOfMedicines().get(i).getId() + "');");
+					myStmt.executeUpdate("INSERT INTO supply (`Quantity`, `sid`, `did`) VALUES ('" + o.getQuantityOfMedicines().get(i) + "', '" + o.getCode() + "', '" + o.getListOfMedicines().get(i).getId() + "');");
 				}
 			}
 			catch (Exception exc) {
