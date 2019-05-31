@@ -103,13 +103,7 @@ public class db {
 
 			// 3. Execute SQL query
 			String query = "select * from " + name;
-			myRs = myStmt.executeQuery(query);
-
-			// 4. Process the result set
-//			while (myRs.next()) {
-//				System.out.println(myRs.getString("First Name") + ", " + myRs.getString("Last Name") + ", " + myRs.getString("RN") + 
-//				", " + myRs.getString("Password") + ", " + myRs.getString("Timetable"));
-//			}			
+			myRs = myStmt.executeQuery(query);		
 
 			// 4. Process the result set
 			ResultSetMetaData rsmd = myRs.getMetaData();
@@ -490,10 +484,6 @@ public class db {
 				
 				// 3. Execute SQL query
 				myStmt.executeUpdate("Insert into drug (`id`, `Availability`, `Price`, `Name`, `SoldUnits`)  Values ('" + d.getId() + "', '" + d.getAvailability() + "', '" + d.getPrice() + "', '" + d.getName() + "', '" + d.getSoldUnits() + "')");
-				
-				// 4. Display the result
-				//printTable("drug", myConn);
-					
 			}
 			catch (Exception exc) {
 				exc.printStackTrace();
@@ -528,10 +518,6 @@ public class db {
 
 				// 4. Execute SQL query
 				myStmt.executeUpdate();
-	        
-			
-			// 5. Display the result
-			//printTable("drug", myConn);
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -623,9 +609,6 @@ public class db {
 					// 4. Execute SQL query
 					myStmt.executeUpdate();
 		        }
-				
-				// 5. Display the result
-				//printTable("drug", myConn);
 			}catch (Exception exc) {
 					exc.printStackTrace();
 				}finally {
@@ -638,8 +621,41 @@ public class db {
 						}
 					}
 			}	
-
 		}
+		
+		/* INPUT: the drug to be inserted to the database and a connection with the database
+		 * Function: inserts drug to the database
+		 * Output: -----------------------
+		 */
+	 public void updateSupplyDataBase (Supply s) {
+			Statement myStmt = null;
+			
+			try {
+				// 2. Create a Statement
+				myStmt = myConn.createStatement();
+				
+				// 3. Execute SQL query
+				myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + s.getCode() + "', '" + s.getTotalCost() + "', '" + s.getDate() + "');");
+			
+				for(int i=0; i<s.getListOfMedicines().size(); i++) {
+					// 3. Execute SQL query
+					myStmt.executeUpdate("INSERT INTO supply (`Quantity`, `sid`, `did`) VALUES ('" + s.getQuantityOfMedicines().get(i) + "', '" + s.getCode() + "', '" + s.getListOfMedicines().get(i).getId() + "');");
+				}
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			finally {
+				if (myStmt != null) {
+					try {
+						myStmt.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		 }
 		
 
 	public Connection getMyConn() {

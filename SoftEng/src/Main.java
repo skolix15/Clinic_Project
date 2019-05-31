@@ -1,7 +1,5 @@
 import java.sql.SQLException;
 
-import org.jfree.chart.JFreeChart;
-
 public class Main {
 
 	public static void main(String[] args) {
