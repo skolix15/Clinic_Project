@@ -28,7 +28,7 @@
 2 viagra 4
 3 lexotanil 5
 4 Panadol 6
-1 xanax 49
-2 viagra 39
+1 xanax 99
+2 viagra 89
 3 lexotanil 70
 4 Panadol 16

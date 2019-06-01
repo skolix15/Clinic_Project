@@ -164,7 +164,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					
 					for(int j=0;j<id.size();j++) {
 						for(int i=0;i<Storage.getMedicineList().size();i++) {
-							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(i))))
+							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(j))))
 								medicineNames.add(Storage.getMedicineList().get(i).getName());
 							}
 						}
