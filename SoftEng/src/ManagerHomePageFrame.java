@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -102,6 +104,13 @@ public class ManagerHomePageFrame extends JFrame {
 		centralPanel.add(secondPanel, BorderLayout.CENTER);
 		
 		this.setContentPane(centralPanel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 6;
+		int y = (screenSize.height - this.getHeight()) / 6;
+		this.setLocation(x, y);
+		
 		this.setVisible(true);
 		this.setSize(800, 600);
 		this.setTitle("Manager/Shifts");

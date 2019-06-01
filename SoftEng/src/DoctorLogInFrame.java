@@ -1,6 +1,8 @@
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -63,7 +65,15 @@ public class DoctorLogInFrame extends JFrame {
 	
 		central_panel.add(panel1, BorderLayout.CENTER);
 		central_panel.add(panel2, BorderLayout.SOUTH);
+		
 		this.setContentPane(central_panel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 2;
+		int y = (screenSize.height - this.getHeight()) / 2;
+		this.setLocation(x, y);
+		
 		this.setVisible(true);
 		this.setSize(530, 250);
 		this.setTitle("Ιατρός");

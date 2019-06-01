@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -67,6 +69,13 @@ public class ManagerLogInFrame extends JFrame  {
 		});
 
 		this.setContentPane(CentralPanel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
+				
 		this.setVisible(true);
 		this.setSize(500, 250);
 		this.setTitle("Manager/Password");

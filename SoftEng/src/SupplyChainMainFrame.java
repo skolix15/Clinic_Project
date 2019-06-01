@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -42,6 +44,7 @@ public class SupplyChainMainFrame extends JFrame{
 	private JMenuItem i1,i2,i3,i4,i5,iCentralMenu;
 	private DefaultTableModel model;
 	private db conn;
+	public static int count;
 	
    
 	public SupplyChainMainFrame(db connection) {
@@ -50,7 +53,10 @@ public class SupplyChainMainFrame extends JFrame{
 		
 		// Enimerwsi programmatos apo basi
 		
-		Storage.updateStorage(conn);
+		if(count == 0) {
+			Storage.updateStorage(conn);
+			count = 1;
+		}
 	 
 		// Dimiourgia baras menu
 		
@@ -241,6 +247,12 @@ public class SupplyChainMainFrame extends JFrame{
 	    // Eisagwgi tou panel sto ContentPane
 	
 		this.setContentPane(panel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
 		
 		// Kathorismos basikwn xaraktiristikwn tou frame
 		
