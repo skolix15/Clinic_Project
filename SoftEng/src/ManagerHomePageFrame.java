@@ -588,7 +588,7 @@ public class ManagerHomePageFrame extends JFrame {
 	    					  }
 	    					  rnDoctDB+="/";
 				  	  }
-				  	  System.out.println(rnDoctDB);
+				  	  
 				    	  secondPanel.add(label);
 				    	  secondPanel.add(scrollPane2);
 				    	  secondPanel.add(save);	

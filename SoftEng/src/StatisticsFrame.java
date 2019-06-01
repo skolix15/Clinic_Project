@@ -50,7 +50,7 @@ public class StatisticsFrame extends JFrame{
 	
 			public void actionPerformed(ActionEvent arg0) {
 
-			//	new TimePeriodStatisticsFrame(conn);
+				new TimePeriodStatisticsFrame(conn);
 				dispose();
 				
 			}
