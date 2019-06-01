@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class db {
@@ -569,7 +570,8 @@ public class db {
 		 * Output: -----------------------
 		 */
 	 public void updateOrderDataBase (Order o, boolean typeOfOrder) {
-
+		 	
+		 
 			Statement myStmt = null;
 
 			if(typeOfOrder == true) 
@@ -578,6 +580,11 @@ public class db {
 				o = (Supply) o;
 
 			try {
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+				java.util.Date utilDate1 = format.parse(o.getDate());
+				java.sql.Date sqlDate = new java.sql.Date(utilDate1.getTime());
+				
 				// 2. Create a Statement
 				myStmt = myConn.createStatement();
 				
@@ -585,7 +592,7 @@ public class db {
 				
 				if(typeOfOrder == true) {
 					
-					myStmt.executeUpdate("INSERT INTO prescription (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
+					myStmt.executeUpdate("INSERT INTO prescription (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + sqlDate + "');");
 				
 					for(int i=0; i<o.getListOfMedicines().size(); i++) {
 
@@ -594,7 +601,7 @@ public class db {
 				
 				}else if(typeOfOrder == false) {
 					
-					myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + o.getDate() + "');");
+					myStmt.executeUpdate("INSERT INTO supply (`id`, `Price`, `Date`) VALUES ('" + o.getCode() + "', '" + o.getTotalCost() + "', '" + sqlDate + "');");
 					
 					for(int i=0; i<o.getListOfMedicines().size(); i++) {
 
@@ -682,20 +689,29 @@ public class db {
 			ResultSet myRs = null;
 			
 			try {
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+				java.util.Date utilDate1 = format.parse(date1);
+				java.util.Date utilDate2 = format.parse(date2);
+			
+				
+				java.sql.Date sqlfirstDate = new java.sql.Date(utilDate1.getTime());
+				java.sql.Date sqlSecondDate = new java.sql.Date(utilDate2.getTime());
+				
 				// 2. Create a Statement
 				myStmt = myConn.createStatement();
 				
 				// 3. Execute SQL query
 				String query = null;
 				if(typeOfOrder == true) { 
-					query = "SELECT ALL pid ,sum(Quantity) from mydb19.pres_has_drug INNER JOIN mydb19.prescription\r\n" + 
+					query = "SELECT ALL drugid ,sum(Quantity) from mydb19.pres_has_drug INNER JOIN mydb19.prescription\r\n" + 
 							"ON mydb19.prescription.id = mydb19.pres_has_drug.pid\r\n" + 
-							"WHERE mydb19.supply.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
+							"WHERE mydb19.prescription.Date between '" + sqlfirstDate + "' and '" + sqlSecondDate + "'\r\n" + 
 							"GROUP BY drugid;";
 				}else if(typeOfOrder == false) {
 					query = "SELECT ALL did ,sum(Quantity) from mydb19.supply_has_drug INNER JOIN mydb19.supply\r\n" + 
 							"ON mydb19.supply.id = mydb19.supply_has_drug.sid\r\n" + 
-							"WHERE mydb19.supply.Date between '" + date1 + "' and '" + date2 + "'\r\n" + 
+							"WHERE mydb19.supply.Date between '" + sqlfirstDate + "' and '" + sqlSecondDate + "'\r\n" + 
 							"GROUP BY did;";
 				}
 				
@@ -705,7 +721,7 @@ public class db {
 				if(typeOfOrder == true) {
 					while (myRs.next()) {
 					
-						int i = myRs.getInt("did");
+						int i = myRs.getInt("drugid");
 						int q = myRs.getInt("sum(Quantity)");
 						// add id to id's list and quantity to quantity's list
 						id.add(i);
@@ -714,7 +730,7 @@ public class db {
 				}else if(typeOfOrder == false) {
 					while (myRs.next()) {
 						
-						int i = myRs.getInt("drugid");
+						int i = myRs.getInt("did");
 						int q = myRs.getInt("sum(Quantity)");
 						// add id to id's list and quantity to quantity's list
 						id.add(i);
