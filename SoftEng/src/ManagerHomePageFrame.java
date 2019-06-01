@@ -600,7 +600,8 @@ public class ManagerHomePageFrame extends JFrame {
 						      public void actionPerformed(ActionEvent e)
 						      {
 						    	  //Save the global timetable in the database
-						    	  //rnDoctDB 
+						    	  //rnDoctDB
+						    	  conn.saveTimetable(rnDoctDB);
 						      }
 						    });
 				    	  
