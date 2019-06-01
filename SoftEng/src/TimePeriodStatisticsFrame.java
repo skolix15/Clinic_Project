@@ -101,7 +101,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
 				    
 				    for (int i=0; i<quantities.size(); i++) {
-				    	System.out.println(quantities.get(i) + " | " + medicineNames.get(i));
+				    
 				    	dataset.addValue(quantities.get(i), medicineNames.get(i), "");
 				    }
 				    
