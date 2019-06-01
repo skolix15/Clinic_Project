@@ -339,7 +339,7 @@ public class ManagerHomePageFrame extends JFrame {
 				else // query was successful
 				{
 					// add the number to the text
-					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose only 7");
+					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose maximum 7");
 				}
 			
 				model = new DefaultTableModel();
@@ -395,18 +395,21 @@ public class ManagerHomePageFrame extends JFrame {
 						if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 							count++;
 						}
-						if(count>7) {
+						if(count>7 && NumberOfDocs>6) {
 							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
 							break;
 						}
 			    	  }
 			    	  
-			    	  if(count<7) {
+			    	  if(count<7 && NumberOfDocs >6) {
 							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!");
 						
 						}
+			    	  if(NumberOfDocs<7 && count<NumberOfDocs) {
+			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!");
+			    	  }
 			    	  
-			    	  if(count==7) {
+			    	  if(count==7 || (NumberOfDocs==count && NumberOfDocs<7)) {
 			    		  for(int i=0; i<doctors.size(); i++) {
 								 
 								if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
@@ -570,7 +573,9 @@ public class ManagerHomePageFrame extends JFrame {
 	    								  break;
 	    							  }
 	    						  }
-	    						  
+	    						  if(((String)model2.getValueAt(h, d)).equals("-")) {
+	    							  findrn="-";
+	    						  }
 	    						  if(d==1 && h==0) {
 	    							  rnDoctDB = findrn;
 	    						  }
@@ -583,7 +588,7 @@ public class ManagerHomePageFrame extends JFrame {
 	    					  }
 	    					  rnDoctDB+="/";
 				  	  }
- 
+				  	  System.out.println(rnDoctDB);
 				    	  secondPanel.add(label);
 				    	  secondPanel.add(scrollPane2);
 				    	  secondPanel.add(save);	
