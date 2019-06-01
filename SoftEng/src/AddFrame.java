@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -151,12 +152,15 @@ public class AddFrame extends JFrame{
 				panel.add(spinner);
 				panel.add(confirm);
 				
-				
-				
-				
 				//Εισαγωγή του panel στο contentpane
 				
 				this.setContentPane(panel);
+				
+				// Set frame in the center of the pc
+				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				int x = (screenSize.width - this.getWidth()) / 3;
+		        int y = (screenSize.height - this.getHeight()) / 3;
+		        this.setLocation(x, y);
 				
 				
 				//Καθορισμός των βασικών χαρακτηριστικών του panel
