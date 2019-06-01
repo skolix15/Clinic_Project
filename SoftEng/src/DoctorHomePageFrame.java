@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -117,6 +119,13 @@ public class DoctorHomePageFrame extends JFrame {
 		
 		
 		this.setContentPane(centralPanel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
+		        
 		this.setVisible(true);
 		this.setSize(500, 500);
 		this.setTitle("Doctor/Schedule");
@@ -126,11 +135,11 @@ public class DoctorHomePageFrame extends JFrame {
 	
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			String ttable;
+			String ttable =  conn.returnTimetable(); 
 			//κουμπί ωρολόγιο πρόγραμμα
 			if(e.getSource()== timetable ) {
 				// get the global timetable from the database
-				ttable = conn.returnTimetable(); 
+			
 				
 				if (ttable == null)
 				{
@@ -138,14 +147,15 @@ public class DoctorHomePageFrame extends JFrame {
 				}
 				else
 				{
-					// handle the program
+					// Get the Global timetable from the database
+					// We already have the global timetable in the variable ttable
 				}
 	
 			}
 			else {
 				//gemizw mono tis grammes opou leei to onoma tou giatrou
 				
-				ttable = conn.returnDoctorTimetable(AM);
+
 				System.out.println(AM +" " + ttable);
 			}
 		}

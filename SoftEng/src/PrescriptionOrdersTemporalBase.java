@@ -71,7 +71,7 @@ public class PrescriptionOrdersTemporalBase {
 		{
 		    String textToBeWritten = "";
 		    
-		    textToBeWritten = date + ": \n\n";
+		    textToBeWritten = date + "\n\n";
 		    for(int i = 0;i<medicines.size();i++) 
 		    	textToBeWritten += (medicines.get(i).getId() + " " + medicines.get(i).getName() + 
 		    						" " + String.valueOf(quantityOfMedicines.get(i)) + "\n");
