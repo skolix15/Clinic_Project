@@ -126,11 +126,11 @@ public class DoctorHomePageFrame extends JFrame {
 	
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			String ttable;
+			String ttable =  conn.returnTimetable(); 
 			//κουμπί ωρολόγιο πρόγραμμα
 			if(e.getSource()== timetable ) {
 				// get the global timetable from the database
-				ttable = conn.returnTimetable(); 
+			
 				
 				if (ttable == null)
 				{
@@ -146,7 +146,7 @@ public class DoctorHomePageFrame extends JFrame {
 			else {
 				//gemizw mono tis grammes opou leei to onoma tou giatrou
 				
-				ttable = conn.returnDoctorTimetable(AM);
+
 				System.out.println(AM +" " + ttable);
 			}
 		}
