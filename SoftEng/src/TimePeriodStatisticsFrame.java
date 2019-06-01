@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,29 +53,15 @@ public class TimePeriodStatisticsFrame extends JFrame{
 	public TimePeriodStatisticsFrame(db connection) {
 		
 		conn= connection;
-		
-		/*// Testing 
-		
-		ArrayList<Integer> id = new ArrayList<Integer>();
-		ArrayList<Integer> quantities = new ArrayList<Integer>();
-		
-		conn.getInfoFromOrderDataBaseForSpecificDates(true, "31/05/2019", "31/05/2019", id, quantities);
-		
-		for(int i=0;i<id.size();i++) {
-			
-			System.out.println(id.get(i) + " | " + quantities.get(i));
-		}
-		*/
-		
 			
 		// Dimiourgia text field
 		
 		firstDateTextField = new JTextField();
-		firstDateTextField.setBorder(new TitledBorder("First Date"));
+		firstDateTextField.setBorder(new TitledBorder("First Date (ex 25-04-1999)"));
 		firstDateTextField.setPreferredSize(new Dimension(200,54));
 		
 		secondDateTextField = new JTextField();
-		secondDateTextField.setBorder(new TitledBorder("Second Date"));
+		secondDateTextField.setBorder(new TitledBorder("Second Date (ex 25-04-1999)"));
 		secondDateTextField.setPreferredSize(new Dimension(200,54));
 		
 		
@@ -107,7 +93,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					
 					for(int j=0;j<id.size();j++) {
 						for(int i=0;i<Storage.getMedicineList().size();i++) {
-							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(i))))
+							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(j))))
 								medicineNames.add(Storage.getMedicineList().get(i).getName());
 							}
 						}
@@ -115,6 +101,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
 				    
 				    for (int i=0; i<quantities.size(); i++) {
+				    	System.out.println(quantities.get(i) + " | " + medicineNames.get(i));
 				    	dataset.addValue(quantities.get(i), medicineNames.get(i), "");
 				    }
 				    
@@ -138,10 +125,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 				    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				    example.setVisible(true);
 				    }
-				else 
-					JOptionPane.showMessageDialog(null,"Wrong format of date!","Error..",JOptionPane.ERROR_MESSAGE);
-				
-			}
+				}
 			
 		});
 		
@@ -197,10 +181,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 				    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				    example.setVisible(true);
 				    }
-				else
-					JOptionPane.showMessageDialog(null,"Wrong format of date!","Error..",JOptionPane.ERROR_MESSAGE);
-				
-			}
+				}
 			
 		});
 		
@@ -361,13 +342,25 @@ public class TimePeriodStatisticsFrame extends JFrame{
 			
 	 }
 	
-	public static boolean isValidDate(String d) 
+	public static boolean isValidDate(String date) 
     { 
-        String regex = "^(1[0-2]|0[1-9])/(3[01]"
-                       + "|[12][0-9]|0[1-9])/[0-9]{4}$"; 
-        Pattern pattern = Pattern.compile(regex); 
-        Matcher matcher = pattern.matcher((CharSequence)d); 
-        return matcher.matches(); 
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+        // Input to be parsed should strictly follow the defined date format
+        // above.
+		
+        format.setLenient(false);
+
+        try {
+        	
+            format.parse(date);
+            return true;
+            
+        } catch (ParseException e) {
+        	
+        	JOptionPane.showMessageDialog(null,"Wrong format of date!","Error..",JOptionPane.ERROR_MESSAGE);
+        	return false;
+        }
     } 
 
 }

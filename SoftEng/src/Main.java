@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 public class Main {
 
@@ -20,9 +21,8 @@ public class Main {
 	   Storage.addMedicine("siropi","004",4,6);
 */
 
-	   new GlobalHomeFrame(conn);
-	    
-	   
+	  new GlobalHomeFrame(conn);
+		
 	}
 	
 
