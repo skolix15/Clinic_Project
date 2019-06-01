@@ -138,7 +138,8 @@ public class DoctorHomePageFrame extends JFrame {
 				}
 				else
 				{
-					// handle the program
+					// Get the Global timetable from the database
+					// We already have the global timetable in the variable ttable
 				}
 	
 			}
