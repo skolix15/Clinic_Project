@@ -1,4 +1,4 @@
-import java.awt.Component;
+/*import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -363,4 +363,4 @@ public class TimePeriodStatisticsFrame extends JFrame{
         }
     } 
 
-}
+}*/
