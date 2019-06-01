@@ -46,6 +46,8 @@ public class ManagerHomePageFrame extends JFrame {
 	private JLabel hrLabel;
 	private db conn ;
 	
+	private String rnDoctDB = null;
+	
 	private DefaultTableModel model, model2;
 	
 	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); 
@@ -73,10 +75,8 @@ public class ManagerHomePageFrame extends JFrame {
 		mainPanel.add(menubar);
 		
 		
-		// Gets all the doctors from the database and puts them in the ArrayList doctors
+		// Gets all the doctors from the database, put them in the ArrayList doctors
 		conn.getAllDoctors(doctors);
-		
-		// Insert the doctors to the JTable
 		
 		
 		//Insert image to return at the Home Page
@@ -339,7 +339,7 @@ public class ManagerHomePageFrame extends JFrame {
 				else // query was successful
 				{
 					// add the number to the text
-					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose only 7");
+					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose maximum 7");
 				}
 			
 				model = new DefaultTableModel();
@@ -395,18 +395,21 @@ public class ManagerHomePageFrame extends JFrame {
 						if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 							count++;
 						}
-						if(count>7) {
+						if(count>7 && NumberOfDocs>6) {
 							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
 							break;
 						}
 			    	  }
 			    	  
-			    	  if(count<7) {
+			    	  if(count<7 && NumberOfDocs >6) {
 							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!");
 						
 						}
+			    	  if(NumberOfDocs<7 && count<NumberOfDocs) {
+			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!");
+			    	  }
 			    	  
-			    	  if(count==7) {
+			    	  if(count==7 || (NumberOfDocs==count && NumberOfDocs<7)) {
 			    		  for(int i=0; i<doctors.size(); i++) {
 								 
 								if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
@@ -508,7 +511,7 @@ public class ManagerHomePageFrame extends JFrame {
 
 				  	    			  if((model2.getValueAt(time, day) == (Object)"-") )  {
 						  	    		  model2.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
-						  	
+						  	    		  
 						  	    	  }
 				  	    			  else {
 				  	    				  //If this day isn't available, doctor will work at the first free woriking hour
@@ -516,7 +519,9 @@ public class ManagerHomePageFrame extends JFrame {
 				  	    					  for(int h=0;h<3;h++) {
 				  	    						  if(model2.getValueAt(h, d) == (Object)"-") {
 				  	    							model2.setValueAt(doct.firstName  + " " +  doct.lastName, h, d);
+				  	     							
 				  	    							flag=true;
+				  	    							
 				  	    							break;
 				  	    						  }
 				  	    						
@@ -556,8 +561,34 @@ public class ManagerHomePageFrame extends JFrame {
 	    								break;}
 	  	    				  }
 				  	    }
-				  	 
-				  	       
+				  	    
+				  	  //Create a String rnDoctDB with Doctors_RN for database 
+				  	  String findrn=null;
+				  	  for(int d=1;d<8; d++) {
+	    					  for(int h=0;h<3;h++) {
+	    						  
+	    						  for(Doctor doct: doctors) {
+	    							  if(((String)model2.getValueAt(h, d)).equals(doct.firstName + " " +  doct.lastName)) {
+	    								  findrn=doct.rn;
+	    								  break;
+	    							  }
+	    						  }
+	    						  if(((String)model2.getValueAt(h, d)).equals("-")) {
+	    							  findrn="-";
+	    						  }
+	    						  if(d==1 && h==0) {
+	    							  rnDoctDB = findrn;
+	    						  }
+	    						  else {
+	    							  rnDoctDB += findrn;
+	    						  }
+	    						  if(h!=2) {
+	    							  rnDoctDB += ",";
+	    						  }
+	    					  }
+	    					  rnDoctDB+="/";
+				  	  }
+				  	  
 				    	  secondPanel.add(label);
 				    	  secondPanel.add(scrollPane2);
 				    	  secondPanel.add(save);	
@@ -569,6 +600,8 @@ public class ManagerHomePageFrame extends JFrame {
 						      public void actionPerformed(ActionEvent e)
 						      {
 						    	  //Save the global timetable in the database
+						    	  //rnDoctDB
+						    	  conn.saveTimetable(rnDoctDB);
 						      }
 						    });
 				    	  
@@ -577,7 +610,7 @@ public class ManagerHomePageFrame extends JFrame {
 						      public void actionPerformed(ActionEvent e)
 						      {
 						    	  JOptionPane.showMessageDialog(secondPanel, "Choose boxes from table with double click and change the First And the Last Name ");
-						    	  //Έλεγχός αν αυτά τα οόματα υπάρχουν στην βάση
+						    	  //Έλεγχός αν αυτά τα ονόματα υπάρχουν στην βάση
 						    	   
 						      }
 						    });
