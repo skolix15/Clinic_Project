@@ -40,6 +40,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 
 	private JButton supplySatisticsButton;
 	private JButton prescriptionStatisticsButton;
+	private JButton goBackButton;
 	
 	private JPanel buttonsPanel;
 	private JPanel textFieldsPanel;
@@ -69,10 +70,22 @@ public class TimePeriodStatisticsFrame extends JFrame{
 		
 		supplySatisticsButton = new JButton("Supply Time Period Statistics");
 		prescriptionStatisticsButton = new JButton("Prescription Time Period Statistics");
+		goBackButton = new JButton("Return to the previous page");
 		
 		// Dimioyrgia listener gia ta buttons
 		
 		// First button Listener
+		
+		goBackButton.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+							
+				new StatisticsFrame(conn);
+				dispose();
+			}
+			
+		});
 		
 		supplySatisticsButton.addActionListener(new ActionListener() {
 
@@ -106,7 +119,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 				    }
 				    
 				    JFreeChart chart=ChartFactory.createBarChart(  
-				            "Supply Quantity Chart", //Chart Title  
+				            "Time Period Supply Quantity Chart", //Chart Title  
 				            "Drug", // Category axis  
 				            "Bought quantity", // Value axis  
 				            dataset,  
@@ -162,7 +175,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 				    }
 				    
 				    JFreeChart chart=ChartFactory.createBarChart(  
-				            "Prescription Quantity Chart", //Chart Title  
+				            "Time Period Prescription Quantity Chart", //Chart Title  
 				            "Drug", // Category axis  
 				            "Bought quantity", // Value axis  
 				            dataset,  
@@ -285,6 +298,8 @@ public class TimePeriodStatisticsFrame extends JFrame{
 	    panel.add(textFieldsPanel);
 	    
 	    panel.add(buttonsPanel);
+	    
+	    panel.add(goBackButton);
 		
 		
 		this.setContentPane(panel);
