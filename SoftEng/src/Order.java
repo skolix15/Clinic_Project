@@ -83,7 +83,7 @@ public abstract class Order {
 	
 	public String getDateTime() {
 		
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         return dateFormat.format(date);
     }
