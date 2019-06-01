@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,9 +16,16 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class TimePeriodStatisticsFrame extends JFrame{
 	
@@ -66,12 +76,133 @@ public class TimePeriodStatisticsFrame extends JFrame{
 		
 		secondDateTextField = new JTextField();
 		secondDateTextField.setBorder(new TitledBorder("Second Date"));
-		secondDateTextField.setPreferredSize(new Dimension(200,54));		
+		secondDateTextField.setPreferredSize(new Dimension(200,54));
+		
 		
 		// Dimiourgia buttons
 		
 		supplySatisticsButton = new JButton("Supply Time Period Statistics");
 		prescriptionStatisticsButton = new JButton("Prescription Time Period Statistics");
+		
+		// Dimioyrgia listener gia ta buttons
+		
+		// First button Listener
+		
+		supplySatisticsButton.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String firstDateText = firstDateTextField.getText();
+				String secondDateText = secondDateTextField.getText();
+				
+				if( isValidDate(firstDateText) && isValidDate(secondDateText) ) {
+					
+					
+					ArrayList<Integer> id = new ArrayList<Integer>();
+					ArrayList<Integer> quantities = new ArrayList<Integer>();
+					ArrayList<String> medicineNames = new ArrayList<String>();
+					
+					conn.getInfoFromOrderDataBaseForSpecificDates(false,firstDateText , secondDateText, id, quantities);
+					
+					for(int j=0;j<id.size();j++) {
+						for(int i=0;i<Storage.getMedicineList().size();i++) {
+							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(i))))
+								medicineNames.add(Storage.getMedicineList().get(i).getName());
+							}
+						}
+					
+					DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
+				    
+				    for (int i=0; i<quantities.size(); i++) {
+				    	dataset.addValue(quantities.get(i), medicineNames.get(i), "");
+				    }
+				    
+				    JFreeChart chart=ChartFactory.createBarChart(  
+				            "Supply Quantity Chart", //Chart Title  
+				            "Drug", // Category axis  
+				            "Bought quantity", // Value axis  
+				            dataset,  
+				            PlotOrientation.VERTICAL,  
+				            true,true,false  
+				           ); 
+				    
+				    ChartPanel BarPanel=new ChartPanel(chart);  
+				    
+				    JFrame example = new JFrame("Bar Chart");
+				    
+				    example.setContentPane(BarPanel);
+				    
+				    example.setSize(800, 400);  
+				    example.setLocationRelativeTo(null);  
+				    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				    example.setVisible(true);
+				    }
+				else 
+					JOptionPane.showMessageDialog(null,"Wrong format of date!","Error..",JOptionPane.ERROR_MESSAGE);
+				
+			}
+			
+		});
+		
+		
+		// Second button Listener
+		
+		prescriptionStatisticsButton.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String firstDateText = firstDateTextField.getText();
+				String secondDateText = secondDateTextField.getText();
+		
+				if( isValidDate(firstDateText) && isValidDate(secondDateText) ) {
+					
+					ArrayList<Integer> id = new ArrayList<Integer>();
+					ArrayList<Integer> quantities = new ArrayList<Integer>();
+					ArrayList<String> medicineNames = new ArrayList<String>();
+					
+					conn.getInfoFromOrderDataBaseForSpecificDates(true,firstDateText , secondDateText, id, quantities);
+					
+					for(int j=0;j<id.size();j++) {
+						for(int i=0;i<Storage.getMedicineList().size();i++) {
+							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(i))))
+								medicineNames.add(Storage.getMedicineList().get(i).getName());
+							}
+						}
+					
+					DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
+				    
+				    for (int i=0; i<quantities.size(); i++) {
+				    	dataset.addValue(quantities.get(i), medicineNames.get(i), "");
+				    }
+				    
+				    JFreeChart chart=ChartFactory.createBarChart(  
+				            "Prescription Quantity Chart", //Chart Title  
+				            "Drug", // Category axis  
+				            "Bought quantity", // Value axis  
+				            dataset,  
+				            PlotOrientation.VERTICAL,  
+				            true,true,false  
+				           ); 
+				    
+				    ChartPanel BarPanel=new ChartPanel(chart);  
+				    
+				    JFrame example = new JFrame("Bar Chart");
+				    
+				    example.setContentPane(BarPanel);
+				    
+				    example.setSize(800, 400);  
+				    example.setLocationRelativeTo(null);  
+				    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				    example.setVisible(true);
+				    }
+				else
+					JOptionPane.showMessageDialog(null,"Wrong format of date!","Error..",JOptionPane.ERROR_MESSAGE);
+				
+			}
+			
+		});
 		
 		
 		// Dimiourgia baras menu
@@ -229,5 +360,14 @@ public class TimePeriodStatisticsFrame extends JFrame{
 		}
 			
 	 }
+	
+	public static boolean isValidDate(String d) 
+    { 
+        String regex = "^(1[0-2]|0[1-9])/(3[01]"
+                       + "|[12][0-9]|0[1-9])/[0-9]{4}$"; 
+        Pattern pattern = Pattern.compile(regex); 
+        Matcher matcher = pattern.matcher((CharSequence)d); 
+        return matcher.matches(); 
+    } 
 
 }
