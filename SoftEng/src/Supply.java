@@ -1,3 +1,5 @@
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -54,7 +56,7 @@ public class Supply extends Order {
 		
 		for(int i = 0;i<medicines.size();i++) 
 			totalCost += (medicines.get(i).getPrice() * quantityOfMedicines.get(i)) / 3;
-			
+        
 		return totalCost;
 	}
 	

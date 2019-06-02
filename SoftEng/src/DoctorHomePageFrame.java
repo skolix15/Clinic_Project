@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -37,6 +38,10 @@ public class DoctorHomePageFrame extends JFrame {
 	private String AM;
 	
 	private DefaultTableModel model;
+	private ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+	private ArrayList<String> rn = new ArrayList<String>();
+
+
 	
 	public DoctorHomePageFrame(db connection, String AM) {
 		this.AM=AM;
@@ -136,27 +141,137 @@ public class DoctorHomePageFrame extends JFrame {
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String ttable =  conn.returnTimetable(); 
+			
+			if (ttable == null)
+			{
+				JOptionPane.showMessageDialog(centralPanel, "The program hasn't been created yet.");
+			}
+			else
+			{
+				String getRn=null;
+				boolean flag =true;
+				
+
+				//Get all RNs from ttable in an arrayList<string> rn
+				for(int i=0; i<ttable.length(); i++) {
+					if((ttable.charAt(i)>47 && ttable.charAt(i)<58) || 
+							(ttable.charAt(i)>96 && ttable.charAt(i)<123)) {
+							if(flag) {
+								getRn=String.valueOf(ttable.charAt(i));
+								flag=false;
+								}
+							else {
+								getRn+=ttable.charAt(i);
+							}	
+							
+							
+					}
+					if(ttable.charAt(i) == ',' || ttable.charAt(i) == '/') {
+						rn.add(getRn);
+						flag=true;
+					}
+				
+				}
+				conn.getAllDoctors(doctors);
+			}
 			//κουμπί ωρολόγιο πρόγραμμα
 			if(e.getSource()== timetable ) {
 				// get the global timetable from the database
 			
 				
-				if (ttable == null)
-				{
-					JOptionPane.showMessageDialog(centralPanel, "The program hasn't been created yet.");
-				}
-				else
-				{
-					// Get the Global timetable from the database
-					// We already have the global timetable in the variable ttable
-				}
-	
-			}
-			else {
-				//gemizw mono tis grammes opou leei to onoma tou giatrou
-				
+				    // Get the Global timetable from the database
+				    // We already have the global timetable in the variable ttable and in the arraylist rn
+					
+					int time=-1;
+					int day=-1;
+					int i=-1;
 
-				System.out.println(AM +" " + ttable);
+					for(int k=0; k<rn.size(); k++) {
+						i++;
+						for(Doctor doct: doctors) {
+							if(doct.rn.equals(rn.get(i))) {
+								time=k%3;
+								switch(k) {
+			  	    		  	case 0:
+			  	    		  		day=1; //Monday
+			  	    		  		break;
+					  	    	case 3:
+					  	    	    day=2; //Tuesday
+					  	    	    break;
+					  	    	case 6:
+			  	    		  		day=3; //Wednesday
+			  	    		  		break;
+					  	    	case 9:
+					  	    	    day=4; //Thursday
+					  	    	    break;
+					  	    	case 12:
+			  	    		  		day=5; //Friday
+			  	    		  		break;
+					  	    	case 15:
+					  	    	    day=6; //Saturday
+					  	    	    break;
+					  	    	case 18:
+					  	    	    day=7; //Sunday
+					  	    	    break;
+								}
+								model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+								break;
+							}
+							
+						}
+					}
+				}
+				
+	
+			
+			else {
+				//Show only doctor's shift
+				
+				int time=-1;
+				int day=-1;
+				int i=-1;
+
+
+				for(int k=0; k<rn.size(); k++) {
+					i++;
+					for(Doctor doct: doctors) {
+						time=k%3;
+						switch(k) {
+	  	    		  	case 0:
+	  	    		  		day=1; //Monday
+	  	    		  		break;
+			  	    	case 3:
+			  	    	    day=2; //Tuesday
+			  	    	    break;
+			  	    	case 6:
+	  	    		  		day=3; //Wednesday
+	  	    		  		break;
+			  	    	case 9:
+			  	    	    day=4; //Thursday
+			  	    	    break;
+			  	    	case 12:
+	  	    		  		day=5; //Friday
+	  	    		  		break;
+			  	    	case 15:
+			  	    	    day=6; //Saturday
+			  	    	    break;
+			  	    	case 18:
+			  	    	    day=7; //Sunday
+			  	    	    break;
+						}
+						if(doct.rn.equals(rn.get(i)) && doct.rn.equals(AM)) {
+						
+							model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+							break;
+						}
+						if(doct.rn.equals(rn.get(i)) && !(doct.rn.equals(AM))) {
+							model.setValueAt("-", time, day);
+						}
+						
+					}
+				}
+
+				
 			}
 		}
 	}
