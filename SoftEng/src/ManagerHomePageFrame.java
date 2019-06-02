@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,9 +31,8 @@ import javax.swing.table.TableRowSorter;
 
 public class ManagerHomePageFrame extends JFrame {
 	
-	private JPanel centralPanel;
-	private JPanel mainPanel;
-	private JPanel secondPanel;
+	private JPanel centralPanel,mainPanel ,secondPanel, menuPanel;
+	private JPanel EmployeePanel;
 	
 	private JMenuBar menubar;
 	private JMenu employeeMenu;
@@ -58,8 +56,9 @@ public class ManagerHomePageFrame extends JFrame {
 	public ManagerHomePageFrame(db connection) {
 		conn= connection;
 		centralPanel = new JPanel(new BorderLayout());
-		mainPanel= new JPanel();
+		mainPanel= new JPanel(new BorderLayout());
 		secondPanel= new JPanel();
+		menuPanel=new JPanel();
 		
 		menubar= new JMenuBar();
 		employeeMenu= new JMenu("Employee");
@@ -74,7 +73,7 @@ public class ManagerHomePageFrame extends JFrame {
 		menubar.add(employeeMenu);
 		menubar.add(programMenu);
 	
-		mainPanel.add(menubar);
+		menuPanel.add(menubar);
 		
 		
 		// Gets all the doctors from the database, put them in the ArrayList doctors
@@ -84,7 +83,9 @@ public class ManagerHomePageFrame extends JFrame {
 		//Insert image to return at the Home Page
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
-		mainPanel.add(lb);
+		mainPanel.add(lb, BorderLayout.NORTH);
+		
+		mainPanel.add(menuPanel, BorderLayout.AFTER_LAST_LINE);
 		
 		lb.addMouseListener(new MouseAdapter() 
 		{
@@ -139,7 +140,7 @@ public class ManagerHomePageFrame extends JFrame {
 			if(e.getSource()== change ) {
 				
 				hrLabel = new JLabel ("Workforce availability");
-			
+				EmployeePanel=new JPanel();
 				
 				// get all doctors from the database
 				
@@ -213,6 +214,12 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(FindField);
 				secondPanel.add(add);
 				secondPanel.add(remove);
+				/*EmployeePanel.add(hrLabel);
+				EmployeePanel.add(scrollPane);
+				EmployeePanel.add(FindField);
+				EmployeePanel.add(add);
+				EmployeePanel.add(remove);
+				secondPanel.add(EmployeePanel);*/
 				pack(); 
 				
 				
