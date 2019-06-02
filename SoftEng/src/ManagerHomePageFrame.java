@@ -334,7 +334,7 @@ public class ManagerHomePageFrame extends JFrame {
 			//Button: Program-> Create
 			else if(e.getSource() == create) {
 				JLabel label= new JLabel("Create - Export TimeTable");
-				JLabel text1 = new JLabel("Number of doctors in db: ");//Arithmos apo vasi
+				JLabel text1 = new JLabel("Number of doctors in db: ");
 				JButton show_program = new JButton("Show Program");
 				JButton cancel_but = new JButton("Cancel");
 				
@@ -391,6 +391,11 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(cancel_but, BorderLayout.SOUTH);
 				pack();
 				
+				//Message that there are no doctors in the data base
+				if(NumberOfDocs==0) {
+					JOptionPane.showMessageDialog(centralPanel, "There are no doctors!");
+				}
+				
 				show_program.addActionListener(new ActionListener()
 			    {	
 			      public void actionPerformed(ActionEvent e)
@@ -404,6 +409,7 @@ public class ManagerHomePageFrame extends JFrame {
 						if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 							count++;
 						}
+						
 						if(count>7 && NumberOfDocs>6) {
 							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
 							break;
@@ -611,6 +617,8 @@ public class ManagerHomePageFrame extends JFrame {
 						    	  //Save the global timetable in the database
 						    	  //rnDoctDB
 						    	  conn.saveTimetable(rnDoctDB);
+
+						    	  JOptionPane.showMessageDialog(secondPanel, "Program saved successfully");
 						      }
 						    });
 				    	  
