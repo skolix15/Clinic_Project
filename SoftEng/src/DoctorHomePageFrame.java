@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -37,6 +38,8 @@ public class DoctorHomePageFrame extends JFrame {
 	private String AM;
 	
 	private DefaultTableModel model;
+	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); 
+
 	
 	public DoctorHomePageFrame(db connection, String AM) {
 		this.AM=AM;
@@ -147,16 +150,81 @@ public class DoctorHomePageFrame extends JFrame {
 				}
 				else
 				{
+					ArrayList<String> rn = new ArrayList<String>();
+					String getRn=null;
+					boolean flag =true;
 					// Get the Global timetable from the database
 					// We already have the global timetable in the variable ttable
+
+					//Get all RNs from ttable in an arrayList<string> rn
+					for(int i=0; i<ttable.length(); i++) {
+						if((ttable.charAt(i)>47 && ttable.charAt(i)<58) || 
+								(ttable.charAt(i)>96 && ttable.charAt(i)<123)) {
+								if(flag) {
+									getRn=String.valueOf(ttable.charAt(i));
+									flag=false;
+									}
+								else {
+									getRn+=ttable.charAt(i);
+								}	
+								
+								
+						}
+						if(ttable.charAt(i) == ',' || ttable.charAt(i) == '/') {
+							rn.add(getRn);
+							flag=true;
+						}
+					
+					}
+					conn.getAllDoctors(doctors);
+					
+					int time=-1;
+					int day=-1;
+					int i=-1;
+
+					for(int k=0; k<rn.size(); k++) {
+						i++;
+						for(Doctor doct: doctors) {
+							if(doct.rn.equals(rn.get(i))) {
+								time=k%3;
+								switch(k) {
+			  	    		  	case 0:
+			  	    		  		day=1; //Monday
+			  	    		  		break;
+					  	    	case 3:
+					  	    	    day=2; //Tuesday
+					  	    	    break;
+					  	    	case 6:
+			  	    		  		day=3; //Wednesday
+			  	    		  		break;
+					  	    	case 9:
+					  	    	    day=4; //Thursday
+					  	    	    break;
+					  	    	case 12:
+			  	    		  		day=5; //Friday
+			  	    		  		break;
+					  	    	case 15:
+					  	    	    day=6; //Saturday
+					  	    	    break;
+					  	    	case 18:
+					  	    	    day=7; //Sunday
+					  	    	    break;
+								}
+								model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+								break;
+							}
+							
+						}
+					}
 				}
+				
 	
 			}
 			else {
 				//gemizw mono tis grammes opou leei to onoma tou giatrou
 				
 
-				System.out.println(AM +" " + ttable);
+				
 			}
 		}
 	}
