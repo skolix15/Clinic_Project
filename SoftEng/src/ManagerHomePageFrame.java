@@ -270,12 +270,12 @@ public class ManagerHomePageFrame extends JFrame {
 					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
-				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error");
+				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  			  }
 				    	  			  else if (NumberOfDocs == 1 )
 				    	  			  {
 				    	  				// show that the doctor with the given RN already exists
-				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists");
+				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  				  
 				    	  			  }
 				    	  			  else
@@ -321,7 +321,7 @@ public class ManagerHomePageFrame extends JFrame {
 						       	 //UPDATE THE DATABASE
 						        	conn.removeDoctor(valueInCell);}
 					    	  else {
-					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove");
+					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove", "Inane warning", JOptionPane.WARNING_MESSAGE);
 					    	  }
 					    	
 					      }
@@ -393,7 +393,7 @@ public class ManagerHomePageFrame extends JFrame {
 				
 				//Message that there are no doctors in the data base
 				if(NumberOfDocs==0) {
-					JOptionPane.showMessageDialog(centralPanel, "There are no doctors!");
+					JOptionPane.showMessageDialog(centralPanel, "There are no doctors!", "Inane error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				show_program.addActionListener(new ActionListener()
@@ -411,17 +411,17 @@ public class ManagerHomePageFrame extends JFrame {
 						}
 						
 						if(count>7 && NumberOfDocs>6) {
-							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
+							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 							break;
 						}
 			    	  }
 			    	  
 			    	  if(count<7 && NumberOfDocs >6) {
-							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!");
+							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 						
 						}
 			    	  if(NumberOfDocs<7 && count<NumberOfDocs) {
-			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!");
+			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 			    	  }
 			    	  
 			    	  if(count==7 || (NumberOfDocs==count && NumberOfDocs<7)) {

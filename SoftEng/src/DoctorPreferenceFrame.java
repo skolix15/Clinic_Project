@@ -139,13 +139,13 @@ public class DoctorPreferenceFrame extends JFrame{
 							count++;
 						}
 						if(count>3) {
-							JOptionPane.showMessageDialog(centralPanel, "Put only 3 choices!");
+							JOptionPane.showMessageDialog(centralPanel, "Put only 3 choices!","Inane warning",JOptionPane.WARNING_MESSAGE);
 							break;
 						}
 			
 				}
 					if(count<3) {
-						JOptionPane.showMessageDialog(centralPanel, "You have less than 3 choices!");
+						JOptionPane.showMessageDialog(centralPanel, "You have less than 3 choices!","Inane warning",JOptionPane.WARNING_MESSAGE);
 					
 					}
 		

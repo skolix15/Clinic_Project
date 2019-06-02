@@ -104,7 +104,7 @@ public class ManagerLogInFrame extends JFrame  {
 				}
 				else {
 					
-					 JOptionPane.showMessageDialog(CentralPanel, "Wrong password");
+					 JOptionPane.showMessageDialog(CentralPanel, "Wrong password","Inane error",JOptionPane.ERROR_MESSAGE);
 				}
 		
 				

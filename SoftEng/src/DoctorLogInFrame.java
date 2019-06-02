@@ -96,7 +96,7 @@ public class DoctorLogInFrame extends JFrame {
 				
 	  			if (NumberOfDocs == -1)
 	  			{
-					 JOptionPane.showMessageDialog(panel1, "Error");
+					 JOptionPane.showMessageDialog(panel1, "Error", "Inane error",JOptionPane.ERROR_MESSAGE);
 
 	  			}
 	  			else if (NumberOfDocs == 1 )
@@ -142,7 +142,7 @@ public class DoctorLogInFrame extends JFrame {
 	  								new DoctorPreferenceFrame(conn, AM);
 	  							}
 	  							else {
-	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!");
+	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!", "Inane error",JOptionPane.ERROR_MESSAGE);
 	  							}
 	  						}
 				     });
@@ -193,7 +193,7 @@ public class DoctorLogInFrame extends JFrame {
 	  							}
 	  							else {
 	  								//If you Can't remember your password?
-	  								JOptionPane.showMessageDialog(panel2, "Wrong Password!");
+	  								JOptionPane.showMessageDialog(panel2, "Wrong Password!", "Inane error",JOptionPane.ERROR_MESSAGE);
 	
 	  							}
 	  						}
@@ -205,7 +205,7 @@ public class DoctorLogInFrame extends JFrame {
 	  			else
 	  		    {
 	  				// show that the doctor with the given AM doesn't exist
-	  				JOptionPane.showMessageDialog(panel1, "The doctor with the RN " + AM + " doesn't exist");
+	  				JOptionPane.showMessageDialog(panel1, "The doctor with the RN " + AM + " doesn't exist", "Inane error",JOptionPane.ERROR_MESSAGE);
 	  		    }	
 			}
 			

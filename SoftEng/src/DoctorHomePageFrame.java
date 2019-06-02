@@ -144,7 +144,7 @@ public class DoctorHomePageFrame extends JFrame {
 			
 			if (ttable == null)
 			{
-				JOptionPane.showMessageDialog(centralPanel, "The program hasn't been created yet.");
+				JOptionPane.showMessageDialog(centralPanel, "The program hasn't been created yet.","Inane warning", JOptionPane.WARNING_MESSAGE);
 			}
 			else
 			{
