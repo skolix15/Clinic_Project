@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class Supply extends Order {
 
-	// Dimiourgeitai ena kainourgio antikeimeno typou Supply opou apla oi dyo listes tis yperklasis "Order" pairnoun thn timh "null".
+	// Creates a new object type of "Supply". In constructor the two list of the hyperclass "Order" take value "null" 
 	
 	public Supply(db connection) {
 			

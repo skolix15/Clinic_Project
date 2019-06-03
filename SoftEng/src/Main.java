@@ -16,6 +16,8 @@ public class Main {
 		SupplyChainMainFrame.count = 0;
 		new GlobalHomeFrame(conn);
 		
+		
+		
 	}
 	
 
