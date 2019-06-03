@@ -155,7 +155,7 @@ public class DoctorHomePageFrame extends JFrame {
 				//Get all RNs from ttable in an arrayList<string> rn
 				for(int i=0; i<ttable.length(); i++) {
 					if((ttable.charAt(i)>47 && ttable.charAt(i)<58) || 
-							(ttable.charAt(i)>96 && ttable.charAt(i)<123)) {
+							(ttable.charAt(i)>96 && ttable.charAt(i)<123) || ttable.charAt(i)=='-') {
 							if(flag) {
 								getRn=String.valueOf(ttable.charAt(i));
 								flag=false;
@@ -189,7 +189,7 @@ public class DoctorHomePageFrame extends JFrame {
 					for(int k=0; k<rn.size(); k++) {
 						i++;
 						for(Doctor doct: doctors) {
-							if(doct.rn.equals(rn.get(i))) {
+							if(doct.rn.equals(rn.get(i)) || "-".equals(rn.get(i))) {
 								time=k%3;
 								switch(k) {
 			  	    		  	case 0:
@@ -214,8 +214,9 @@ public class DoctorHomePageFrame extends JFrame {
 					  	    	    day=7; //Sunday
 					  	    	    break;
 								}
-								model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
-								break;
+								if(doct.rn.equals(rn.get(i))) {
+									model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+									break;}
 							}
 							
 						}
