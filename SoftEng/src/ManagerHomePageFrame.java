@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,9 +31,8 @@ import javax.swing.table.TableRowSorter;
 
 public class ManagerHomePageFrame extends JFrame {
 	
-	private JPanel centralPanel;
-	private JPanel mainPanel;
-	private JPanel secondPanel;
+	private JPanel centralPanel,mainPanel ,secondPanel, menuPanel;
+	private JPanel EmployeePanel;
 	
 	private JMenuBar menubar;
 	private JMenu employeeMenu;
@@ -58,8 +56,9 @@ public class ManagerHomePageFrame extends JFrame {
 	public ManagerHomePageFrame(db connection) {
 		conn= connection;
 		centralPanel = new JPanel(new BorderLayout());
-		mainPanel= new JPanel();
+		mainPanel= new JPanel(new BorderLayout());
 		secondPanel= new JPanel();
+		menuPanel=new JPanel();
 		
 		menubar= new JMenuBar();
 		employeeMenu= new JMenu("Employee");
@@ -74,7 +73,7 @@ public class ManagerHomePageFrame extends JFrame {
 		menubar.add(employeeMenu);
 		menubar.add(programMenu);
 	
-		mainPanel.add(menubar);
+		menuPanel.add(menubar);
 		
 		
 		// Gets all the doctors from the database, put them in the ArrayList doctors
@@ -84,7 +83,9 @@ public class ManagerHomePageFrame extends JFrame {
 		//Insert image to return at the Home Page
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
-		mainPanel.add(lb);
+		mainPanel.add(lb, BorderLayout.NORTH);
+		
+		mainPanel.add(menuPanel, BorderLayout.AFTER_LAST_LINE);
 		
 		lb.addMouseListener(new MouseAdapter() 
 		{
@@ -139,7 +140,7 @@ public class ManagerHomePageFrame extends JFrame {
 			if(e.getSource()== change ) {
 				
 				hrLabel = new JLabel ("Workforce availability");
-			
+				EmployeePanel=new JPanel();
 				
 				// get all doctors from the database
 				
@@ -213,6 +214,12 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(FindField);
 				secondPanel.add(add);
 				secondPanel.add(remove);
+				/*EmployeePanel.add(hrLabel);
+				EmployeePanel.add(scrollPane);
+				EmployeePanel.add(FindField);
+				EmployeePanel.add(add);
+				EmployeePanel.add(remove);
+				secondPanel.add(EmployeePanel);*/
 				pack(); 
 				
 				
@@ -270,12 +277,12 @@ public class ManagerHomePageFrame extends JFrame {
 					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
-				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error");
+				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  			  }
 				    	  			  else if (NumberOfDocs == 1 )
 				    	  			  {
 				    	  				// show that the doctor with the given RN already exists
-				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists");
+				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  				  
 				    	  			  }
 				    	  			  else
@@ -321,7 +328,7 @@ public class ManagerHomePageFrame extends JFrame {
 						       	 //UPDATE THE DATABASE
 						        	conn.removeDoctor(valueInCell);}
 					    	  else {
-					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove");
+					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove", "Inane warning", JOptionPane.WARNING_MESSAGE);
 					    	  }
 					    	
 					      }
@@ -334,7 +341,7 @@ public class ManagerHomePageFrame extends JFrame {
 			//Button: Program-> Create
 			else if(e.getSource() == create) {
 				JLabel label= new JLabel("Create - Export TimeTable");
-				JLabel text1 = new JLabel("Number of doctors in db: ");//Arithmos apo vasi
+				JLabel text1 = new JLabel("Number of doctors in db: ");
 				JButton show_program = new JButton("Show Program");
 				JButton cancel_but = new JButton("Cancel");
 				
@@ -391,6 +398,11 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(cancel_but, BorderLayout.SOUTH);
 				pack();
 				
+				//Message that there are no doctors in the data base
+				if(NumberOfDocs==0) {
+					JOptionPane.showMessageDialog(centralPanel, "There are no doctors!", "Inane error", JOptionPane.ERROR_MESSAGE);
+				}
+				
 				show_program.addActionListener(new ActionListener()
 			    {	
 			      public void actionPerformed(ActionEvent e)
@@ -404,18 +416,19 @@ public class ManagerHomePageFrame extends JFrame {
 						if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 							count++;
 						}
+						
 						if(count>7 && NumberOfDocs>6) {
-							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
+							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 							break;
 						}
 			    	  }
 			    	  
 			    	  if(count<7 && NumberOfDocs >6) {
-							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!");
+							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 						
 						}
 			    	  if(NumberOfDocs<7 && count<NumberOfDocs) {
-			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!");
+			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 			    	  }
 			    	  
 			    	  if(count==7 || (NumberOfDocs==count && NumberOfDocs<7)) {
@@ -611,6 +624,8 @@ public class ManagerHomePageFrame extends JFrame {
 						    	  //Save the global timetable in the database
 						    	  //rnDoctDB
 						    	  conn.saveTimetable(rnDoctDB);
+
+						    	  JOptionPane.showMessageDialog(secondPanel, "Program saved successfully");
 						      }
 						    });
 				    	  
