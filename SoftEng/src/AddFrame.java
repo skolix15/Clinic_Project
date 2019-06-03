@@ -69,7 +69,7 @@ public class AddFrame extends JFrame{
 				ButtonListenerConfirm confirmListener= new ButtonListenerConfirm();
 				confirm.addActionListener(confirmListener);
 				
-				// Creating and adding picture and listener in this frame
+				// Creating and adding picture and listener for it in this frame
 				
 				ImageIcon icon = new ImageIcon("hospital1.png");
 				JLabel lb = new JLabel(icon);
@@ -113,13 +113,13 @@ public class AddFrame extends JFrame{
 			    i5.addActionListener(menuListener);
 			    iCentralMenu.addActionListener(menuListener);
 			    
-			    //Creating JSpinner
+			    // Creating JSpinner
 			    spinner = new JSpinner();
 			    spinner.setPreferredSize(new Dimension(75, 50));
 			    spinner.setBorder(new TitledBorder("Quantity"));
 			    
 				
-			    //Adding items in their menus
+			    // Adding items in their menus
 			    centralMenu_Menu.add(iCentralMenu);
 			    orderMenu.add(i1);
 			    orderMenu.add(i2);
@@ -127,7 +127,7 @@ public class AddFrame extends JFrame{
 			    storageMenu.add(i4);
 			    statisticsMenu.add(i5);
 			    
-			    //Adding all the menus in the menu bar
+			    // Adding all the menus in the menu bar
 			    mb.add(centralMenu_Menu);
 			    mb.add(orderMenu);
 			    mb.add(storageMenu);
@@ -174,6 +174,8 @@ public class AddFrame extends JFrame{
 				
 				
 			}
+	
+			// menu listener
 			
 			class JTablePopupMenuListener implements ActionListener {
 
@@ -222,6 +224,8 @@ public class AddFrame extends JFrame{
 					
 			 }
 			
+			// Button listener (confirm button)
+			
 			class ButtonListenerConfirm implements ActionListener {
 				
 				public void actionPerformed(ActionEvent e) {
@@ -237,6 +241,7 @@ public class AddFrame extends JFrame{
 					double priceDouble = Double.parseDouble(priceText);
 					int quantityInt = Integer.parseInt(quantityText);
 					
+					// Adding drug in the list of the Storage class and inform base for this adding
 					
 					if (Storage.searchMedicine(nameText, idText) == null) {
 						Storage.addMedicine(nameText, idText, priceDouble, quantityInt);
