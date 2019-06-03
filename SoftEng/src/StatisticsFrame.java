@@ -1,4 +1,6 @@
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +14,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class StatisticsFrame extends JFrame{
 	
@@ -55,6 +62,76 @@ public class StatisticsFrame extends JFrame{
 				
 			}
 			
+		});
+		
+		generalStatisticsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
+			    
+			    for (int i=0; i<Storage.getMedicineList().size(); i++) {
+			    	
+			    	dataset.addValue(Storage.getMedicineList().get(i).getSoldUnits(), Storage.getMedicineList().get(i).getName(), "");
+			    }
+			    
+			    JFreeChart chart=ChartFactory.createBarChart(  
+			            "Bought Quantity Chart", //Chart Title  
+			            "Drug", // Category axis  
+			            "Bought quantity", // Value axis  
+			            dataset,  
+			            PlotOrientation.VERTICAL,  
+			            true,true,false  
+			           ); 
+			    
+			    ChartPanel BarPanel=new ChartPanel(chart);  
+			    
+			    JFrame example = new JFrame("Bar Chart");
+			    
+			    example.setContentPane(BarPanel);
+			    
+			    example.setSize(800, 400);  
+			    example.setLocationRelativeTo(null);  
+			    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			    example.setVisible(true);
+			    }
+		});
+		
+		dailyStatisticsButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				PrescriptionOrdersTemporalBase.readFromOrderFile();
+				
+				DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
+			    
+			    for (int i=0; i<PrescriptionOrdersTemporalBase.getListOfMedicinesFromAllTheDailyOrders().size(); i++) {
+			    	
+			    	dataset.addValue(PrescriptionOrdersTemporalBase.getListOfQuantityOfMedicinesFromAllTheDailyOrders().get(i).intValue(), PrescriptionOrdersTemporalBase.getListOfMedicinesFromAllTheDailyOrders().get(i).getName(), "");
+			    }
+			    
+			    JFreeChart chart=ChartFactory.createBarChart(  
+			            "Daily Bought Quantity Chart", //Chart Title  
+			            "Drug", // Category axis  
+			            "Bought quantity", // Value axis  
+			            dataset,  
+			            PlotOrientation.VERTICAL,  
+			            true,true,false  
+			           ); 
+			    
+			    ChartPanel BarPanel=new ChartPanel(chart);  
+			    
+			    JFrame example = new JFrame("Daily Bar Chart");
+			    
+			    example.setContentPane(BarPanel);
+			    
+			    example.setSize(800, 400);  
+			    example.setLocationRelativeTo(null);  
+			    example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			    example.setVisible(true); 
+				
+			}
 		});
 		
 		// Dimiourgia baras menu
@@ -147,13 +224,15 @@ public class StatisticsFrame extends JFrame{
 	    panel.add(menuPanel);
 	    
 	    panel.add(buttonsPanel);
-		
-		
-		
-		
-		
-		
+
+	    
 		this.setContentPane(panel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
 		
 		this.setVisible(true);;
 		this.setSize(600,400);

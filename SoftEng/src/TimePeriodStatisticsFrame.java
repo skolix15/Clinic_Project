@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -40,6 +41,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 
 	private JButton supplySatisticsButton;
 	private JButton prescriptionStatisticsButton;
+	private JButton goBackButton;
 	
 	private JPanel buttonsPanel;
 	private JPanel textFieldsPanel;
@@ -69,10 +71,22 @@ public class TimePeriodStatisticsFrame extends JFrame{
 		
 		supplySatisticsButton = new JButton("Supply Time Period Statistics");
 		prescriptionStatisticsButton = new JButton("Prescription Time Period Statistics");
+		goBackButton = new JButton("Return to the previous page");
 		
 		// Dimioyrgia listener gia ta buttons
 		
 		// First button Listener
+		
+		goBackButton.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+							
+				new StatisticsFrame(conn);
+				dispose();
+			}
+			
+		});
 		
 		supplySatisticsButton.addActionListener(new ActionListener() {
 
@@ -101,12 +115,12 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					DefaultCategoryDataset dataset = new DefaultCategoryDataset();   
 				    
 				    for (int i=0; i<quantities.size(); i++) {
-				    	System.out.println(quantities.get(i) + " | " + medicineNames.get(i));
+				    
 				    	dataset.addValue(quantities.get(i), medicineNames.get(i), "");
 				    }
 				    
 				    JFreeChart chart=ChartFactory.createBarChart(  
-				            "Supply Quantity Chart", //Chart Title  
+				            "Time Period Supply Quantity Chart", //Chart Title  
 				            "Drug", // Category axis  
 				            "Bought quantity", // Value axis  
 				            dataset,  
@@ -150,7 +164,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 					
 					for(int j=0;j<id.size();j++) {
 						for(int i=0;i<Storage.getMedicineList().size();i++) {
-							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(i))))
+							if(Storage.getMedicineList().get(i).getId().equals(String.valueOf(id.get(j))))
 								medicineNames.add(Storage.getMedicineList().get(i).getName());
 							}
 						}
@@ -162,7 +176,7 @@ public class TimePeriodStatisticsFrame extends JFrame{
 				    }
 				    
 				    JFreeChart chart=ChartFactory.createBarChart(  
-				            "Prescription Quantity Chart", //Chart Title  
+				            "Time Period Prescription Quantity Chart", //Chart Title  
 				            "Drug", // Category axis  
 				            "Bought quantity", // Value axis  
 				            dataset,  
@@ -285,9 +299,17 @@ public class TimePeriodStatisticsFrame extends JFrame{
 	    panel.add(textFieldsPanel);
 	    
 	    panel.add(buttonsPanel);
+	    
+	    panel.add(goBackButton);
 		
 		
 		this.setContentPane(panel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
 		
 		this.setVisible(true);;
 		this.setSize(600,400);

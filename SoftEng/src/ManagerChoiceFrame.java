@@ -1,3 +1,6 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,25 +17,32 @@ class ManagerChoiceFrame extends JFrame{
 		private JButton s_chain =new JButton("Supply Chain");
 		private JButton shift =new JButton("Shift Work");
 
-		private JPanel D_Panel;
+		private JPanel D_Panel, SecondPanel;
 		
 		private db conn;
 
 					 
 		public ManagerChoiceFrame(db connection) {
 			conn=connection;
-			D_Panel = new JPanel();
-			D_Panel.add(s_chain);
-			D_Panel.add(shift);
+			D_Panel = new JPanel(new BorderLayout());
+			SecondPanel=new JPanel();
+			
+			ImageIcon icon = new ImageIcon("hospital1.png");
+			JLabel lb = new JLabel(icon);
+			D_Panel.add(lb, BorderLayout.NORTH);
+			
+			SecondPanel.add(s_chain);
+			SecondPanel.add(shift);
+			D_Panel.add(SecondPanel);
 			
 			ButtonListener listener = new ButtonListener();
 			s_chain.addActionListener(listener);
 			shift.addActionListener(listener);
 			
 
-			ImageIcon icon = new ImageIcon("hospital1.png");
+		/*	ImageIcon icon = new ImageIcon("hospital1.png");
 			JLabel lb = new JLabel(icon);
-			D_Panel.add(lb);
+			D_Panel.add(lb);*/
 			
 			lb.addMouseListener(new MouseAdapter() 
 			{
@@ -44,6 +54,13 @@ class ManagerChoiceFrame extends JFrame{
 			});
 			
 			this.setContentPane(D_Panel);
+			
+			// Set frame in the center of the pc
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			int x = (screenSize.width - this.getWidth()) / 3;
+			int y = (screenSize.height - this.getHeight()) / 3;
+			this.setLocation(x, y);
+			
 			this.setVisible(true);
 			this.setSize(400, 300);
 			this.setTitle("Manager");

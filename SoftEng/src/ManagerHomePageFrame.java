@@ -1,12 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,9 +31,8 @@ import javax.swing.table.TableRowSorter;
 
 public class ManagerHomePageFrame extends JFrame {
 	
-	private JPanel centralPanel;
-	private JPanel mainPanel;
-	private JPanel secondPanel;
+	private JPanel centralPanel,mainPanel ,secondPanel, menuPanel;
+	private JPanel EmployeePanel;
 	
 	private JMenuBar menubar;
 	private JMenu employeeMenu;
@@ -46,6 +46,8 @@ public class ManagerHomePageFrame extends JFrame {
 	private JLabel hrLabel;
 	private db conn ;
 	
+	private String rnDoctDB = null;
+	
 	private DefaultTableModel model, model2;
 	
 	private ArrayList<Doctor> doctors = new ArrayList<Doctor>(); 
@@ -54,8 +56,9 @@ public class ManagerHomePageFrame extends JFrame {
 	public ManagerHomePageFrame(db connection) {
 		conn= connection;
 		centralPanel = new JPanel(new BorderLayout());
-		mainPanel= new JPanel();
+		mainPanel= new JPanel(new BorderLayout());
 		secondPanel= new JPanel();
+		menuPanel=new JPanel();
 		
 		menubar= new JMenuBar();
 		employeeMenu= new JMenu("Employee");
@@ -70,19 +73,19 @@ public class ManagerHomePageFrame extends JFrame {
 		menubar.add(employeeMenu);
 		menubar.add(programMenu);
 	
-		mainPanel.add(menubar);
+		menuPanel.add(menubar);
 		
 		
-		// Gets all the doctors from the database and puts them in the ArrayList doctors
+		// Gets all the doctors from the database, put them in the ArrayList doctors
 		conn.getAllDoctors(doctors);
-		
-		// Insert the doctors to the JTable
 		
 		
 		//Insert image to return at the Home Page
 		ImageIcon icon = new ImageIcon("hospital1.png");
 		JLabel lb = new JLabel(icon);
-		mainPanel.add(lb);
+		mainPanel.add(lb, BorderLayout.NORTH);
+		
+		mainPanel.add(menuPanel, BorderLayout.AFTER_LAST_LINE);
 		
 		lb.addMouseListener(new MouseAdapter() 
 		{
@@ -102,6 +105,13 @@ public class ManagerHomePageFrame extends JFrame {
 		centralPanel.add(secondPanel, BorderLayout.CENTER);
 		
 		this.setContentPane(centralPanel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 6;
+		int y = (screenSize.height - this.getHeight()) / 6;
+		this.setLocation(x, y);
+		
 		this.setVisible(true);
 		this.setSize(800, 600);
 		this.setTitle("Manager/Shifts");
@@ -130,7 +140,7 @@ public class ManagerHomePageFrame extends JFrame {
 			if(e.getSource()== change ) {
 				
 				hrLabel = new JLabel ("Workforce availability");
-			
+				EmployeePanel=new JPanel();
 				
 				// get all doctors from the database
 				
@@ -204,6 +214,12 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(FindField);
 				secondPanel.add(add);
 				secondPanel.add(remove);
+				/*EmployeePanel.add(hrLabel);
+				EmployeePanel.add(scrollPane);
+				EmployeePanel.add(FindField);
+				EmployeePanel.add(add);
+				EmployeePanel.add(remove);
+				secondPanel.add(EmployeePanel);*/
 				pack(); 
 				
 				
@@ -261,12 +277,12 @@ public class ManagerHomePageFrame extends JFrame {
 					
 				    	  			  if (NumberOfDocs == -1)
 				    	  			  {
-				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error");
+				    	  				 JOptionPane.showMessageDialog(secondPanel, "Error", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  			  }
 				    	  			  else if (NumberOfDocs == 1 )
 				    	  			  {
 				    	  				// show that the doctor with the given RN already exists
-				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists");
+				    	  				  JOptionPane.showMessageDialog(secondPanel, " The doctor with the given RN already exists", "Inane error", JOptionPane.ERROR_MESSAGE);
 				    	  				  
 				    	  			  }
 				    	  			  else
@@ -312,7 +328,7 @@ public class ManagerHomePageFrame extends JFrame {
 						       	 //UPDATE THE DATABASE
 						        	conn.removeDoctor(valueInCell);}
 					    	  else {
-					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove");
+					    		  JOptionPane.showMessageDialog(secondPanel, "Choose One Doctor from the table to remove", "Inane warning", JOptionPane.WARNING_MESSAGE);
 					    	  }
 					    	
 					      }
@@ -325,7 +341,7 @@ public class ManagerHomePageFrame extends JFrame {
 			//Button: Program-> Create
 			else if(e.getSource() == create) {
 				JLabel label= new JLabel("Create - Export TimeTable");
-				JLabel text1 = new JLabel("Number of doctors in db: ");//Arithmos apo vasi
+				JLabel text1 = new JLabel("Number of doctors in db: ");
 				JButton show_program = new JButton("Show Program");
 				JButton cancel_but = new JButton("Cancel");
 				
@@ -339,7 +355,7 @@ public class ManagerHomePageFrame extends JFrame {
 				else // query was successful
 				{
 					// add the number to the text
-					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose only 7");
+					text1.setText(text1.getText() + " '" + NumberOfDocs + "' choose maximum 7");
 				}
 			
 				model = new DefaultTableModel();
@@ -382,6 +398,11 @@ public class ManagerHomePageFrame extends JFrame {
 				secondPanel.add(cancel_but, BorderLayout.SOUTH);
 				pack();
 				
+				//Message that there are no doctors in the data base
+				if(NumberOfDocs==0) {
+					JOptionPane.showMessageDialog(centralPanel, "There are no doctors!", "Inane error", JOptionPane.ERROR_MESSAGE);
+				}
+				
 				show_program.addActionListener(new ActionListener()
 			    {	
 			      public void actionPerformed(ActionEvent e)
@@ -395,18 +416,22 @@ public class ManagerHomePageFrame extends JFrame {
 						if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 							count++;
 						}
-						if(count>7) {
-							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!");
+						
+						if(count>7 && NumberOfDocs>6) {
+							JOptionPane.showMessageDialog(centralPanel, "Put only 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 							break;
 						}
 			    	  }
 			    	  
-			    	  if(count<7) {
-							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!");
+			    	  if(count<7 && NumberOfDocs >6) {
+							JOptionPane.showMessageDialog(centralPanel, "You have less than 7 choices!", "Inane warning", JOptionPane.WARNING_MESSAGE);
 						
 						}
+			    	  if(NumberOfDocs<7 && count<NumberOfDocs) {
+			    		  JOptionPane.showMessageDialog(centralPanel, "Select all the doctors!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+			    	  }
 			    	  
-			    	  if(count==7) {
+			    	  if(count==7 || (NumberOfDocs==count && NumberOfDocs<7)) {
 			    		  for(int i=0; i<doctors.size(); i++) {
 								 
 								if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
@@ -508,7 +533,7 @@ public class ManagerHomePageFrame extends JFrame {
 
 				  	    			  if((model2.getValueAt(time, day) == (Object)"-") )  {
 						  	    		  model2.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
-						  	
+						  	    		  
 						  	    	  }
 				  	    			  else {
 				  	    				  //If this day isn't available, doctor will work at the first free woriking hour
@@ -516,7 +541,9 @@ public class ManagerHomePageFrame extends JFrame {
 				  	    					  for(int h=0;h<3;h++) {
 				  	    						  if(model2.getValueAt(h, d) == (Object)"-") {
 				  	    							model2.setValueAt(doct.firstName  + " " +  doct.lastName, h, d);
+				  	     							
 				  	    							flag=true;
+				  	    							
 				  	    							break;
 				  	    						  }
 				  	    						
@@ -556,8 +583,34 @@ public class ManagerHomePageFrame extends JFrame {
 	    								break;}
 	  	    				  }
 				  	    }
-				  	 
-				  	       
+				  	    
+				  	  //Create a String rnDoctDB with Doctors_RN for database 
+				  	  String findrn=null;
+				  	  for(int d=1;d<8; d++) {
+	    					  for(int h=0;h<3;h++) {
+	    						  
+	    						  for(Doctor doct: doctors) {
+	    							  if(((String)model2.getValueAt(h, d)).equals(doct.firstName + " " +  doct.lastName)) {
+	    								  findrn=doct.rn;
+	    								  break;
+	    							  }
+	    						  }
+	    						  if(((String)model2.getValueAt(h, d)).equals("-")) {
+	    							  findrn="-";
+	    						  }
+	    						  if(d==1 && h==0) {
+	    							  rnDoctDB = findrn;
+	    						  }
+	    						  else {
+	    							  rnDoctDB += findrn;
+	    						  }
+	    						  if(h!=2) {
+	    							  rnDoctDB += ",";
+	    						  }
+	    					  }
+	    					  rnDoctDB+="/";
+				  	  }
+				  	  
 				    	  secondPanel.add(label);
 				    	  secondPanel.add(scrollPane2);
 				    	  secondPanel.add(save);	
@@ -569,6 +622,10 @@ public class ManagerHomePageFrame extends JFrame {
 						      public void actionPerformed(ActionEvent e)
 						      {
 						    	  //Save the global timetable in the database
+						    	  //rnDoctDB
+						    	  conn.saveTimetable(rnDoctDB);
+
+						    	  JOptionPane.showMessageDialog(secondPanel, "Program saved successfully");
 						      }
 						    });
 				    	  
@@ -577,7 +634,7 @@ public class ManagerHomePageFrame extends JFrame {
 						      public void actionPerformed(ActionEvent e)
 						      {
 						    	  JOptionPane.showMessageDialog(secondPanel, "Choose boxes from table with double click and change the First And the Last Name ");
-						    	  //Έλεγχός αν αυτά τα οόματα υπάρχουν στην βάση
+						    	  //Έλεγχός αν αυτά τα ονόματα υπάρχουν στην βάση
 						    	   
 						      }
 						    });

@@ -1,10 +1,12 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 
 public class ManagerLogInFrame extends JFrame  {
@@ -23,20 +24,26 @@ public class ManagerLogInFrame extends JFrame  {
 	private JButton log_in_But =new JButton("Log In");
 
 	private JLabel label= new JLabel();
-	private JPanel CentralPanel;
+	private JPanel CentralPanel, SecondPanel;
 
 	private db conn;
 
 	
 	public ManagerLogInFrame(db connection) {
 		conn = connection;
-		CentralPanel=new JPanel();
+		CentralPanel=new JPanel(new BorderLayout());
+		SecondPanel = new JPanel();
 		
 		label.setText("Please enter Manager's password");
 		
-		CentralPanel.add(label);
-		CentralPanel.add(code_pass);
-		CentralPanel.add(log_in_But);
+		ImageIcon icon = new ImageIcon("hospital1.png");
+		JLabel lb = new JLabel(icon);
+		CentralPanel.add(lb, BorderLayout.NORTH);
+		
+		SecondPanel.add(label);
+		SecondPanel.add(code_pass);
+		SecondPanel.add(log_in_But);
+		CentralPanel.add(SecondPanel, BorderLayout.CENTER);
 		
 		code_pass.addKeyListener(new KeyAdapter() {
 	        
@@ -50,13 +57,8 @@ public class ManagerLogInFrame extends JFrame  {
 		
 		ButtonListener listener = new ButtonListener();
 		log_in_But.addActionListener(listener);
-		
 
-		ImageIcon icon = new ImageIcon("hospital1.png");
-		JLabel lb = new JLabel(icon);
-		CentralPanel.add(lb);
-		
-		
+
 		lb.addMouseListener(new MouseAdapter() 
 		{
 			public void mouseClicked(MouseEvent e) 
@@ -67,6 +69,13 @@ public class ManagerLogInFrame extends JFrame  {
 		});
 
 		this.setContentPane(CentralPanel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 3;
+		int y = (screenSize.height - this.getHeight()) / 3;
+		this.setLocation(x, y);
+				
 		this.setVisible(true);
 		this.setSize(500, 250);
 		this.setTitle("Manager/Password");
@@ -95,7 +104,7 @@ public class ManagerLogInFrame extends JFrame  {
 				}
 				else {
 					
-					 JOptionPane.showMessageDialog(CentralPanel, "Wrong password");
+					 JOptionPane.showMessageDialog(CentralPanel, "Wrong password","Inane error",JOptionPane.ERROR_MESSAGE);
 				}
 		
 				

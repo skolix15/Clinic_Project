@@ -1,6 +1,8 @@
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -63,7 +65,15 @@ public class DoctorLogInFrame extends JFrame {
 	
 		central_panel.add(panel1, BorderLayout.CENTER);
 		central_panel.add(panel2, BorderLayout.SOUTH);
+		
 		this.setContentPane(central_panel);
+		
+		// Set frame in the center of the pc
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (screenSize.width - this.getWidth()) / 2;
+		int y = (screenSize.height - this.getHeight()) / 2;
+		this.setLocation(x, y);
+		
 		this.setVisible(true);
 		this.setSize(530, 250);
 		this.setTitle("Ιατρός");
@@ -86,7 +96,7 @@ public class DoctorLogInFrame extends JFrame {
 				
 	  			if (NumberOfDocs == -1)
 	  			{
-					 JOptionPane.showMessageDialog(panel1, "Error");
+					 JOptionPane.showMessageDialog(panel1, "Error", "Inane error",JOptionPane.ERROR_MESSAGE);
 
 	  			}
 	  			else if (NumberOfDocs == 1 )
@@ -132,7 +142,7 @@ public class DoctorLogInFrame extends JFrame {
 	  								new DoctorPreferenceFrame(conn, AM);
 	  							}
 	  							else {
-	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!");
+	  								JOptionPane.showMessageDialog(panel2, "Passwords don't match, Try again!", "Inane error",JOptionPane.ERROR_MESSAGE);
 	  							}
 	  						}
 				     });
@@ -183,7 +193,7 @@ public class DoctorLogInFrame extends JFrame {
 	  							}
 	  							else {
 	  								//If you Can't remember your password?
-	  								JOptionPane.showMessageDialog(panel2, "Wrong Password!");
+	  								JOptionPane.showMessageDialog(panel2, "Wrong Password!", "Inane error",JOptionPane.ERROR_MESSAGE);
 	
 	  							}
 	  						}
@@ -195,7 +205,7 @@ public class DoctorLogInFrame extends JFrame {
 	  			else
 	  		    {
 	  				// show that the doctor with the given AM doesn't exist
-	  				JOptionPane.showMessageDialog(panel1, "The doctor with the RN " + AM + " doesn't exist");
+	  				JOptionPane.showMessageDialog(panel1, "The doctor with the RN " + AM + " doesn't exist", "Inane error",JOptionPane.ERROR_MESSAGE);
 	  		    }	
 			}
 			

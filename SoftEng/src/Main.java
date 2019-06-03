@@ -1,5 +1,4 @@
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 public class Main {
 
@@ -12,16 +11,10 @@ public class Main {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		
-	   /* 
-	   Storage.addMedicine("aspirini","001",3,5);
-	   Storage.addMedicine("depon","002",4,10);
-	   Storage.addMedicine("panadol","003",2.5,7);
-	   Storage.addMedicine("siropi","004",4,6);
-*/
-
-	  new GlobalHomeFrame(conn);
+		SupplyChainMainFrame.count = 0;
+		new GlobalHomeFrame(conn);
 		
 	}
 	
