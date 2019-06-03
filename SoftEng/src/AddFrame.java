@@ -44,15 +44,15 @@ public class AddFrame extends JFrame{
 				
 		        conn=connection;
 		
-				//Δημιουργία panel
+				//Creating panels
 				panel = new JPanel();
 				menuPanel = new JPanel();
 				
-				//Δημιουργία τίτλου για το παράθυρο
+				//Creating label and set Alingment for it
 			    title = new JLabel("Add Medicine");
 			    title.setAlignmentX(Component.LEFT_ALIGNMENT);
 				
-				//Δημιουργία πεδίων για εισαγωγή τιμών απο χρήστες
+				//Creating text fields with titles where user will write all the information for the new drug
 				id = new JTextField("");
 				id.setBorder(new TitledBorder("Id"));
 				id.setPreferredSize(new Dimension(75,4));
@@ -64,12 +64,12 @@ public class AddFrame extends JFrame{
 				name.setPreferredSize(new Dimension(75,4));
 				//quantity = new JTextField("Ποσότητα");
 				
-				//Δημιουργία για κουμπιών
+				//Creating confirm button and listener for it. If the user pressed this button, the new drug will be produced
 				confirm = new JButton("Confirm");
 				ButtonListenerConfirm confirmListener= new ButtonListenerConfirm();
 				confirm.addActionListener(confirmListener);
 				
-				// Prosthiki eikonas kai listener gia aythn
+				// Creating and adding picture and listener in this frame
 				
 				ImageIcon icon = new ImageIcon("hospital1.png");
 				JLabel lb = new JLabel(icon);
@@ -84,20 +84,18 @@ public class AddFrame extends JFrame{
 				}	);
 				
 				
-				//Δημιουργία μπάρας μενού
+				// Creating menu bar for the panel
 				mb = new JMenuBar();
 				
-				//Δημιουργία μενού
+				// Creating menus that will be added in the main menu (menu bar)
 				centralMenu_Menu = new JMenu("Central Menu");
 				orderMenu = new JMenu("Order");
 				storageMenu = new JMenu("Storage");
 				statisticsMenu = new JMenu("Statistics");
 				
 				
-				//Δημιουργία επιλογών κάθε μενού
-				
-				
-				
+				// Creating menu items for every menu
+
 				i1 = new JMenuItem("Prescription");  
 			    i2 = new JMenuItem("Supply");  
 			    i3 = new JMenuItem("Add");
@@ -105,7 +103,7 @@ public class AddFrame extends JFrame{
 			    i5 = new JMenuItem("Show Statistics");
 			    iCentralMenu = new JMenuItem("Go to Central Menu");
 			    
-			    // Eisagwgi ActionListener gia ta pedia tou Menu
+			    // Adding ActionListener for every item of the menus
 			    
 			    JTablePopupMenuListener menuListener = new JTablePopupMenuListener();
 			    i1.addActionListener(menuListener);
@@ -115,13 +113,13 @@ public class AddFrame extends JFrame{
 			    i5.addActionListener(menuListener);
 			    iCentralMenu.addActionListener(menuListener);
 			    
-			    //JSpinner
+			    //Creating JSpinner
 			    spinner = new JSpinner();
 			    spinner.setPreferredSize(new Dimension(75, 50));
 			    spinner.setBorder(new TitledBorder("Quantity"));
 			    
 				
-			    //Eισαγωγή στο μενού
+			    //Adding items in their menus
 			    centralMenu_Menu.add(iCentralMenu);
 			    orderMenu.add(i1);
 			    orderMenu.add(i2);
@@ -129,21 +127,24 @@ public class AddFrame extends JFrame{
 			    storageMenu.add(i4);
 			    statisticsMenu.add(i5);
 			    
-			    //Εισαγωγή των μενού στην μπάρα
+			    //Adding all the menus in the menu bar
 			    mb.add(centralMenu_Menu);
 			    mb.add(orderMenu);
 			    mb.add(storageMenu);
 			    mb.add(statisticsMenu);
 			    mb.add(lb);
 			    
+			    // Adding menu bar in a panel that has been created only for menus
 			    menuPanel.add(mb);
+			    
+			    // Adding the menu panel in the main panel
 			    panel.add(menuPanel);
 			    
-			    
+			    // Set Alignment to the main panel
 			    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 			    panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			    
-				//Προσθήκη στο panel
+				// Adding all fields (title, spinner, buttons) in the main panel
 			    
 				panel.add(title);	
 				panel.add(id);
@@ -152,7 +153,7 @@ public class AddFrame extends JFrame{
 				panel.add(spinner);
 				panel.add(confirm);
 				
-				//Εισαγωγή του panel στο contentpane
+				// Adding main panel in the content pane of the frame
 				
 				this.setContentPane(panel);
 				
@@ -163,7 +164,7 @@ public class AddFrame extends JFrame{
 		        this.setLocation(x, y);
 				
 				
-				//Καθορισμός των βασικών χαρακτηριστικών του panel
+				// Adding trappings of the frame
 				
 				this.setSize(600,400);
 				this.setTitle("/Supply Chain/Pharmacist/Storage/Add");
