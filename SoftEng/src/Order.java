@@ -23,7 +23,9 @@ public abstract class Order {
 		
 	}
 	
-	/* Searches and deletes a medicine from existing medicines in Order. */
+	/* Searches and deletes a medicine from existing medicines in Order. 
+	 * Input: Drug orderedMedicine
+	 * Output: - */
 	
 	public abstract void deleteMedicineFronTheOrder(Drug orderedMedicine);
 	
@@ -32,25 +34,33 @@ public abstract class Order {
 	 * Every file will be updated for every new order(Prescription/Supply).
 	 * File for different types of order will be differ on "fileName". */
 	
-	/* Returns list of medicines. */
+	/* Returns list of medicines. 
+	 * Input: -
+	 * Output: ArrayList<Drug> medicines. */
 	
 	public ArrayList<Drug> getListOfMedicines(){
 		
 		return medicines;
 	}
 	
-	/* Returns list of quantities. */
+	/* Returns list of quantities. 
+	 * Input: -
+	 * Output: ArrayList<Integer> quantityOfMedicines. */
 	
 	public ArrayList<Integer> getQuantityOfMedicines(){
 		
 		return quantityOfMedicines;
 	}
 	
-	/* Abstract function which calculates the total cost of the order. */
+	/* Abstract function which calculates the total cost of the order. 
+	 * Input: -
+	 * Output: double value of order's total cost. */
 	
 	public abstract double getTotalCost();
 	
-	/* Prints every medicine included in the order. */
+	/* Prints every medicine included in the order. 
+	 * Input: -
+	 * Output: Prints every medicine included in order. */
 	
 	public void printListOfMedicines() {
 		
@@ -66,7 +76,9 @@ public abstract class Order {
 		}
 	}
 	
-	/* Returns boolean value whether a medicine exists or not in the order. */
+	/* Returns boolean value whether a medicine exists or not in the order. 
+	 * Input: String medicineId
+	 * Output: boolean value */
 	
 	public boolean searchForMedicineInOrder(String medicineId) {
 		
@@ -79,7 +91,9 @@ public abstract class Order {
 		return false;
 	}
 	
-	/* Clears ArrayList for medicines of the order and ArrayList for quantities of these medicines. */
+	/* Clears ArrayList for medicines of the order and ArrayList for quantities of these medicines. 
+	 * Input: -
+	 * Output: - */
 	
 	public void clearOrder() {
 		
@@ -90,7 +104,9 @@ public abstract class Order {
 		quantityOfMed.clear();
 	}
 	
-	/* Returns a string that contains the current date. */ 
+	/* Returns a string that contains the current date. 
+	 * Input: -
+	 * Output: String type of current date. */ 
 	
 	public String getDateTime() {
 		

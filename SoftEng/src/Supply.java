@@ -21,16 +21,20 @@ public class Supply extends Order {
 		
 	/* Adds a new medicine in ArrayList of existing medicines and its quantity
 	 * in the equivalent position in ArrayList of quantities of the existing medicines. 
-	 * At the same time its availability is increased. */
+	 * At the same time its availability is increased. 
+	 * Input: Drug orderedMedicine, int quantity
+	 * Output: - */
 		
-	public void addMedicineInTheOrder (Drug orderedMedicine,int quantity) {
+	public void addMedicineInTheOrder (Drug orderedMedicine, int quantity) {
 			
 		super.addMedicineInTheOrder(orderedMedicine, quantity);
 		orderedMedicine.setAvailability(orderedMedicine.getAvailability() + quantity);
 		
 	}
 	
-	/* Searches and deletes a medicine from existing medicines in Order. */
+	/* Searches and deletes a medicine from existing medicines in Order. 
+	 * Input: Drug orderedMedicine
+	 * Output: - */
 	
 	public void deleteMedicineFronTheOrder(Drug orderedMedicine) {
 		
@@ -51,7 +55,9 @@ public class Supply extends Order {
 	}
 		
 	/* Calculates and returns total cost of Supply.
-	 * Acceptance that every medicine supply costs 1/3 of its market price. */
+	 * Acceptance that every medicine supply costs 1/3 of its market price. 
+	 * Input: -
+	 * Output: double value of order's total cost. */
 	
 	public double getTotalCost() {
 

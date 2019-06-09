@@ -11,14 +11,18 @@ public class Storage {
 		connection.getAllDrugs(medicineList);
 	}
 	
-	/* Adds a medicine in Storage.  */
+	/* Adds a medicine in Storage.  
+	 * Input: String name, String id, double price, int availability
+	 * Output: - */
 	
 	public static void addMedicine(String name, String id, double price, int availability) {
 		Drug med = new Drug(name, id, price, availability);
 		medicineList.add(med);
 	}
 	
-	/*  Removes a medicine from Storage. */
+	/*  Removes a medicine from Storage. 
+	 * Input: String name, String id
+	 * Output: - */
 	
 	public static void removeMedicine(String name, String id) {
 		
@@ -29,7 +33,9 @@ public class Storage {
 	}
 	
 	/* Searches Storage whether a medicine exists or not.
-	 * If the medicine does exist, it returns it, else return null. */
+	 * If the medicine does exist, it returns it, else return null. 
+	 * Input: String name, String id
+	 * Output: Drug if found, null if not. */
 	
 	public static Drug searchMedicine(String name, String id) {
 		
