@@ -56,7 +56,7 @@ public class AddFrame extends JFrame{
 			    title = new JLabel("Add Medicine");
 			    title.setAlignmentX(Component.LEFT_ALIGNMENT);
 				
-				/* Creating text fields with titles where user will write all the information for the new drug */
+				/* Creating text fields with titles where the user will write all the information for the new drug */
 			    
 				id = new JTextField("");
 				id.setBorder(new TitledBorder("Id"));
@@ -189,9 +189,9 @@ public class AddFrame extends JFrame{
 				
 			}
 	
-			/* Listener that determines the communication and the metaphor among the frames of the program. */
+/* Listener that determines the communication and the metaphor among the frames of the program. */
 			
-			class JTablePopupMenuListener implements ActionListener {
+class JTablePopupMenuListener implements ActionListener {
 
 
 				public void actionPerformed(ActionEvent e) {

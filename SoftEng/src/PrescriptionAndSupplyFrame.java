@@ -532,7 +532,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		
 		}
 	
-	/* Method that returns a boolean value. This method checks if a String is Integer or not */
+	/* Method which returns a boolean value. This method checks if a String is Integer or not.
+	 * Input: String str
+	 * Output: boolean */
 	
 	public static boolean isNumeric(String str) { 
 		  try {  

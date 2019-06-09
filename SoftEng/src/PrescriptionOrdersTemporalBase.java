@@ -34,7 +34,7 @@ public class PrescriptionOrdersTemporalBase {
 		return quantityOfMedicines;
 	}
 	
-	/* Method that is checking if a drug exists in a file where daily orders are saved. 
+	/* Method which is checking if a drug exists in a file where daily orders are saved. 
 	 * Input: String name
 	 * Output: Boolean value */
 	
@@ -47,7 +47,7 @@ public class PrescriptionOrdersTemporalBase {
 		return false;
 	}
 	
-	/* Method that is adding a medicine in the daily orders list. 
+	/* Method which is adding a medicine in the daily orders list. 
 	 * Input: Drug medicine, int quantity
 	 * Output: - */
 	
@@ -75,13 +75,13 @@ public class PrescriptionOrdersTemporalBase {
 			}
 		}
 	
-	/* Method that is writing daily orders list and the quantities of every medicine in a file.
+	/* Method which is writing daily orders list and the quantities of every medicine in a file.
 	 * Input: ArrayList<Drug> medicinesInOrder, ArrayList<Integer> quantityOfMedicinesInOrder
 	 * Output: - */
 	
 	public static void writeToOrderFile(ArrayList<Drug> medicinesInOrder,ArrayList<Integer> quantityOfMedicinesInOrder) {
 		
-		/* Informing the two list of the class with the daily orders information that are being saved in a file. */
+		/* Informing the two list of the class with the daily orders information which are being saved in a file. */
 		
 		PrescriptionOrdersTemporalBase.readFromOrderFile();
 		
@@ -95,7 +95,7 @@ public class PrescriptionOrdersTemporalBase {
 			PrescriptionOrdersTemporalBase.addMedicineInTheListOfMedicinesFromAllTheDailyOrders(medicinesInOrder.get(i), quantityOfMedicinesInOrder.get(i));
 		}		
 		
-		/* Informing the file that saves the daily orders information with the updates of the daily orders list. */
+		/* Informing the file which saves the daily orders information with the updates of the daily orders list. */
 		
 		try
 		{
@@ -119,7 +119,7 @@ public class PrescriptionOrdersTemporalBase {
 		
 	}
 	
-	/* Method that is returning the date ( With specific format ).
+	/* Method which is returning the date ( With specific format ).
 	 * Input: -
 	 * Output: String */
 	
@@ -130,7 +130,7 @@ public class PrescriptionOrdersTemporalBase {
         return dateFormat.format(date);
     }
 	
-	/* Method that is searching a medicine in the daily orders list. If the medicine exists in the daily orders list the method
+	/* Method which is searching a medicine in the daily orders list. If the medicine exists in the daily orders list the method
 	 * is returning medicine's index. If the medicine does'nt exist the method is returning -1. 
 	 * Input: String name
 	 * Output: Int */
@@ -157,7 +157,7 @@ public class PrescriptionOrdersTemporalBase {
 		
 	}
 	
-	/* Method that is reading from a file all the information about the daily orders. The method is writing the values
+	/* Method which is reading from a file all the information about the daily orders. The method is writing the values
 	 * from the file to the corresponding lists.
 	 * Input: -
 	 * Output: - */
