@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -22,14 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class PrescriptionAndSupplyFrame extends JFrame {
 	
@@ -247,12 +241,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    orderTable = new JTable(basketModel);
 	    
 	    
-	    // Setting alignment for both tables
+	    /* Setting alignment for both tables */
 	    
 	    storageTable.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    orderTable.setAlignmentX(Component.RIGHT_ALIGNMENT);
 	    
-	    // Creating scrollPane for both tables  
+	    /* Creating scrollPane for both tables  */
 	    
 	    JScrollPane storageScrollPane = new JScrollPane(storageTable);
 	    JScrollPane orderScrollPane = new JScrollPane(orderTable);
@@ -279,15 +273,12 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 	    
 	    /* Setting the way that objects will be put in every panel ( for example vertically, horizontally ) */
 	    
-	    
 	    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 	    panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
-	    
 	    
 	    /* Adding the menu bar in the menu panel */ 
 	    
 	    menuPanel.add(mb);
-	    
 	    
 	    /* Adding the menu panel in the main panel of the frame.
 	     * Furthermore this part of the code it is adding storage and order table and their labels 
@@ -552,9 +543,9 @@ public class PrescriptionAndSupplyFrame extends JFrame {
 		  }  
 		}
 	
-	/* Listener that determines the communication and the metaphor among the frames of the program  */
+/* Listener that determines the communication and the metaphor among the frames of the program  */
 	
-	class JTablePopupMenuListener implements ActionListener {
+class JTablePopupMenuListener implements ActionListener {
 
 
 		public void actionPerformed(ActionEvent e) {

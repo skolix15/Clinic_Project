@@ -69,6 +69,7 @@ public class AddFrame extends JFrame{
 				name.setPreferredSize(new Dimension(75,4));
 				
 				/* Creating confirm button and listener for it. If the user pressed this button, the new drug will be produced */
+				
 				confirm = new JButton("Confirm");
 				ButtonListenerConfirm confirmListener= new ButtonListenerConfirm();
 				confirm.addActionListener(confirmListener);
