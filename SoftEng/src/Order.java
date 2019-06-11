@@ -29,11 +29,6 @@ public abstract class Order {
 	
 	public abstract void deleteMedicineFronTheOrder(Drug orderedMedicine);
 	
-	/* There will be a file for orders, the database will be updated from the files.
-	 * Different files for prescriptions and supplies. 
-	 * Every file will be updated for every new order(Prescription/Supply).
-	 * File for different types of order will be differ on "fileName". */
-	
 	/* Returns list of medicines. 
 	 * Input: -
 	 * Output: ArrayList<Drug> medicines. */

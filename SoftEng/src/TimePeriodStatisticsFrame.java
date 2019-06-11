@@ -440,5 +440,5 @@ class JTablePopupMenuListener implements ActionListener {
 		}
 			
 	 }
-
 }
+
