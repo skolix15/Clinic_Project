@@ -122,8 +122,8 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 
 	public void setDoctorsTimeTable(String rn, String tb) {
 		 for(Doctor  doct: doctors) {
-			 if(doct.rn.equals(rn)) {
-				 doct.timetable=tb;
+			 if(doct.getRn().equals(rn)) {
+				 doct.setTimetable(tb);
 				
 			 }
 		 }
@@ -153,9 +153,9 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				String rn_db=null;
 				
 				for(Doctor doct: doctors) {
-					firstname_db= doct.firstName;
-					lastname_db=doct.lastName;
-					rn_db=doct.rn;
+					firstname_db= doct.getFirstName();
+					lastname_db=doct.getLastName();
+					rn_db=doct.getRn();
 					model.addRow(new Object[] {firstname_db, lastname_db, rn_db});
 				}
 			
@@ -369,9 +369,9 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				Boolean check;
 				
 				for(Doctor doct: doctors) {
-					firstname_db= doct.firstName;
-					lastname_db=doct.lastName;
-					rn_db=doct.rn;
+					firstname_db= doct.getFirstName();
+					lastname_db=doct.getLastName();
+					rn_db=doct.getRn();
 					check=false;
 					model.addRow(new Object[] {firstname_db, lastname_db, rn_db, check});
 				}
@@ -437,8 +437,8 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 								if(doctorsTable.getModel().getValueAt(i,3).toString() =="true") {
 									
 									for(Doctor doct: doctors) {
-										if(doct.rn.equals(doctorsTable.getModel().getValueAt(i,2).toString())) {
-											if(doct.timetable!=null) {
+										if(doct.getRn().equals(doctorsTable.getModel().getValueAt(i,2).toString())) {
+											if(doct.getTimetable()!=null) {
 												// A List with the selected doctors by the manager who have preferences
 												doctorsWITHprefer.add(doct);
 											}
@@ -494,7 +494,7 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				  	    
 				  	      for(Doctor doct: doctorsWITHprefer) {
 				  	    	 
-				  	    	String prefer =  doct.timetable;  //Preference
+				  	    	String prefer =  doct.getTimetable();  //Preference
 				  	    	int countfor1=0;  
 				  	    	StringBuilder pref = new StringBuilder(prefer);
 				  	    	for(int k=0; k<pref.length(); k++) { //pref.lenght() ==21, because we have 7 days with 3 working hours
@@ -532,7 +532,7 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				  	    			  countfor1 ++; 
 
 				  	    			  if((model2.getValueAt(time, day) == (Object)"-") )  {
-						  	    		  model2.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+						  	    		  model2.setValueAt(doct.getFirstName()  + " " +  doct.getLastName(), time, day);
 						  	    		  
 						  	    	  }
 				  	    			  else {
@@ -540,7 +540,7 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				  	    				  for(int d=1;d<8; d++) {
 				  	    					  for(int h=0;h<3;h++) {
 				  	    						  if(model2.getValueAt(h, d) == (Object)"-") {
-				  	    							model2.setValueAt(doct.firstName  + " " +  doct.lastName, h, d);
+				  	    							model2.setValueAt(doct.getFirstName()  + " " +  doct.getLastName(), h, d);
 				  	     							
 				  	    							flag=true;
 				  	    							
@@ -572,7 +572,7 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 				  	    	for(int d=1;d<8; d++) {
 	  	    					  for(int h=0;h<3;h++) {
 	  	    						  if(model2.getValueAt(h, d) == (Object)"-") {
-	  	    							model2.setValueAt(doct.firstName + " " +  doct.lastName, h, d);
+	  	    							model2.setValueAt(doct.getFirstName() + " " +  doct.getLastName(), h, d);
 	  	    							
 	  	    							counter++;
 	  	    							if(counter==3) {
@@ -590,8 +590,8 @@ public class ManagerHomePageFrame extends JFrame { //This name was < GUIEfimerie
 	    					  for(int h=0;h<3;h++) {
 	    						  
 	    						  for(Doctor doct: doctors) {
-	    							  if(((String)model2.getValueAt(h, d)).equals(doct.firstName + " " +  doct.lastName)) {
-	    								  findrn=doct.rn;
+	    							  if(((String)model2.getValueAt(h, d)).equals(doct.getFirstName() + " " +  doct.getLastName())) {
+	    								  findrn=doct.getRn();
 	    								  break;
 	    							  }
 	    						  }

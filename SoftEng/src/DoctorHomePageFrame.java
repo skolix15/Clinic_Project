@@ -189,7 +189,7 @@ public class DoctorHomePageFrame extends JFrame { //This name was <GUIGiatros2>
 					for(int k=0; k<rn.size(); k++) {
 						i++;
 						for(Doctor doct: doctors) {
-							if(doct.rn.equals(rn.get(i)) || "-".equals(rn.get(i))) {
+							if(doct.getRn().equals(rn.get(i)) || "-".equals(rn.get(i))) {
 								time=k%3;
 								switch(k) {
 			  	    		  	case 0:
@@ -214,8 +214,8 @@ public class DoctorHomePageFrame extends JFrame { //This name was <GUIGiatros2>
 					  	    	    day=7; //Sunday
 					  	    	    break;
 								}
-								if(doct.rn.equals(rn.get(i))) {
-									model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+								if(doct.getRn().equals(rn.get(i))) {
+									model.setValueAt(doct.getFirstName()  + " " +  doct.getLastName(), time, day);
 									break;}
 							}
 							
@@ -260,12 +260,12 @@ public class DoctorHomePageFrame extends JFrame { //This name was <GUIGiatros2>
 			  	    	    day=7; //Sunday
 			  	    	    break;
 						}
-						if(doct.rn.equals(rn.get(i)) && doct.rn.equals(AM)) {
+						if(doct.getRn().equals(rn.get(i)) && doct.getRn().equals(AM)) {
 						
-							model.setValueAt(doct.firstName  + " " +  doct.lastName, time, day);
+							model.setValueAt(doct.getFirstName()  + " " +  doct.getLastName(), time, day);
 							break;
 						}
-						if(doct.rn.equals(rn.get(i)) && !(doct.rn.equals(AM))) {
+						if(doct.getRn().equals(rn.get(i)) && !(doct.getRn().equals(AM))) {
 							model.setValueAt("-", time, day);
 						}
 						

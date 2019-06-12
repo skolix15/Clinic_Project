@@ -39,6 +39,14 @@ public class Doctor {
 		return rn;
 	}
 
+	public String getTimetable() {
+		return timetable;
+	}
+
+	public void setTimetable(String timetable) {
+		this.timetable = timetable;
+	}
+
 	public static ArrayList<Doctor> RemoveDoctor(String RN, ArrayList<Doctor> doctors) {
 		ArrayList<Doctor> helpList= new ArrayList<Doctor>();
 		
