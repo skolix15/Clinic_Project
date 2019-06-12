@@ -32,61 +32,6 @@ public class db {
 	}
 
 	/*
-	 * Input: the name of the table that we want to print and the connection with
-	 * the db server Function: Takes the data from the table and prints it on the
-	 * console
-	 */
-	public static void printTable(String name, Connection myConn) {
-
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			// 2. Create a Statement
-			myStmt = myConn.createStatement();
-
-			// 3. Execute SQL query
-			String query = "select * from " + name;
-			myRs = myStmt.executeQuery(query);		
-
-			// 4. Process the result set
-			ResultSetMetaData rsmd = myRs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-
-			// The column count starts from 1
-			while (myRs.next()) {
-				for (int i = 1; i <= columnCount; i++) {
-					String n = rsmd.getColumnName(i);
-					System.out.print(myRs.getString(n) + "\t\t");
-
-				}
-				System.out.println();
-			}
-
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		} finally {
-			if (myRs != null) {
-				try {
-					myRs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			if (myStmt != null) {
-				try {
-					myStmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	/*
 	 * Function: gets the global timetable from the database
 	 */
 	public String returnTimetable() {
@@ -112,13 +57,14 @@ public class db {
 	}
 
 	/*
-	 * Input: The timetable as a String Function: Updates the
-	 * 
+	 * Input: The timetable as a String Function: Updates the db with the
+	 * new global timetable
 	 */
 	public void saveTimetable(String timetable) {
 		Statement myStmt = null;
 
 		try {
+			// update the timetable in the database
 			myStmt = myConn.createStatement();
 			String query = "update timetable set ttable = \"" + timetable + "\" where id = 1";
 
@@ -138,6 +84,7 @@ public class db {
 		Statement myStmt = null;
 
 		try {
+		//update
 			myStmt = myConn.createStatement();
 			String query = "update doctor set " + field + " = \"" + saveValue + "\" where RN = \"" + conditionValue
 					+ "\"";
@@ -151,7 +98,7 @@ public class db {
 
 	/*
 	 * Input: A list that will contain all the data from all the doctors 
-	 * Function: Gets all the doctors from the database and all their data a and puts them in
+	 * Function: Gets all the doctors from the database and all their data and puts them in
 	 * the ArrayList that was sent as input 
 	 * Output: The list that contains the doctors
 	 */
@@ -160,11 +107,11 @@ public class db {
 		ResultSet myRs = null;
 		try {
 			myStmt = myConn.createStatement();
-			// 3. Execute SQL query
+			// Execute SQL query
 			String query = "select * from doctor";
 			myRs = myStmt.executeQuery(query);
 
-			// 4. Process the result set and put the data in the doctor list
+			// Process the result set and put the data in the doctor list
 			Doctor d;
 			while (myRs.next()) {
 
@@ -258,9 +205,9 @@ public class db {
 	}
 
 	/*
-	 * INPUT: the doctor to be inserted to the database Function: inserts doctor to
-	 * the database with null values in password and timetable Output:
-	 * -----------------------
+	 * INPUT: the doctor to be inserted to the database 
+	 * Function: inserts doctor to the database with null values in password and timetable 
+	 * 
 	 */
 	public void addDoctor(Doctor d) {
 		Statement myStmt = null;
@@ -268,8 +215,8 @@ public class db {
 		try {
 			myStmt = myConn.createStatement();
 
-			myStmt.executeUpdate("Insert into doctor (`First Name`, `Last Name`, `RN`)  Values ('" + d.firstName
-					+ "', '" + d.lastName + "', '" + d.rn + "')");
+			myStmt.executeUpdate("Insert into doctor (`First Name`, `Last Name`, `RN`)  Values ('" + d.getFirstName()
+					+ "', '" + d.getLastName() + "', '" + d.getRn() + "')");
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -369,9 +316,9 @@ public class db {
 	}
 
 	/*
-	 * Input: the code of the wanted entity (1: manager, 2: pharmacist) Function:
-	 * gets the password of the wanted entity from the database Output: the password
-	 * of the entity
+	 * Input: the code of the wanted entity (1: manager, 2: pharmacist)
+	 * Function: gets the password of the wanted entity from the database 
+	 * Output: the password of the entity
 	 */
 	public String returnPasswordUser(int code) {
 
@@ -381,7 +328,7 @@ public class db {
 
 		try {
 			myStmt = myConn.createStatement();
-			// 3. Execute SQL query
+			// Execute SQL query
 			String query = "select Password from privileged_user where Code = " + code;
 			myRs = myStmt.executeQuery(query);
 
@@ -587,10 +534,10 @@ public class db {
 				java.util.Date utilDate1 = format.parse(o.getDate());
 				java.sql.Date sqlDate = new java.sql.Date(utilDate1.getTime());
 				
-				// 2. Create a Statement
+				// Create a Statement
 				myStmt = myConn.createStatement();
 				
-				// 3. Execute SQL query
+				// Execute SQL query
 				
 				if(typeOfOrder == true) {
 					

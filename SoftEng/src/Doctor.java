@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class Doctor {
-	 String firstName;
-	 String lastName;
-	 String rn;
-	 String password;
-	 String timetable;
+	 private String firstName;
+	 private String lastName;
+	 private String rn;
+	 private String password;
+	 private String timetable;
 	
 	public Doctor(String firstN, String lastN, String rn)
 	{
