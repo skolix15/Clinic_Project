@@ -26,7 +26,8 @@ In order to use it you must:
 
 IMPORTANT NOTE: 
 If you have any trouble running the program please make sure you have a valid Java version and that the libraries are 
-correctly imported in the project!!
+correctly imported in the project. Also make sure that the bin folder is reachable (otherwise you will probably have an error like:
+Could not find or load main)
 
 
 Afterwards you're good to go to manage your Clinic's supply chain and human resources!!!
