@@ -19,7 +19,7 @@ C:\Program Files (x86)\MySQL\Connector J (the_version_you_have)
 If not, you should probably install the JConnector from the official website of MySQL.
 
 DATABASE:
-In the folder Database Dumps you will find the dump of the database that's used for the program.
+In the folder Database Dumps (or Dump2019063) you will find the dump of the database that's used for the program.
 In order to use it you must:
 1. Create a database (schema) in MySQL Workbench with the namw "mydb19"
 2. Import the dump folder as is, in the database "mydb19" 
