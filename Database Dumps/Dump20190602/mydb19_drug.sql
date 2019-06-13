@@ -38,7 +38,7 @@ CREATE TABLE `drug` (
 
 LOCK TABLES `drug` WRITE;
 /*!40000 ALTER TABLE `drug` DISABLE KEYS */;
-INSERT INTO `drug` VALUES ('1',5,1.3,'xanax',34),('2',3,2.4,'viagra',13),('3',55,5.5,'lexotanil',0);
+INSERT INTO `drug` VALUES ('1',5,1.3,'xanax',34),('2',3,2.4,'depon',13),('4',4,2.1,'panadol',0);
 /*!40000 ALTER TABLE `drug` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-02 23:45:00
+-- Dump completed on 2019-06-13  3:33:54
