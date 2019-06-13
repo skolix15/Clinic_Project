@@ -24,4 +24,9 @@ In order to use it you must:
 1. Create a database (schema) in MySQL Workbench with the namw "mydb19"
 2. Import the dump folder as is, in the database "mydb19" 
 
+IMPORTANT NOTE: 
+If you have any trouble running the program please make sure you have a valid Java version and that the libraries are 
+correctly imported in the project!!
+
+
 Afterwards you're good to go to manage your Clinic's supply chain and human resources!!!
