@@ -16,10 +16,10 @@ JConnector:
 If you have installed the MySQL Workbench using the MySQL Installer, normally you have
 also installed the JConnector which can be found usually in the following path:
 C:\Program Files (x86)\MySQL\Connector J (the_version_you_have)
-If not, you should probably install the JConnector from the official website of MySQL.
+If not, you can download the jar file from the JConnector folder. Alternatively, you can download the JConnector from the official website of MySQL.
 
 DATABASE:
-In the folder Database Dumps (or Dump2019063) you will find the dump of the database that's used for the program.
+In the folder Database Dumps (or Dump2019063, it's in both) you will find the dump of the LOCAL database that's used for the program.
 In order to use it you must:
 1. Create a database (schema) in MySQL Workbench with the namw "mydb19"
 2. Import the dump folder as is, in the database "mydb19" 
